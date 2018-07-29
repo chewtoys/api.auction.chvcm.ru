@@ -83,6 +83,25 @@
             "description": "<p>Подробное описание ошибки</p>"
           }
         ],
+        "Payload Too Large 413": [
+          {
+            "group": "Payload Too Large 413",
+            "type": "string",
+            "allowedValues": [
+              "\"PAYLOAD_TOO_LARGE_ERROR\""
+            ],
+            "optional": false,
+            "field": "code",
+            "description": "<p>Код ошибки</p>"
+          },
+          {
+            "group": "Payload Too Large 413",
+            "type": "string",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Подробное описание ошибки</p>"
+          }
+        ],
         "Internal Server Error 500": [
           {
             "group": "Internal Server Error 500",
@@ -217,9 +236,21 @@
             "description": "<p>Перечень поддерживаемых способов кодирования содержимого сущности при передаче</p>"
           }
         ],
-        "Content-Type": [
+        "Content-Type запроса": [
           {
-            "group": "Content-Type",
+            "group": "Content-Type запроса",
+            "type": "string",
+            "allowedValues": [
+              "\"application/json\""
+            ],
+            "optional": true,
+            "field": "Content-Type",
+            "description": "<p>Формат и способ представления сущности</p>"
+          }
+        ],
+        "Content-Type ответа": [
+          {
+            "group": "Content-Type ответа",
             "type": "string",
             "allowedValues": [
               "\"application/json\""
@@ -307,9 +338,21 @@
             "description": "<p>Перечень поддерживаемых способов кодирования содержимого сущности при передаче</p>"
           }
         ],
-        "Content-Type": [
+        "Content-Type запроса": [
           {
-            "group": "Content-Type",
+            "group": "Content-Type запроса",
+            "type": "string",
+            "allowedValues": [
+              "\"application/json\""
+            ],
+            "optional": true,
+            "field": "Content-Type",
+            "description": "<p>Формат и способ представления сущности</p>"
+          }
+        ],
+        "Content-Type ответа": [
+          {
+            "group": "Content-Type ответа",
             "type": "string",
             "allowedValues": [
               "\"application/json\""
@@ -355,6 +398,25 @@
     },
     "error": {
       "fields": {
+        "Payload Too Large 413": [
+          {
+            "group": "Payload Too Large 413",
+            "type": "string",
+            "allowedValues": [
+              "\"PAYLOAD_TOO_LARGE_ERROR\""
+            ],
+            "optional": false,
+            "field": "code",
+            "description": "<p>Код ошибки</p>"
+          },
+          {
+            "group": "Payload Too Large 413",
+            "type": "string",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Подробное описание ошибки</p>"
+          }
+        ],
         "Internal Server Error 500": [
           {
             "group": "Internal Server Error 500",
@@ -534,6 +596,25 @@
             "description": "<p>Подробное описание ошибки</p>"
           }
         ],
+        "Payload Too Large 413": [
+          {
+            "group": "Payload Too Large 413",
+            "type": "string",
+            "allowedValues": [
+              "\"PAYLOAD_TOO_LARGE_ERROR\""
+            ],
+            "optional": false,
+            "field": "code",
+            "description": "<p>Код ошибки</p>"
+          },
+          {
+            "group": "Payload Too Large 413",
+            "type": "string",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Подробное описание ошибки</p>"
+          }
+        ],
         "Internal Server Error 500": [
           {
             "group": "Internal Server Error 500",
@@ -668,9 +749,21 @@
             "description": "<p>Перечень поддерживаемых способов кодирования содержимого сущности при передаче</p>"
           }
         ],
-        "Content-Type": [
+        "Content-Type запроса": [
           {
-            "group": "Content-Type",
+            "group": "Content-Type запроса",
+            "type": "string",
+            "allowedValues": [
+              "\"application/json\""
+            ],
+            "optional": true,
+            "field": "Content-Type",
+            "description": "<p>Формат и способ представления сущности</p>"
+          }
+        ],
+        "Content-Type ответа": [
+          {
+            "group": "Content-Type ответа",
             "type": "string",
             "allowedValues": [
               "\"application/json\""
@@ -896,6 +989,25 @@
             "description": "<p>Подробное описание ошибки</p>"
           }
         ],
+        "Payload Too Large 413": [
+          {
+            "group": "Payload Too Large 413",
+            "type": "string",
+            "allowedValues": [
+              "\"PAYLOAD_TOO_LARGE_ERROR\""
+            ],
+            "optional": false,
+            "field": "code",
+            "description": "<p>Код ошибки</p>"
+          },
+          {
+            "group": "Payload Too Large 413",
+            "type": "string",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Подробное описание ошибки</p>"
+          }
+        ],
         "Internal Server Error 500": [
           {
             "group": "Internal Server Error 500",
@@ -1087,9 +1199,21 @@
             "description": "<p>Перечень поддерживаемых способов кодирования содержимого сущности при передаче</p>"
           }
         ],
-        "Content-Type": [
+        "Content-Type запроса": [
           {
-            "group": "Content-Type",
+            "group": "Content-Type запроса",
+            "type": "string",
+            "allowedValues": [
+              "\"application/json\""
+            ],
+            "optional": true,
+            "field": "Content-Type",
+            "description": "<p>Формат и способ представления сущности</p>"
+          }
+        ],
+        "Content-Type ответа": [
+          {
+            "group": "Content-Type ответа",
             "type": "string",
             "allowedValues": [
               "\"application/json\""
@@ -1376,6 +1500,25 @@
             "description": "<p>Подробное описание ошибки</p>"
           }
         ],
+        "Payload Too Large 413": [
+          {
+            "group": "Payload Too Large 413",
+            "type": "string",
+            "allowedValues": [
+              "\"PAYLOAD_TOO_LARGE_ERROR\""
+            ],
+            "optional": false,
+            "field": "code",
+            "description": "<p>Код ошибки</p>"
+          },
+          {
+            "group": "Payload Too Large 413",
+            "type": "string",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Подробное описание ошибки</p>"
+          }
+        ],
         "Internal Server Error 500": [
           {
             "group": "Internal Server Error 500",
@@ -1510,9 +1653,21 @@
             "description": "<p>Перечень поддерживаемых способов кодирования содержимого сущности при передаче</p>"
           }
         ],
-        "Content-Type": [
+        "Content-Type запроса": [
           {
-            "group": "Content-Type",
+            "group": "Content-Type запроса",
+            "type": "string",
+            "allowedValues": [
+              "\"application/json\""
+            ],
+            "optional": true,
+            "field": "Content-Type",
+            "description": "<p>Формат и способ представления сущности</p>"
+          }
+        ],
+        "Content-Type ответа": [
+          {
+            "group": "Content-Type ответа",
             "type": "string",
             "allowedValues": [
               "\"application/json\""
@@ -1684,6 +1839,25 @@
             "description": "<p>Подробное описание ошибки</p>"
           }
         ],
+        "Payload Too Large 413": [
+          {
+            "group": "Payload Too Large 413",
+            "type": "string",
+            "allowedValues": [
+              "\"PAYLOAD_TOO_LARGE_ERROR\""
+            ],
+            "optional": false,
+            "field": "code",
+            "description": "<p>Код ошибки</p>"
+          },
+          {
+            "group": "Payload Too Large 413",
+            "type": "string",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Подробное описание ошибки</p>"
+          }
+        ],
         "Internal Server Error 500": [
           {
             "group": "Internal Server Error 500",
@@ -1818,9 +1992,21 @@
             "description": "<p>Перечень поддерживаемых способов кодирования содержимого сущности при передаче</p>"
           }
         ],
-        "Content-Type": [
+        "Content-Type запроса": [
           {
-            "group": "Content-Type",
+            "group": "Content-Type запроса",
+            "type": "string",
+            "allowedValues": [
+              "\"application/json\""
+            ],
+            "optional": true,
+            "field": "Content-Type",
+            "description": "<p>Формат и способ представления сущности</p>"
+          }
+        ],
+        "Content-Type ответа": [
+          {
+            "group": "Content-Type ответа",
             "type": "string",
             "allowedValues": [
               "\"application/json\""
@@ -2114,6 +2300,25 @@
             "description": "<p>Подробное описание ошибки</p>"
           }
         ],
+        "Payload Too Large 413": [
+          {
+            "group": "Payload Too Large 413",
+            "type": "string",
+            "allowedValues": [
+              "\"PAYLOAD_TOO_LARGE_ERROR\""
+            ],
+            "optional": false,
+            "field": "code",
+            "description": "<p>Код ошибки</p>"
+          },
+          {
+            "group": "Payload Too Large 413",
+            "type": "string",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Подробное описание ошибки</p>"
+          }
+        ],
         "Internal Server Error 500": [
           {
             "group": "Internal Server Error 500",
@@ -2248,9 +2453,21 @@
             "description": "<p>Перечень поддерживаемых способов кодирования содержимого сущности при передаче</p>"
           }
         ],
-        "Content-Type": [
+        "Content-Type запроса": [
           {
-            "group": "Content-Type",
+            "group": "Content-Type запроса",
+            "type": "string",
+            "allowedValues": [
+              "\"application/json\""
+            ],
+            "optional": true,
+            "field": "Content-Type",
+            "description": "<p>Формат и способ представления сущности</p>"
+          }
+        ],
+        "Content-Type ответа": [
+          {
+            "group": "Content-Type ответа",
             "type": "string",
             "allowedValues": [
               "\"application/json\""
@@ -2415,6 +2632,25 @@
             "description": "<p>Подробное описание ошибки</p>"
           }
         ],
+        "Payload Too Large 413": [
+          {
+            "group": "Payload Too Large 413",
+            "type": "string",
+            "allowedValues": [
+              "\"PAYLOAD_TOO_LARGE_ERROR\""
+            ],
+            "optional": false,
+            "field": "code",
+            "description": "<p>Код ошибки</p>"
+          },
+          {
+            "group": "Payload Too Large 413",
+            "type": "string",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Подробное описание ошибки</p>"
+          }
+        ],
         "Internal Server Error 500": [
           {
             "group": "Internal Server Error 500",
@@ -2549,9 +2785,21 @@
             "description": "<p>Перечень поддерживаемых способов кодирования содержимого сущности при передаче</p>"
           }
         ],
-        "Content-Type": [
+        "Content-Type запроса": [
           {
-            "group": "Content-Type",
+            "group": "Content-Type запроса",
+            "type": "string",
+            "allowedValues": [
+              "\"application/json\""
+            ],
+            "optional": true,
+            "field": "Content-Type",
+            "description": "<p>Формат и способ представления сущности</p>"
+          }
+        ],
+        "Content-Type ответа": [
+          {
+            "group": "Content-Type ответа",
             "type": "string",
             "allowedValues": [
               "\"application/json\""
@@ -2777,6 +3025,25 @@
             "description": "<p>Подробное описание ошибки</p>"
           }
         ],
+        "Payload Too Large 413": [
+          {
+            "group": "Payload Too Large 413",
+            "type": "string",
+            "allowedValues": [
+              "\"PAYLOAD_TOO_LARGE_ERROR\""
+            ],
+            "optional": false,
+            "field": "code",
+            "description": "<p>Код ошибки</p>"
+          },
+          {
+            "group": "Payload Too Large 413",
+            "type": "string",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Подробное описание ошибки</p>"
+          }
+        ],
         "Internal Server Error 500": [
           {
             "group": "Internal Server Error 500",
@@ -2911,9 +3178,21 @@
             "description": "<p>Перечень поддерживаемых способов кодирования содержимого сущности при передаче</p>"
           }
         ],
-        "Content-Type": [
+        "Content-Type запроса": [
           {
-            "group": "Content-Type",
+            "group": "Content-Type запроса",
+            "type": "string",
+            "allowedValues": [
+              "\"application/json\""
+            ],
+            "optional": true,
+            "field": "Content-Type",
+            "description": "<p>Формат и способ представления сущности</p>"
+          }
+        ],
+        "Content-Type ответа": [
+          {
+            "group": "Content-Type ответа",
             "type": "string",
             "allowedValues": [
               "\"application/json\""
@@ -3294,6 +3573,25 @@
             "description": "<p>Подробное описание ошибки</p>"
           }
         ],
+        "Payload Too Large 413": [
+          {
+            "group": "Payload Too Large 413",
+            "type": "string",
+            "allowedValues": [
+              "\"PAYLOAD_TOO_LARGE_ERROR\""
+            ],
+            "optional": false,
+            "field": "code",
+            "description": "<p>Код ошибки</p>"
+          },
+          {
+            "group": "Payload Too Large 413",
+            "type": "string",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Подробное описание ошибки</p>"
+          }
+        ],
         "Internal Server Error 500": [
           {
             "group": "Internal Server Error 500",
@@ -3428,9 +3726,21 @@
             "description": "<p>Перечень поддерживаемых способов кодирования содержимого сущности при передаче</p>"
           }
         ],
-        "Content-Type": [
+        "Content-Type запроса": [
           {
-            "group": "Content-Type",
+            "group": "Content-Type запроса",
+            "type": "string",
+            "allowedValues": [
+              "\"application/json\""
+            ],
+            "optional": true,
+            "field": "Content-Type",
+            "description": "<p>Формат и способ представления сущности</p>"
+          }
+        ],
+        "Content-Type ответа": [
+          {
+            "group": "Content-Type ответа",
             "type": "string",
             "allowedValues": [
               "\"application/json\""
@@ -3839,6 +4149,25 @@
             "description": "<p>Подробное описание ошибки</p>"
           }
         ],
+        "Payload Too Large 413": [
+          {
+            "group": "Payload Too Large 413",
+            "type": "string",
+            "allowedValues": [
+              "\"PAYLOAD_TOO_LARGE_ERROR\""
+            ],
+            "optional": false,
+            "field": "code",
+            "description": "<p>Код ошибки</p>"
+          },
+          {
+            "group": "Payload Too Large 413",
+            "type": "string",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Подробное описание ошибки</p>"
+          }
+        ],
         "Internal Server Error 500": [
           {
             "group": "Internal Server Error 500",
@@ -3954,9 +4283,21 @@
             "description": "<p>Перечень поддерживаемых способов кодирования содержимого сущности при передаче</p>"
           }
         ],
-        "Content-Type": [
+        "Content-Type запроса": [
           {
-            "group": "Content-Type",
+            "group": "Content-Type запроса",
+            "type": "string",
+            "allowedValues": [
+              "\"application/json\""
+            ],
+            "optional": true,
+            "field": "Content-Type",
+            "description": "<p>Формат и способ представления сущности</p>"
+          }
+        ],
+        "Content-Type ответа": [
+          {
+            "group": "Content-Type ответа",
             "type": "string",
             "allowedValues": [
               "\"application/json\""
@@ -4003,225 +4344,6 @@
   },
   {
     "type": "post",
-    "url": "/password/check",
-    "title": "Проверить пароль",
-    "version": "0.0.0",
-    "name": "PasswordCheck",
-    "group": "SignIn",
-    "permission": [
-      {
-        "name": "Гость"
-      }
-    ],
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "type": "string",
-            "optional": false,
-            "field": "password",
-            "description": "<p>Пароль</p>"
-          }
-        ]
-      }
-    },
-    "success": {
-      "fields": {
-        "Success 200": [
-          {
-            "group": "Success 200",
-            "type": "object",
-            "optional": false,
-            "field": "score",
-            "description": "<p>Рейтинг пароля</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "number",
-            "allowedValues": [
-              "0",
-              "1",
-              "2",
-              "3",
-              "4"
-            ],
-            "optional": false,
-            "field": "score.actual",
-            "description": "<p>Текущий рейтинг пароля</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "number",
-            "allowedValues": [
-              "1",
-              "3"
-            ],
-            "optional": false,
-            "field": "score.expected",
-            "description": "<p>Минимально резрешенный рейтинг пароля</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "number",
-            "allowedValues": [
-              "4"
-            ],
-            "optional": false,
-            "field": "score.max",
-            "description": "<p>Максимальный рейтинг пароля</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "number",
-            "allowedValues": [
-              "0"
-            ],
-            "optional": false,
-            "field": "score.min",
-            "description": "<p>Минимальный рейтинг пароля</p>"
-          }
-        ]
-      }
-    },
-    "error": {
-      "fields": {
-        "Bad Request 400 - Пропущен параметр": [
-          {
-            "group": "Bad Request 400 - Пропущен параметр",
-            "type": "string",
-            "allowedValues": [
-              "\"OBJECT_MISSING_KEY\""
-            ],
-            "optional": false,
-            "field": "code",
-            "description": "<p>Код ошибки</p>"
-          },
-          {
-            "group": "Bad Request 400 - Пропущен параметр",
-            "type": "string",
-            "optional": false,
-            "field": "message",
-            "description": "<p>Подробное описание ошибки</p>"
-          }
-        ],
-        "Bad Request 400 - Параметр равен null": [
-          {
-            "group": "Bad Request 400 - Параметр равен null",
-            "type": "string",
-            "allowedValues": [
-              "\"OBJECT_NULL_VALUE\""
-            ],
-            "optional": false,
-            "field": "code",
-            "description": "<p>Код ошибки</p>"
-          },
-          {
-            "group": "Bad Request 400 - Параметр равен null",
-            "type": "string",
-            "optional": false,
-            "field": "message",
-            "description": "<p>Подробное описание ошибки</p>"
-          }
-        ],
-        "Bad Request 400 - Параметр password неверный": [
-          {
-            "group": "Bad Request 400 - Параметр password неверный",
-            "type": "string",
-            "allowedValues": [
-              "\"WRONG_NOT_EMPTY_STRING\""
-            ],
-            "optional": false,
-            "field": "code",
-            "description": "<p>Код ошибки</p>"
-          },
-          {
-            "group": "Bad Request 400 - Параметр password неверный",
-            "type": "string",
-            "optional": false,
-            "field": "message",
-            "description": "<p>Подробное описание ошибки</p>"
-          }
-        ],
-        "Internal Server Error 500": [
-          {
-            "group": "Internal Server Error 500",
-            "type": "string",
-            "allowedValues": [
-              "\"INTERNAL_SERVER_ERROR\""
-            ],
-            "optional": false,
-            "field": "code",
-            "description": "<p>Код ошибки</p>"
-          },
-          {
-            "group": "Internal Server Error 500",
-            "type": "string",
-            "optional": false,
-            "field": "message",
-            "description": "<p>Подробное описание ошибки</p>"
-          }
-        ]
-      }
-    },
-    "filename": "routes/api/password/check.ts",
-    "groupTitle": "SignIn",
-    "header": {
-      "fields": {
-        "Accept-Encoding": [
-          {
-            "group": "Accept-Encoding",
-            "type": "string",
-            "allowedValues": [
-              "\"gzip\"",
-              "\"deflate\"",
-              "\"identity\""
-            ],
-            "optional": true,
-            "field": "Accept-Encoding",
-            "description": "<p>Перечень поддерживаемых способов кодирования содержимого сущности при передаче</p>"
-          }
-        ],
-        "Content-Type": [
-          {
-            "group": "Content-Type",
-            "type": "string",
-            "allowedValues": [
-              "\"application/json\""
-            ],
-            "optional": true,
-            "field": "Content-Type",
-            "description": "<p>Формат и способ представления сущности</p>"
-          }
-        ],
-        "Content-Encoding": [
-          {
-            "group": "Content-Encoding",
-            "type": "string",
-            "allowedValues": [
-              "\"gzip\"",
-              "\"deflate\"",
-              "\"identity\""
-            ],
-            "optional": true,
-            "field": "Content-Encoding",
-            "description": "<p>Способ кодирования содержимого сущности при передаче</p>"
-          }
-        ],
-        "Origin": [
-          {
-            "group": "Origin",
-            "type": "string",
-            "optional": true,
-            "field": "Origin",
-            "description": "<p>Инициализировать получение прав на совместное использование ресурсов между разными источниками</p>"
-          }
-        ]
-      }
-    }
-  },
-  {
-    "type": "post",
     "url": "/password/reset",
     "title": "Сбросить пароль",
     "version": "0.0.0",
@@ -4257,9 +4379,21 @@
             "description": "<p>Перечень поддерживаемых способов кодирования содержимого сущности при передаче</p>"
           }
         ],
-        "Content-Type": [
+        "Content-Type запроса": [
           {
-            "group": "Content-Type",
+            "group": "Content-Type запроса",
+            "type": "string",
+            "allowedValues": [
+              "\"application/json\""
+            ],
+            "optional": true,
+            "field": "Content-Type",
+            "description": "<p>Формат и способ представления сущности</p>"
+          }
+        ],
+        "Content-Type ответа": [
+          {
+            "group": "Content-Type ответа",
             "type": "string",
             "allowedValues": [
               "\"application/json\""
@@ -4398,6 +4532,25 @@
           },
           {
             "group": "Unauthorized 401 - Пользователь забанен",
+            "type": "string",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Подробное описание ошибки</p>"
+          }
+        ],
+        "Payload Too Large 413": [
+          {
+            "group": "Payload Too Large 413",
+            "type": "string",
+            "allowedValues": [
+              "\"PAYLOAD_TOO_LARGE_ERROR\""
+            ],
+            "optional": false,
+            "field": "code",
+            "description": "<p>Код ошибки</p>"
+          },
+          {
+            "group": "Payload Too Large 413",
             "type": "string",
             "optional": false,
             "field": "message",
@@ -4573,6 +4726,25 @@
             "description": "<p>Подробное описание ошибки</p>"
           }
         ],
+        "Payload Too Large 413": [
+          {
+            "group": "Payload Too Large 413",
+            "type": "string",
+            "allowedValues": [
+              "\"PAYLOAD_TOO_LARGE_ERROR\""
+            ],
+            "optional": false,
+            "field": "code",
+            "description": "<p>Код ошибки</p>"
+          },
+          {
+            "group": "Payload Too Large 413",
+            "type": "string",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Подробное описание ошибки</p>"
+          }
+        ],
         "Internal Server Error 500": [
           {
             "group": "Internal Server Error 500",
@@ -4612,9 +4784,21 @@
             "description": "<p>Перечень поддерживаемых способов кодирования содержимого сущности при передаче</p>"
           }
         ],
-        "Content-Type": [
+        "Content-Type запроса": [
           {
-            "group": "Content-Type",
+            "group": "Content-Type запроса",
+            "type": "string",
+            "allowedValues": [
+              "\"application/json\""
+            ],
+            "optional": true,
+            "field": "Content-Type",
+            "description": "<p>Формат и способ представления сущности</p>"
+          }
+        ],
+        "Content-Type ответа": [
+          {
+            "group": "Content-Type ответа",
             "type": "string",
             "allowedValues": [
               "\"application/json\""
@@ -4854,6 +5038,25 @@
             "description": "<p>Подробное описание ошибки</p>"
           }
         ],
+        "Payload Too Large 413": [
+          {
+            "group": "Payload Too Large 413",
+            "type": "string",
+            "allowedValues": [
+              "\"PAYLOAD_TOO_LARGE_ERROR\""
+            ],
+            "optional": false,
+            "field": "code",
+            "description": "<p>Код ошибки</p>"
+          },
+          {
+            "group": "Payload Too Large 413",
+            "type": "string",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Подробное описание ошибки</p>"
+          }
+        ],
         "Internal Server Error 500": [
           {
             "group": "Internal Server Error 500",
@@ -4912,9 +5115,21 @@
             "description": "<p>Перечень поддерживаемых способов кодирования содержимого сущности при передаче</p>"
           }
         ],
-        "Content-Type": [
+        "Content-Type запроса": [
           {
-            "group": "Content-Type",
+            "group": "Content-Type запроса",
+            "type": "string",
+            "allowedValues": [
+              "\"application/json\""
+            ],
+            "optional": true,
+            "field": "Content-Type",
+            "description": "<p>Формат и способ представления сущности</p>"
+          }
+        ],
+        "Content-Type ответа": [
+          {
+            "group": "Content-Type ответа",
             "type": "string",
             "allowedValues": [
               "\"application/json\""
@@ -5220,6 +5435,25 @@
             "description": "<p>Подробное описание ошибки</p>"
           }
         ],
+        "Payload Too Large 413": [
+          {
+            "group": "Payload Too Large 413",
+            "type": "string",
+            "allowedValues": [
+              "\"PAYLOAD_TOO_LARGE_ERROR\""
+            ],
+            "optional": false,
+            "field": "code",
+            "description": "<p>Код ошибки</p>"
+          },
+          {
+            "group": "Payload Too Large 413",
+            "type": "string",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Подробное описание ошибки</p>"
+          }
+        ],
         "Internal Server Error 500": [
           {
             "group": "Internal Server Error 500",
@@ -5392,9 +5626,21 @@
             "description": "<p>Перечень поддерживаемых способов кодирования содержимого сущности при передаче</p>"
           }
         ],
-        "Content-Type": [
+        "Content-Type запроса": [
           {
-            "group": "Content-Type",
+            "group": "Content-Type запроса",
+            "type": "string",
+            "allowedValues": [
+              "\"application/json\""
+            ],
+            "optional": true,
+            "field": "Content-Type",
+            "description": "<p>Формат и способ представления сущности</p>"
+          }
+        ],
+        "Content-Type ответа": [
+          {
+            "group": "Content-Type ответа",
             "type": "string",
             "allowedValues": [
               "\"application/json\""
@@ -5533,6 +5779,25 @@
             "description": "<p>Подробное описание ошибки</p>"
           }
         ],
+        "Payload Too Large 413": [
+          {
+            "group": "Payload Too Large 413",
+            "type": "string",
+            "allowedValues": [
+              "\"PAYLOAD_TOO_LARGE_ERROR\""
+            ],
+            "optional": false,
+            "field": "code",
+            "description": "<p>Код ошибки</p>"
+          },
+          {
+            "group": "Payload Too Large 413",
+            "type": "string",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Подробное описание ошибки</p>"
+          }
+        ],
         "Internal Server Error 500": [
           {
             "group": "Internal Server Error 500",
@@ -5610,9 +5875,21 @@
             "description": "<p>Перечень поддерживаемых способов кодирования содержимого сущности при передаче</p>"
           }
         ],
-        "Content-Type": [
+        "Content-Type запроса": [
           {
-            "group": "Content-Type",
+            "group": "Content-Type запроса",
+            "type": "string",
+            "allowedValues": [
+              "\"application/json\""
+            ],
+            "optional": true,
+            "field": "Content-Type",
+            "description": "<p>Формат и способ представления сущности</p>"
+          }
+        ],
+        "Content-Type ответа": [
+          {
+            "group": "Content-Type ответа",
             "type": "string",
             "allowedValues": [
               "\"application/json\""
@@ -5780,6 +6057,25 @@
             "description": "<p>Подробное описание ошибки</p>"
           }
         ],
+        "Payload Too Large 413": [
+          {
+            "group": "Payload Too Large 413",
+            "type": "string",
+            "allowedValues": [
+              "\"PAYLOAD_TOO_LARGE_ERROR\""
+            ],
+            "optional": false,
+            "field": "code",
+            "description": "<p>Код ошибки</p>"
+          },
+          {
+            "group": "Payload Too Large 413",
+            "type": "string",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Подробное описание ошибки</p>"
+          }
+        ],
         "Internal Server Error 500": [
           {
             "group": "Internal Server Error 500",
@@ -5857,9 +6153,21 @@
             "description": "<p>Перечень поддерживаемых способов кодирования содержимого сущности при передаче</p>"
           }
         ],
-        "Content-Type": [
+        "Content-Type запроса": [
           {
-            "group": "Content-Type",
+            "group": "Content-Type запроса",
+            "type": "string",
+            "allowedValues": [
+              "\"application/json\""
+            ],
+            "optional": true,
+            "field": "Content-Type",
+            "description": "<p>Формат и способ представления сущности</p>"
+          }
+        ],
+        "Content-Type ответа": [
+          {
+            "group": "Content-Type ответа",
             "type": "string",
             "allowedValues": [
               "\"application/json\""
@@ -5954,9 +6262,21 @@
             "description": "<p>Перечень поддерживаемых способов кодирования содержимого сущности при передаче</p>"
           }
         ],
-        "Content-Type": [
+        "Content-Type запроса": [
           {
-            "group": "Content-Type",
+            "group": "Content-Type запроса",
+            "type": "string",
+            "allowedValues": [
+              "\"application/json\""
+            ],
+            "optional": true,
+            "field": "Content-Type",
+            "description": "<p>Формат и способ представления сущности</p>"
+          }
+        ],
+        "Content-Type ответа": [
+          {
+            "group": "Content-Type ответа",
             "type": "string",
             "allowedValues": [
               "\"application/json\""
@@ -6002,6 +6322,25 @@
     },
     "error": {
       "fields": {
+        "Payload Too Large 413": [
+          {
+            "group": "Payload Too Large 413",
+            "type": "string",
+            "allowedValues": [
+              "\"PAYLOAD_TOO_LARGE_ERROR\""
+            ],
+            "optional": false,
+            "field": "code",
+            "description": "<p>Код ошибки</p>"
+          },
+          {
+            "group": "Payload Too Large 413",
+            "type": "string",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Подробное описание ошибки</p>"
+          }
+        ],
         "Internal Server Error 500": [
           {
             "group": "Internal Server Error 500",
@@ -6165,6 +6504,25 @@
             "description": "<p>Подробное описание ошибки</p>"
           }
         ],
+        "Payload Too Large 413": [
+          {
+            "group": "Payload Too Large 413",
+            "type": "string",
+            "allowedValues": [
+              "\"PAYLOAD_TOO_LARGE_ERROR\""
+            ],
+            "optional": false,
+            "field": "code",
+            "description": "<p>Код ошибки</p>"
+          },
+          {
+            "group": "Payload Too Large 413",
+            "type": "string",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Подробное описание ошибки</p>"
+          }
+        ],
         "Internal Server Error 500": [
           {
             "group": "Internal Server Error 500",
@@ -6242,9 +6600,21 @@
             "description": "<p>Перечень поддерживаемых способов кодирования содержимого сущности при передаче</p>"
           }
         ],
-        "Content-Type": [
+        "Content-Type запроса": [
           {
-            "group": "Content-Type",
+            "group": "Content-Type запроса",
+            "type": "string",
+            "allowedValues": [
+              "\"application/json\""
+            ],
+            "optional": true,
+            "field": "Content-Type",
+            "description": "<p>Формат и способ представления сущности</p>"
+          }
+        ],
+        "Content-Type ответа": [
+          {
+            "group": "Content-Type ответа",
             "type": "string",
             "allowedValues": [
               "\"application/json\""
@@ -6355,9 +6725,21 @@
             "description": "<p>Перечень поддерживаемых способов кодирования содержимого сущности при передаче</p>"
           }
         ],
-        "Content-Type": [
+        "Content-Type запроса": [
           {
-            "group": "Content-Type",
+            "group": "Content-Type запроса",
+            "type": "string",
+            "allowedValues": [
+              "\"application/json\""
+            ],
+            "optional": true,
+            "field": "Content-Type",
+            "description": "<p>Формат и способ представления сущности</p>"
+          }
+        ],
+        "Content-Type ответа": [
+          {
+            "group": "Content-Type ответа",
             "type": "string",
             "allowedValues": [
               "\"application/json\""
@@ -6403,6 +6785,25 @@
     },
     "error": {
       "fields": {
+        "Payload Too Large 413": [
+          {
+            "group": "Payload Too Large 413",
+            "type": "string",
+            "allowedValues": [
+              "\"PAYLOAD_TOO_LARGE_ERROR\""
+            ],
+            "optional": false,
+            "field": "code",
+            "description": "<p>Код ошибки</p>"
+          },
+          {
+            "group": "Payload Too Large 413",
+            "type": "string",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Подробное описание ошибки</p>"
+          }
+        ],
         "Internal Server Error 500": [
           {
             "group": "Internal Server Error 500",
@@ -8060,6 +8461,25 @@
             "description": "<p>Подробное описание ошибки</p>"
           }
         ],
+        "Payload Too Large 413": [
+          {
+            "group": "Payload Too Large 413",
+            "type": "string",
+            "allowedValues": [
+              "\"PAYLOAD_TOO_LARGE_ERROR\""
+            ],
+            "optional": false,
+            "field": "code",
+            "description": "<p>Код ошибки</p>"
+          },
+          {
+            "group": "Payload Too Large 413",
+            "type": "string",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Подробное описание ошибки</p>"
+          }
+        ],
         "Internal Server Error 500": [
           {
             "group": "Internal Server Error 500",
@@ -8175,9 +8595,21 @@
             "description": "<p>Перечень поддерживаемых способов кодирования содержимого сущности при передаче</p>"
           }
         ],
-        "Content-Type": [
+        "Content-Type запроса": [
           {
-            "group": "Content-Type",
+            "group": "Content-Type запроса",
+            "type": "string",
+            "allowedValues": [
+              "\"application/json\""
+            ],
+            "optional": true,
+            "field": "Content-Type",
+            "description": "<p>Формат и способ представления сущности</p>"
+          }
+        ],
+        "Content-Type ответа": [
+          {
+            "group": "Content-Type ответа",
             "type": "string",
             "allowedValues": [
               "\"application/json\""
@@ -9675,6 +10107,25 @@
             "description": "<p>Подробное описание ошибки</p>"
           }
         ],
+        "Payload Too Large 413": [
+          {
+            "group": "Payload Too Large 413",
+            "type": "string",
+            "allowedValues": [
+              "\"PAYLOAD_TOO_LARGE_ERROR\""
+            ],
+            "optional": false,
+            "field": "code",
+            "description": "<p>Код ошибки</p>"
+          },
+          {
+            "group": "Payload Too Large 413",
+            "type": "string",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Подробное описание ошибки</p>"
+          }
+        ],
         "Internal Server Error 500": [
           {
             "group": "Internal Server Error 500",
@@ -9809,9 +10260,21 @@
             "description": "<p>Перечень поддерживаемых способов кодирования содержимого сущности при передаче</p>"
           }
         ],
-        "Content-Type": [
+        "Content-Type запроса": [
           {
-            "group": "Content-Type",
+            "group": "Content-Type запроса",
+            "type": "string",
+            "allowedValues": [
+              "\"application/json\""
+            ],
+            "optional": true,
+            "field": "Content-Type",
+            "description": "<p>Формат и способ представления сущности</p>"
+          }
+        ],
+        "Content-Type ответа": [
+          {
+            "group": "Content-Type ответа",
             "type": "string",
             "allowedValues": [
               "\"application/json\""
@@ -10072,9 +10535,21 @@
             "description": "<p>Перечень поддерживаемых способов кодирования содержимого сущности при передаче</p>"
           }
         ],
-        "Content-Type": [
+        "Content-Type запроса": [
           {
-            "group": "Content-Type",
+            "group": "Content-Type запроса",
+            "type": "string",
+            "allowedValues": [
+              "\"application/json\""
+            ],
+            "optional": true,
+            "field": "Content-Type",
+            "description": "<p>Формат и способ представления сущности</p>"
+          }
+        ],
+        "Content-Type ответа": [
+          {
+            "group": "Content-Type ответа",
             "type": "string",
             "allowedValues": [
               "\"application/json\""
@@ -10120,6 +10595,25 @@
     },
     "error": {
       "fields": {
+        "Payload Too Large 413": [
+          {
+            "group": "Payload Too Large 413",
+            "type": "string",
+            "allowedValues": [
+              "\"PAYLOAD_TOO_LARGE_ERROR\""
+            ],
+            "optional": false,
+            "field": "code",
+            "description": "<p>Код ошибки</p>"
+          },
+          {
+            "group": "Payload Too Large 413",
+            "type": "string",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Подробное описание ошибки</p>"
+          }
+        ],
         "Internal Server Error 500": [
           {
             "group": "Internal Server Error 500",
@@ -10268,9 +10762,21 @@
             "description": "<p>Перечень поддерживаемых способов кодирования содержимого сущности при передаче</p>"
           }
         ],
-        "Content-Type": [
+        "Content-Type запроса": [
           {
-            "group": "Content-Type",
+            "group": "Content-Type запроса",
+            "type": "string",
+            "allowedValues": [
+              "\"application/json\""
+            ],
+            "optional": true,
+            "field": "Content-Type",
+            "description": "<p>Формат и способ представления сущности</p>"
+          }
+        ],
+        "Content-Type ответа": [
+          {
+            "group": "Content-Type ответа",
             "type": "string",
             "allowedValues": [
               "\"application/json\""
@@ -10316,6 +10822,25 @@
     },
     "error": {
       "fields": {
+        "Payload Too Large 413": [
+          {
+            "group": "Payload Too Large 413",
+            "type": "string",
+            "allowedValues": [
+              "\"PAYLOAD_TOO_LARGE_ERROR\""
+            ],
+            "optional": false,
+            "field": "code",
+            "description": "<p>Код ошибки</p>"
+          },
+          {
+            "group": "Payload Too Large 413",
+            "type": "string",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Подробное описание ошибки</p>"
+          }
+        ],
         "Internal Server Error 500": [
           {
             "group": "Internal Server Error 500",
@@ -10499,6 +11024,25 @@
             "description": "<p>Подробное описание ошибки</p>"
           }
         ],
+        "Payload Too Large 413": [
+          {
+            "group": "Payload Too Large 413",
+            "type": "string",
+            "allowedValues": [
+              "\"PAYLOAD_TOO_LARGE_ERROR\""
+            ],
+            "optional": false,
+            "field": "code",
+            "description": "<p>Код ошибки</p>"
+          },
+          {
+            "group": "Payload Too Large 413",
+            "type": "string",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Подробное описание ошибки</p>"
+          }
+        ],
         "Internal Server Error 500": [
           {
             "group": "Internal Server Error 500",
@@ -10614,9 +11158,21 @@
             "description": "<p>Перечень поддерживаемых способов кодирования содержимого сущности при передаче</p>"
           }
         ],
-        "Content-Type": [
+        "Content-Type запроса": [
           {
-            "group": "Content-Type",
+            "group": "Content-Type запроса",
+            "type": "string",
+            "allowedValues": [
+              "\"application/json\""
+            ],
+            "optional": true,
+            "field": "Content-Type",
+            "description": "<p>Формат и способ представления сущности</p>"
+          }
+        ],
+        "Content-Type ответа": [
+          {
+            "group": "Content-Type ответа",
             "type": "string",
             "allowedValues": [
               "\"application/json\""
@@ -10704,9 +11260,21 @@
             "description": "<p>Перечень поддерживаемых способов кодирования содержимого сущности при передаче</p>"
           }
         ],
-        "Content-Type": [
+        "Content-Type запроса": [
           {
-            "group": "Content-Type",
+            "group": "Content-Type запроса",
+            "type": "string",
+            "allowedValues": [
+              "\"application/json\""
+            ],
+            "optional": true,
+            "field": "Content-Type",
+            "description": "<p>Формат и способ представления сущности</p>"
+          }
+        ],
+        "Content-Type ответа": [
+          {
+            "group": "Content-Type ответа",
             "type": "string",
             "allowedValues": [
               "\"application/json\""
@@ -10752,6 +11320,25 @@
     },
     "error": {
       "fields": {
+        "Payload Too Large 413": [
+          {
+            "group": "Payload Too Large 413",
+            "type": "string",
+            "allowedValues": [
+              "\"PAYLOAD_TOO_LARGE_ERROR\""
+            ],
+            "optional": false,
+            "field": "code",
+            "description": "<p>Код ошибки</p>"
+          },
+          {
+            "group": "Payload Too Large 413",
+            "type": "string",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Подробное описание ошибки</p>"
+          }
+        ],
         "Internal Server Error 500": [
           {
             "group": "Internal Server Error 500",
@@ -10841,6 +11428,411 @@
           },
           {
             "group": "Unauthorized 401 - Пользователь забанен",
+            "type": "string",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Подробное описание ошибки</p>"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "post",
+    "url": "/password/check",
+    "title": "Проверить пароль",
+    "version": "0.0.0",
+    "name": "PasswordCheck",
+    "group": "Utils",
+    "permission": [
+      {
+        "name": "Гость"
+      }
+    ],
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "password",
+            "description": "<p>Пароль (учитываются только первые 72 символа)</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "object",
+            "optional": false,
+            "field": "score",
+            "description": "<p>Рейтинг пароля</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "allowedValues": [
+              "0",
+              "1",
+              "2",
+              "3",
+              "4"
+            ],
+            "optional": false,
+            "field": "score.actual",
+            "description": "<p>Текущий рейтинг пароля</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "allowedValues": [
+              "1",
+              "3"
+            ],
+            "optional": false,
+            "field": "score.expected",
+            "description": "<p>Минимально резрешенный рейтинг пароля</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "allowedValues": [
+              "4"
+            ],
+            "optional": false,
+            "field": "score.max",
+            "description": "<p>Максимальный рейтинг пароля</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "allowedValues": [
+              "0"
+            ],
+            "optional": false,
+            "field": "score.min",
+            "description": "<p>Минимальный рейтинг пароля</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Bad Request 400 - Пропущен параметр": [
+          {
+            "group": "Bad Request 400 - Пропущен параметр",
+            "type": "string",
+            "allowedValues": [
+              "\"OBJECT_MISSING_KEY\""
+            ],
+            "optional": false,
+            "field": "code",
+            "description": "<p>Код ошибки</p>"
+          },
+          {
+            "group": "Bad Request 400 - Пропущен параметр",
+            "type": "string",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Подробное описание ошибки</p>"
+          }
+        ],
+        "Bad Request 400 - Параметр равен null": [
+          {
+            "group": "Bad Request 400 - Параметр равен null",
+            "type": "string",
+            "allowedValues": [
+              "\"OBJECT_NULL_VALUE\""
+            ],
+            "optional": false,
+            "field": "code",
+            "description": "<p>Код ошибки</p>"
+          },
+          {
+            "group": "Bad Request 400 - Параметр равен null",
+            "type": "string",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Подробное описание ошибки</p>"
+          }
+        ],
+        "Bad Request 400 - Параметр password не строка": [
+          {
+            "group": "Bad Request 400 - Параметр password не строка",
+            "type": "string",
+            "allowedValues": [
+              "\"WRONG_STRING\""
+            ],
+            "optional": false,
+            "field": "code",
+            "description": "<p>Код ошибки</p>"
+          },
+          {
+            "group": "Bad Request 400 - Параметр password не строка",
+            "type": "string",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Подробное описание ошибки</p>"
+          }
+        ],
+        "Bad Request 400 - Параметр password не той длины": [
+          {
+            "group": "Bad Request 400 - Параметр password не той длины",
+            "type": "string",
+            "allowedValues": [
+              "\"WRONG_STRING_LENGTH_RANGE\""
+            ],
+            "optional": false,
+            "field": "code",
+            "description": "<p>Код ошибки</p>"
+          },
+          {
+            "group": "Bad Request 400 - Параметр password не той длины",
+            "type": "string",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Подробное описание ошибки</p>"
+          }
+        ],
+        "Payload Too Large 413": [
+          {
+            "group": "Payload Too Large 413",
+            "type": "string",
+            "allowedValues": [
+              "\"PAYLOAD_TOO_LARGE_ERROR\""
+            ],
+            "optional": false,
+            "field": "code",
+            "description": "<p>Код ошибки</p>"
+          },
+          {
+            "group": "Payload Too Large 413",
+            "type": "string",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Подробное описание ошибки</p>"
+          }
+        ],
+        "Internal Server Error 500": [
+          {
+            "group": "Internal Server Error 500",
+            "type": "string",
+            "allowedValues": [
+              "\"INTERNAL_SERVER_ERROR\""
+            ],
+            "optional": false,
+            "field": "code",
+            "description": "<p>Код ошибки</p>"
+          },
+          {
+            "group": "Internal Server Error 500",
+            "type": "string",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Подробное описание ошибки</p>"
+          }
+        ]
+      }
+    },
+    "filename": "routes/api/password/check.ts",
+    "groupTitle": "Utils",
+    "header": {
+      "fields": {
+        "Accept-Encoding": [
+          {
+            "group": "Accept-Encoding",
+            "type": "string",
+            "allowedValues": [
+              "\"gzip\"",
+              "\"deflate\"",
+              "\"identity\""
+            ],
+            "optional": true,
+            "field": "Accept-Encoding",
+            "description": "<p>Перечень поддерживаемых способов кодирования содержимого сущности при передаче</p>"
+          }
+        ],
+        "Content-Type запроса": [
+          {
+            "group": "Content-Type запроса",
+            "type": "string",
+            "allowedValues": [
+              "\"application/json\""
+            ],
+            "optional": true,
+            "field": "Content-Type",
+            "description": "<p>Формат и способ представления сущности</p>"
+          }
+        ],
+        "Content-Type ответа": [
+          {
+            "group": "Content-Type ответа",
+            "type": "string",
+            "allowedValues": [
+              "\"application/json\""
+            ],
+            "optional": true,
+            "field": "Content-Type",
+            "description": "<p>Формат и способ представления сущности</p>"
+          }
+        ],
+        "Content-Encoding": [
+          {
+            "group": "Content-Encoding",
+            "type": "string",
+            "allowedValues": [
+              "\"gzip\"",
+              "\"deflate\"",
+              "\"identity\""
+            ],
+            "optional": true,
+            "field": "Content-Encoding",
+            "description": "<p>Способ кодирования содержимого сущности при передаче</p>"
+          }
+        ],
+        "Origin": [
+          {
+            "group": "Origin",
+            "type": "string",
+            "optional": true,
+            "field": "Origin",
+            "description": "<p>Инициализировать получение прав на совместное использование ресурсов между разными источниками</p>"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "all",
+    "url": "/ping",
+    "title": "Проверить доступность сервера",
+    "description": "<p>А также мини игра &quot;Настольный теннис&quot;</p>",
+    "version": "0.0.0",
+    "name": "Ping",
+    "group": "Utils",
+    "permission": [
+      {
+        "name": "Гость"
+      }
+    ],
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "boolean",
+            "optional": false,
+            "field": "pong",
+            "description": "<p>Отбил ли сервер мячик?</p>"
+          }
+        ]
+      }
+    },
+    "filename": "routes/api/ping.ts",
+    "groupTitle": "Utils",
+    "header": {
+      "fields": {
+        "Accept-Encoding": [
+          {
+            "group": "Accept-Encoding",
+            "type": "string",
+            "allowedValues": [
+              "\"gzip\"",
+              "\"deflate\"",
+              "\"identity\""
+            ],
+            "optional": true,
+            "field": "Accept-Encoding",
+            "description": "<p>Перечень поддерживаемых способов кодирования содержимого сущности при передаче</p>"
+          }
+        ],
+        "Content-Type запроса": [
+          {
+            "group": "Content-Type запроса",
+            "type": "string",
+            "allowedValues": [
+              "\"application/json\""
+            ],
+            "optional": true,
+            "field": "Content-Type",
+            "description": "<p>Формат и способ представления сущности</p>"
+          }
+        ],
+        "Content-Type ответа": [
+          {
+            "group": "Content-Type ответа",
+            "type": "string",
+            "allowedValues": [
+              "\"application/json\""
+            ],
+            "optional": true,
+            "field": "Content-Type",
+            "description": "<p>Формат и способ представления сущности</p>"
+          }
+        ],
+        "Content-Encoding": [
+          {
+            "group": "Content-Encoding",
+            "type": "string",
+            "allowedValues": [
+              "\"gzip\"",
+              "\"deflate\"",
+              "\"identity\""
+            ],
+            "optional": true,
+            "field": "Content-Encoding",
+            "description": "<p>Способ кодирования содержимого сущности при передаче</p>"
+          }
+        ],
+        "Origin": [
+          {
+            "group": "Origin",
+            "type": "string",
+            "optional": true,
+            "field": "Origin",
+            "description": "<p>Инициализировать получение прав на совместное использование ресурсов между разными источниками</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Payload Too Large 413": [
+          {
+            "group": "Payload Too Large 413",
+            "type": "string",
+            "allowedValues": [
+              "\"PAYLOAD_TOO_LARGE_ERROR\""
+            ],
+            "optional": false,
+            "field": "code",
+            "description": "<p>Код ошибки</p>"
+          },
+          {
+            "group": "Payload Too Large 413",
+            "type": "string",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Подробное описание ошибки</p>"
+          }
+        ],
+        "Internal Server Error 500": [
+          {
+            "group": "Internal Server Error 500",
+            "type": "string",
+            "allowedValues": [
+              "\"INTERNAL_SERVER_ERROR\""
+            ],
+            "optional": false,
+            "field": "code",
+            "description": "<p>Код ошибки</p>"
+          },
+          {
+            "group": "Internal Server Error 500",
             "type": "string",
             "optional": false,
             "field": "message",
