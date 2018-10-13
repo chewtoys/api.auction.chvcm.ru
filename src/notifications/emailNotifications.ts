@@ -7,7 +7,7 @@ import * as cachePugTemplates from "cache-pug-templates";
 import * as Email from "email-templates";
 import * as nodemailer from "nodemailer";
 
-import {Global} from "../../global";
+import {baseDir} from "../../global";
 import {Const} from "../const";
 import {Env} from "../env";
 import {IEntityAttributes, IUserAttributes} from "../interfaces";
@@ -70,12 +70,12 @@ export class EmailNotifications extends EventEmitter {
     this._i18nDebug = debug("i18n:debug");
     this._i18nWarn = debug("i18n:warn");
     this._i18nError = debug("i18n:error");
-    const views = path.join(Global.baseDir, "emails", "templates");
+    const views = path.join(baseDir, "emails", "templates");
     // noinspection JSUnusedGlobalSymbols
     this._email = new Email({
       i18n: {
         defaultLocale: "en",
-        directory: path.join(Global.baseDir, "emails", "locales"),
+        directory: path.join(baseDir, "emails", "locales"),
         locales: ["ru", "en"],
         logger: {
           debug: (msg: any) => {
@@ -93,7 +93,7 @@ export class EmailNotifications extends EventEmitter {
       juiceResources: {
         preserveImportant: true,
         webResources: {
-          relativeTo: Global.baseDir,
+          relativeTo: baseDir,
         },
       },
       message: {

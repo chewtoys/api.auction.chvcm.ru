@@ -82,14 +82,16 @@ export class Env {
   public static readonly CORS_WHITELIST: string[] = (process.env.CORS_WHITELIST || "").split(";").filter((i) => i);
 
   /**
-   * Maximum body size in "bytes" notation
+   * Maximum size in "bytes" notation for json body
    */
-  public static readonly EXPRESS_BODY_PARSER_LIMIT: number = bytes(process.env.EXPRESS_BODY_PARSER_LIMIT as string);
+  public static readonly EXPRESS_BODY_PARSER_LIMIT_JSON: number =
+    bytes(process.env.EXPRESS_BODY_PARSER_LIMIT_JSON as string);
 
   /**
-   * Max file size in "bytes" notation
+   * Max size in "bytes" notation for raw body
    */
-  public static readonly BUSBOY_LIMITS_FILESIZE: number = bytes(process.env.BUSBOY_LIMITS_FILESIZE as string);
+  public static readonly EXPRESS_BODY_PARSER_LIMIT_RAW: number =
+    bytes(process.env.EXPRESS_BODY_PARSER_LIMIT_RAW as string);
 
   // email
 

@@ -6,7 +6,7 @@
   "author": "Alendo",
   "license": "MIT",
   "dependencies": {
-    "dns-protocol": "^2.0.1",
+    "dns-protocol": "^2.1.0",
     "tslib": "^1.9.3"
   }
 }

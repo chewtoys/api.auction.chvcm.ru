@@ -6,12 +6,11 @@ import * as compression from "compression";
 import * as express from "express";
 import {Express} from "express";
 import * as bearerToken from "express-bearer-token";
-import * as fileUpload from "express-fileupload";
 import * as helmet from "helmet";
 import * as morgan from "morgan";
 
 import * as cors from "cors";
-import {Global} from "../global";
+import {baseDir} from "../global";
 import {Const} from "./const";
 import {Env} from "./env";
 import {ResponseChain} from "./index";
@@ -97,7 +96,7 @@ export class Web {
 
     this.app.use(helmet());
 
-    this.app.use(express.static(path.join(Global.baseDir, "build")));
+    this.app.use(express.static(path.join(baseDir, "build")));
 
     this.app.use(cors({
       origin(origin, callback) {
@@ -109,15 +108,10 @@ export class Web {
     this.app.use(bearerToken());
 
     this.app.use(bodyParser.json({
-      limit: Env.EXPRESS_BODY_PARSER_LIMIT,
+      limit: Env.EXPRESS_BODY_PARSER_LIMIT_JSON,
     }));
-    this.app.use(fileUpload({ // TODO: configure file upload
-      abortOnLimit: true,
-      limits: {
-        fields: 0,
-        fileSize: Env.BUSBOY_LIMITS_FILESIZE,
-        files: 1,
-      },
+    this.app.use(bodyParser.raw({
+      limit: Env.EXPRESS_BODY_PARSER_LIMIT_RAW,
     }));
 
     this.app.use("/", rootRoute);

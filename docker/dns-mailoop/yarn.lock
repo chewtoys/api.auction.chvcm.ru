@@ -2,16 +2,19 @@
 # yarn lockfile v1
 
 
-dns-protocol@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/dns-protocol/-/dns-protocol-2.0.1.tgz#916812020693853dfcf22567f804d273043dfcf6"
+dns-protocol@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/dns-protocol/-/dns-protocol-2.1.0.tgz#ac1e5169a3513668898e0c6981b1017e50993f5f"
+  integrity sha512-8j8B0WHpOGXPjaYSlKN5MbIQe6kmSbq7ro2s2hNfA5H/5Obh+aXSqnFtV3y9IK8X2fdUYKCus9/UL1rZ7AUQ+Q==
   dependencies:
     fluent-binary-converter "4"
 
 fluent-binary-converter@4:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/fluent-binary-converter/-/fluent-binary-converter-4.0.2.tgz#548fe702e3d38ac02a1d095bdf6c723ae31a3d8a"
+  integrity sha512-i4ZE6wKsRztRqCwFplKc+pl4bxXEWIrU/+YYXyNq8r1Vp9GBn/a6M/wPafgx7c6OSZnLbIBEuEO5D8UQn2e0pA==
 
 tslib@^1.9.3:
   version "1.9.3"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.9.3.tgz#d7e4dd79245d85428c4d7e4822a79917954ca286"
+  integrity sha512-4krF8scpejhaOgqzBEcGM7yDIEfi0/8+8zDRZhNZZ2kjmHJ4hv3zCbQWxoJGz1iw5U0Jl0nma13xzHXcncMavQ==
