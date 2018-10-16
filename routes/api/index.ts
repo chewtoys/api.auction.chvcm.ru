@@ -12,6 +12,7 @@ import stuff from "./stuff/index";
 import tfa from "./tfa/index";
 import user from "./user/index";
 
+import limits from "./limits";
 import ping from "./ping";
 import signin from "./signin";
 import signup from "./signup";
@@ -25,6 +26,7 @@ router.use("/stuff", stuff);
 router.use("/tfa", tfa);
 router.use("/user", user);
 
+router.use("/limits", limits);
 router.use("/ping", ping);
 router.use("/signin", signin);
 router.use("/signup", signup);

@@ -10,7 +10,7 @@ import {
 import {Router} from "express";
 import * as _ from "lodash";
 
-import {IEmployeeInstance, Sequelize} from "src";
+import {Const, IEmployeeInstance, Sequelize} from "src";
 
 const router = Router();
 export default router;
@@ -27,7 +27,7 @@ export default router;
  * @apiParam {boolean} [admin] Фильтр по администраторам
  * @apiParam {boolean} [banned] Фильтр по бану
  * @apiParam {string="1..9223372036854775807"} [id] Фильтр по ID сотрудника
- * @apiParam {string="0..9223372036854775807"} [limit] Лимит
+ * @apiParam {string="0..100"} [limit] Лимит
  * @apiParam {boolean} [moderator] Фильтр по модераторам
  * @apiParam {string="0..9223372036854775807"} [offset] Оффсет
  *
@@ -80,6 +80,7 @@ router.post("/", new RequestValidator({
       limit: {
         Unit: PgLimitUnit,
         optional: true,
+        payload: Const.LIMIT_LIMIT,
       },
       moderator: {
         Unit: BooleanUnit,

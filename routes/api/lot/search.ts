@@ -10,7 +10,7 @@ import {
 import {Router} from "express";
 import * as _ from "lodash";
 
-import {ILotInstance, Sequelize} from "src";
+import {Const, ILotInstance, Sequelize} from "src";
 
 const router = Router();
 export default router;
@@ -27,7 +27,7 @@ export default router;
  *
  * @apiParam {boolean} [iAmParticipant] Фильтр по тем лотам в которых пользователь принимал участие
  * @apiParam {string="1..9223372036854775807"} [id] Фильтр по ID лота
- * @apiParam {string="0..9223372036854775807"} [limit] Лимит
+ * @apiParam {string="0..100"} [limit] Лимит
  * @apiParam {string="0..9223372036854775807"} [offset] Оффсет
  * @apiParam {string="1..9223372036854775807"} [stuffid] Фильтр по ID материала
  *
@@ -92,6 +92,7 @@ router.post("/", new RequestValidator({
       limit: {
         Unit: PgLimitUnit,
         optional: true,
+        payload: Const.LIMIT_LIMIT,
       },
       offset: {
         Unit: PgOffsetUnit,

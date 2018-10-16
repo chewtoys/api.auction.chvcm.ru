@@ -197,6 +197,30 @@ describe("POST /employee/search", () => {
       });
   });
 
+  it("more limit", async () => {
+    await supertest(Web.instance.app).post(`${Const.API_MOUNT_POINT}/employee/search`)
+      .set("Authorization", `Bearer ${token}`)
+      .send({
+        limit: "1000",
+      })
+      .expect(400, {
+        code: PgLimitUnitCodes.WRONG_PG_LIMIT,
+        message: `body.limit: limit must be less or equal than ${Const.LIMIT_LIMIT}`,
+      });
+  });
+
+  it("less limit", async () => {
+    await supertest(Web.instance.app).post(`${Const.API_MOUNT_POINT}/employee/search`)
+      .set("Authorization", `Bearer ${token}`)
+      .send({
+        limit: "-100",
+      })
+      .expect(400, {
+        code: PgLimitUnitCodes.WRONG_PG_LIMIT,
+        message: "body.limit: limit must be more or equal than 0",
+      });
+  });
+
   it("wrong moderator", async () => {
     await supertest(Web.instance.app).post(`${Const.API_MOUNT_POINT}/employee/search`)
       .set("Authorization", `Bearer ${token}`)

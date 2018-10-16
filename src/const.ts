@@ -90,4 +90,9 @@ export class Const {
    * @type {string}
    */
   public static readonly AUTHENTICATOR_SERVICE = "auction.chvcm.ru";
+
+  /**
+   * Limit to limit
+   */
+  public static readonly LIMIT_LIMIT: string = "100";
 }

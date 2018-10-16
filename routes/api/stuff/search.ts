@@ -15,7 +15,7 @@ import {Router} from "express";
 import * as _ from "lodash";
 import * as sequelize from "sequelize";
 
-import {IStuffInstance, IStuffTranslation, IStuffTranslationsInstance, Sequelize} from "src";
+import {Const, IStuffInstance, IStuffTranslation, IStuffTranslationsInstance, Sequelize} from "src";
 
 const router = Router();
 export default router;
@@ -32,7 +32,7 @@ export default router;
  * @apiParam {string="ISO 639-1 в нижнем регистре"} [code] Фильтр по коду языка перевода
  * @apiParam {boolean} [enabled] Фильтр по включеному состоянию
  * @apiParam {string="1..9223372036854775807"} [id] Фильтр по ID материала
- * @apiParam {string="0..9223372036854775807"} [limit] Лимит
+ * @apiParam {string="0..100"} [limit] Лимит
  * @apiParam {string="0..9223372036854775807"} [offset] Оффсет
  * @apiParam {string} [translation] Фильтр по переводу (без учета регистра)
  *
@@ -274,6 +274,7 @@ router.post("/", new RequestValidator({
       limit: {
         Unit: PgLimitUnit,
         optional: true,
+        payload: Const.LIMIT_LIMIT,
       },
       offset: {
         Unit: PgOffsetUnit,
