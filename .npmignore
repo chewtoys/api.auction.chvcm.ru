@@ -22,6 +22,7 @@ test/
 .npmignore
 .slugignore
 .travis.yml
+cc-test-reporter
 docker-compose*.yml
 Procfile
 renovate.json
