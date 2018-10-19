@@ -8,6 +8,9 @@ RUN cd /dns-mailoop && \
 
 WORKDIR /dns-mailoop
 
-CMD PORT='53' HOST='0.0.0.0' node index.js
+ENV PORT 53
+ENV HOST 0.0.0.0
+
+CMD exec node index.js
 
 EXPOSE 53

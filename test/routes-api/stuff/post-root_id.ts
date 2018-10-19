@@ -6,6 +6,7 @@ import {
   ObjectUnitCodes,
   PgBigSerialUnitCodes,
   PgEnumUnitCodes,
+  StringUnitCodes,
 } from "@alendo/express-req-validator";
 
 import {expect} from "chai";
@@ -16,7 +17,7 @@ import {
   ApiCodes,
   Bcrypt,
   Const,
-  IStuffInstance, IStuffTranslation,
+  IStuffInstance,
   IStuffTranslationsInstance,
   Recaptcha2,
   Sequelize,
@@ -87,6 +88,39 @@ describe("POST /stuff/:id", () => {
       });
   });
 
+  it("null tr.code.title", async () => {
+    await supertest(Web.instance.app).post(`${Const.API_MOUNT_POINT}/stuff/1`)
+      .set("Authorization", `Bearer ${token}`)
+      .send({
+        tr: {
+          ru: {
+            title: null,
+          },
+        },
+      })
+      .expect(400, {
+        code: ObjectUnitCodes.OBJECT_NULL_VALUE,
+        message: "body.tr.ru.title: value can't be null",
+      });
+  });
+
+  it("null tr.code.description", async () => {
+    await supertest(Web.instance.app).post(`${Const.API_MOUNT_POINT}/stuff/1`)
+      .set("Authorization", `Bearer ${token}`)
+      .send({
+        tr: {
+          ru: {
+            description: null,
+            title: "Золото",
+          },
+        },
+      })
+      .expect(400, {
+        code: ObjectUnitCodes.OBJECT_NULL_VALUE,
+        message: "body.tr.ru.description: value can't be null",
+      });
+  });
+
   it("wrong id", async () => {
     await supertest(Web.instance.app).post(`${Const.API_MOUNT_POINT}/stuff/0`)
       .set("Authorization", `Bearer ${token}`)
@@ -131,8 +165,8 @@ describe("POST /stuff/:id", () => {
         },
       })
       .expect(400, {
-        code: NotEmptyStringUnitCodes.WRONG_NOT_EMPTY_STRING,
-        message: "body.tr.ru: value must be not empty string",
+        code: ObjectUnitCodes.WRONG_OBJECT,
+        message: "body.tr.ru: value must be object",
       });
   });
 
@@ -141,13 +175,50 @@ describe("POST /stuff/:id", () => {
       .set("Authorization", `Bearer ${token}`)
       .send({
         tr: {
-          russian: "Золото",
+          russian: {
+            title: "Золото",
+          },
         },
       })
       .expect(400, {
         code: PgEnumUnitCodes.WRONG_PG_ENUM,
         // tslint:disable max-line-length
-        message: "body.tr[russian]: value must be one of these values ['aa', 'ab', 'ae', 'af', 'ak', 'am', 'an', 'ar', 'as', 'av', 'ay', 'az', 'ba', 'be', 'bg', 'bh', 'bi', 'bm', 'bn', 'bo', 'br', 'bs', 'ca', 'ce', 'ch', 'co', 'cr', 'cs', 'cu', 'cv', 'cy', 'da', 'de', 'dv', 'dz', 'ee', 'el', 'en', 'eo', 'es', 'et', 'eu', 'fa', 'ff', 'fi', 'fj', 'fl', 'fo', 'fr', 'fy', 'ga', 'gd', 'gl', 'gn', 'gu', 'gv', 'ha', 'he', 'hi', 'ho', 'hr', 'ht', 'hu', 'hy', 'hz', 'ia', 'id', 'ie', 'ig', 'ii', 'ik', 'io', 'is', 'it', 'iu', 'ja', 'jv', 'ka', 'kg', 'ki', 'kj', 'kk', 'kl', 'km', 'kn', 'ko', 'kr', 'ks', 'ku', 'kv', 'kw', 'ky', 'la', 'lb', 'lg', 'li', 'ln', 'lo', 'lt', 'lu', 'lv', 'mg', 'mh', 'mi', 'mk', 'ml', 'mn', 'mr', 'ms', 'mt', 'my', 'na', 'nb', 'nd', 'ne', 'ng', 'nl', 'nn', 'no', 'nr', 'nv', 'ny', 'oc', 'oj', 'om', 'or', 'os', 'pa', 'pi', 'pl', 'ps', 'pt', 'qu', 'rm', 'rn', 'ro', 'ru', 'rw', 'sa', 'sc', 'sd', 'se', 'sg', 'si', 'sk', 'sl', 'sm', 'sn', 'so', 'sq', 'sr', 'ss', 'st', 'su', 'sv', 'sw', 'ta', 'te', 'tg', 'th', 'ti', 'tk', 'tl', 'tn', 'to', 'tr', 'ts', 'tt', 'tw', 'ty', 'ug', 'uk', 'ur', 'uz', 've', 'vi', 'vo', 'wa', 'wo', 'xh', 'yi', 'yo', 'za', 'zh', 'zu']",
+        message: "body.tr[russian]: value must be one of these values ['aa', 'ab', 'ae', 'af', 'ak', 'am', 'an', 'ar', 'as', 'av', 'ay', 'az', 'ba', 'be', 'bg', 'bh', 'bi', 'bm', 'bn', 'bo', 'br', 'bs', 'ca', 'ce', 'ch', 'co', 'cr', 'cs', 'cu', 'cv', 'cy', 'da', 'de', 'dv', 'dz', 'ee', 'el', 'en', 'eo', 'es', 'et', 'eu', 'fa', 'ff', 'fi', 'fj', 'fo', 'fr', 'fy', 'ga', 'gd', 'gl', 'gn', 'gu', 'gv', 'ha', 'he', 'hi', 'ho', 'hr', 'ht', 'hu', 'hy', 'hz', 'ia', 'id', 'ie', 'ig', 'ii', 'ik', 'io', 'is', 'it', 'iu', 'ja', 'jv', 'ka', 'kg', 'ki', 'kj', 'kk', 'kl', 'km', 'kn', 'ko', 'kr', 'ks', 'ku', 'kv', 'kw', 'ky', 'la', 'lb', 'lg', 'li', 'ln', 'lo', 'lt', 'lu', 'lv', 'mg', 'mh', 'mi', 'mk', 'ml', 'mn', 'mr', 'ms', 'mt', 'my', 'na', 'nb', 'nd', 'ne', 'ng', 'nl', 'nn', 'no', 'nr', 'nv', 'ny', 'oc', 'oj', 'om', 'or', 'os', 'pa', 'pi', 'pl', 'ps', 'pt', 'qu', 'rm', 'rn', 'ro', 'ru', 'rw', 'sa', 'sc', 'sd', 'se', 'sg', 'si', 'sk', 'sl', 'sm', 'sn', 'so', 'sq', 'sr', 'ss', 'st', 'su', 'sv', 'sw', 'ta', 'te', 'tg', 'th', 'ti', 'tk', 'tl', 'tn', 'to', 'tr', 'ts', 'tt', 'tw', 'ty', 'ug', 'uk', 'ur', 'uz', 've', 'vi', 'vo', 'wa', 'wo', 'xh', 'yi', 'yo', 'za', 'zh', 'zu']",
+      });
+  });
+
+  it("wrong tr.code.title", async () => {
+    await supertest(Web.instance.app).post(`${Const.API_MOUNT_POINT}/stuff/1`)
+      .set("Authorization", `Bearer ${token}`)
+      .send({
+        tr: {
+          ru: {
+            title: "",
+          },
+        },
+      })
+      .expect(400, {
+        code: NotEmptyStringUnitCodes.WRONG_NOT_EMPTY_STRING,
+        // tslint:disable max-line-length
+        message: "body.tr.ru.title: value must be not empty string",
+      });
+  });
+
+  it("wrong tr.code.description", async () => {
+    await supertest(Web.instance.app).post(`${Const.API_MOUNT_POINT}/stuff/1`)
+      .set("Authorization", `Bearer ${token}`)
+      .send({
+        tr: {
+          ru: {
+            description: 45,
+            title: "Золото",
+          },
+        },
+      })
+      .expect(400, {
+        code: StringUnitCodes.WRONG_STRING,
+        // tslint:disable max-line-length
+        message: "body.tr.ru.description: value must be string",
       });
   });
 
@@ -190,8 +261,13 @@ describe("POST /stuff/:id", () => {
       .send({
         enabled: false,
         tr: {
-          en: "Ebonite",
-          ru: "Эбонит",
+          en: {
+            title: "Ebonite",
+          },
+          ru: {
+            description: "Эбонитовый слиток",
+            title: "Эбонит",
+          },
         },
       })
       .expect(204);
@@ -209,14 +285,12 @@ describe("POST /stuff/:id", () => {
     expect(((stuff as any).stuff_translations as IStuffTranslationsInstance[])[0].code).equal("en");
     expect(((stuff as any).stuff_translations as IStuffTranslationsInstance[])[1].code).equal("ru");
 
-    const translationEn = ((stuff as any).stuff_translations as IStuffTranslationsInstance[])[0].translation as IStuffTranslation;
-    const translationRu = ((stuff as any).stuff_translations as IStuffTranslationsInstance[])[1].translation as IStuffTranslation;
-    [translationEn, translationEn].map((translation) => {
-      expect(translation).be.a("Object");
-      expect(translation).have.keys("title");
-    });
+    const translationEn = ((stuff as any).stuff_translations as IStuffTranslationsInstance[])[0];
+    const translationRu = ((stuff as any).stuff_translations as IStuffTranslationsInstance[])[1];
     expect(translationEn.title).equal("Ebonite");
+    expect(translationEn.description).equal("");
     expect(translationRu.title).equal("Эбонит");
+    expect(translationRu.description).equal("Эбонитовый слиток");
   });
 
   it("double update tr", async () => {
@@ -224,9 +298,16 @@ describe("POST /stuff/:id", () => {
       .set("Authorization", `Bearer ${token}`)
       .send({
         tr: {
-          de: "Gold",
-          en: "Gold",
-          ru: "Золото",
+          de: {
+            title: "Gold",
+          },
+          en: {
+            title: "Gold",
+          },
+          ru: {
+            description: "Золотой слиток",
+            title: "Gold",
+          },
         },
       })
       .expect(204);
@@ -234,8 +315,13 @@ describe("POST /stuff/:id", () => {
       .set("Authorization", `Bearer ${token}`)
       .send({
         tr: {
-          en: "Ebonite",
-          ru: "Эбонит",
+          en: {
+            title: "Ebonite",
+          },
+          ru: {
+            description: "Эбонитовый слиток",
+            title: "Эбонит",
+          },
         },
       })
       .expect(204);
@@ -253,13 +339,11 @@ describe("POST /stuff/:id", () => {
     expect(((stuff as any).stuff_translations as IStuffTranslationsInstance[])[0].code).equal("en");
     expect(((stuff as any).stuff_translations as IStuffTranslationsInstance[])[1].code).equal("ru");
 
-    const translationEn = ((stuff as any).stuff_translations as IStuffTranslationsInstance[])[0].translation as IStuffTranslation;
-    const translationRu = ((stuff as any).stuff_translations as IStuffTranslationsInstance[])[1].translation as IStuffTranslation;
-    [translationEn, translationEn].map((translation) => {
-      expect(translation).be.a("Object");
-      expect(translation).have.keys("title");
-    });
+    const translationEn = ((stuff as any).stuff_translations as IStuffTranslationsInstance[])[0];
+    const translationRu = ((stuff as any).stuff_translations as IStuffTranslationsInstance[])[1];
     expect(translationEn.title).equal("Ebonite");
+    expect(translationEn.description).equal("");
     expect(translationRu.title).equal("Эбонит");
+    expect(translationRu.description).equal("Эбонитовый слиток");
   });
 });

@@ -25,3 +25,12 @@ server.on("listening", () => {
 });
 
 server.bind(parseInt(process.env.PORT, 10), process.env.HOST);
+
+function handle(signal) {
+  server.close(() => {
+    console.log(`dns-mailoop was stopped by ${signal} signal`);
+  });
+}
+
+process.on("SIGINT", handle);
+process.on("SIGTERM", handle);

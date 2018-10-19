@@ -1,13 +1,10 @@
 import * as SuperSequelize from "sequelize";
 
-export interface IStuffTranslation {
-  title: string;
-}
-
 export interface IStuffTranslationsAttributes {
-  readonly stuffid?: string;
   readonly code?: string;
-  readonly translation?: IStuffTranslation;
+  readonly description?: string;
+  readonly stuffid?: string;
+  readonly title?: string;
 }
 
 export type IStuffTranslationsInstance =

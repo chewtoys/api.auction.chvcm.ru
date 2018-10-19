@@ -65,7 +65,6 @@ CREATE TYPE LANGUAGE_CODE AS ENUM (
   'ff',
   'fi',
   'fj',
-  'fl',
   'fo',
   'fr',
   'fy',
@@ -366,8 +365,9 @@ CREATE TYPE CURRENCY AS ENUM (
   'usn',
   'uyi',
   'uyu',
+  'uyw',
   'uzs',
-  'vef',
+  'ves',
   'vnd',
   'vuv',
   'wst',
@@ -479,7 +479,7 @@ CREATE TABLE tokens_password_reset (
 -- Auction stuffs
 CREATE TABLE stuffs (
   id      BIGSERIAL PRIMARY KEY, -- id
-  enabled BOOLEAN NOT NULL DEFAULT TRUE -- is stuff enabled?
+  enabled BOOLEAN NOT NULL -- is stuff enabled?
 );
 
 -- Auction stuff translations
@@ -487,7 +487,8 @@ CREATE TABLE stuff_translations (
   stuffid     BIGINT REFERENCES stuffs (id)
   ON DELETE RESTRICT ON UPDATE CASCADE, -- stuff id
   code        LANGUAGE_CODE, -- language code
-  translation JSONB NOT NULL, -- translation
+  title TEXT NOT NULL, -- title
+  description TEXT NOT NULL, -- description
   PRIMARY KEY (code, stuffid)
 );
 
@@ -505,7 +506,7 @@ CREATE TABLE lots (
   startbid     NUMERIC                                 NOT NULL, -- start bid
   step         NUMERIC                                 NOT NULL, -- auction step
   currency     CURRENCY                                NOT NULL, -- currency
-  participants BIGINT                                  NOT NULL DEFAULT 0, -- participants amount
+  participants BIGINT                                  NOT NULL, -- participants amount
   winbid       NUMERIC, -- winning bid
   winner       BIGINT REFERENCES users_entities (userid)
   ON DELETE RESTRICT ON UPDATE CASCADE -- winner entity id
@@ -585,10 +586,6 @@ CREATE INDEX btree_index_tokens_tfa_recovery_token
 CREATE INDEX btree_index_tokens_password_reset_token
   ON tokens_password_reset
   USING btree (token);
-
-CREATE INDEX gin_index_stuff_translations_translation
-  ON stuff_translations
-  USING gin (translation);
 
 ----------------------------------------------------------------------------
 --                                                                        --
@@ -768,7 +765,6 @@ $$
 LANGUAGE plpgsql;
 
 -- ABS for intervals
--- https://stackoverflow.com/a/44787918
 CREATE FUNCTION abs_interval(INTERVAL)
   RETURNS INTERVAL AS
 $$ SELECT CASE

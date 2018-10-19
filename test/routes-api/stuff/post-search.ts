@@ -53,8 +53,12 @@ describe("POST /stuff/search", () => {
       .send({
         enabled: false,
         tr: {
-          en: "Ebonite",
-          ru: "Эбонит",
+          en: {
+            title: "Ebonite",
+          },
+          ru: {
+            title: "Эбонит",
+          },
         },
       })
       .expect(204);
@@ -62,8 +66,12 @@ describe("POST /stuff/search", () => {
       .set("Authorization", `Bearer ${token}`)
       .send({
         tr: {
-          en: "Metal",
-          ru: "Металл",
+          en: {
+            title: "Metal",
+          },
+          ru: {
+            title: "Металл",
+          },
         },
       })
       .expect(204);
@@ -71,8 +79,13 @@ describe("POST /stuff/search", () => {
       .set("Authorization", `Bearer ${token}`)
       .send({
         tr: {
-          en: "Gold",
-          ru: "Золото",
+          en: {
+            title: "Gold",
+          },
+          ru: {
+            description: "Золотой слиток",
+            title: "Золото",
+          },
         },
       })
       .expect(204);
@@ -176,7 +189,7 @@ describe("POST /stuff/search", () => {
       .expect(400, {
         code: PgEnumUnitCodes.WRONG_PG_ENUM,
         // tslint:disable max-line-length
-        message: "body.code: value must be one of these values ['aa', 'ab', 'ae', 'af', 'ak', 'am', 'an', 'ar', 'as', 'av', 'ay', 'az', 'ba', 'be', 'bg', 'bh', 'bi', 'bm', 'bn', 'bo', 'br', 'bs', 'ca', 'ce', 'ch', 'co', 'cr', 'cs', 'cu', 'cv', 'cy', 'da', 'de', 'dv', 'dz', 'ee', 'el', 'en', 'eo', 'es', 'et', 'eu', 'fa', 'ff', 'fi', 'fj', 'fl', 'fo', 'fr', 'fy', 'ga', 'gd', 'gl', 'gn', 'gu', 'gv', 'ha', 'he', 'hi', 'ho', 'hr', 'ht', 'hu', 'hy', 'hz', 'ia', 'id', 'ie', 'ig', 'ii', 'ik', 'io', 'is', 'it', 'iu', 'ja', 'jv', 'ka', 'kg', 'ki', 'kj', 'kk', 'kl', 'km', 'kn', 'ko', 'kr', 'ks', 'ku', 'kv', 'kw', 'ky', 'la', 'lb', 'lg', 'li', 'ln', 'lo', 'lt', 'lu', 'lv', 'mg', 'mh', 'mi', 'mk', 'ml', 'mn', 'mr', 'ms', 'mt', 'my', 'na', 'nb', 'nd', 'ne', 'ng', 'nl', 'nn', 'no', 'nr', 'nv', 'ny', 'oc', 'oj', 'om', 'or', 'os', 'pa', 'pi', 'pl', 'ps', 'pt', 'qu', 'rm', 'rn', 'ro', 'ru', 'rw', 'sa', 'sc', 'sd', 'se', 'sg', 'si', 'sk', 'sl', 'sm', 'sn', 'so', 'sq', 'sr', 'ss', 'st', 'su', 'sv', 'sw', 'ta', 'te', 'tg', 'th', 'ti', 'tk', 'tl', 'tn', 'to', 'tr', 'ts', 'tt', 'tw', 'ty', 'ug', 'uk', 'ur', 'uz', 've', 'vi', 'vo', 'wa', 'wo', 'xh', 'yi', 'yo', 'za', 'zh', 'zu']",
+        message: "body.code: value must be one of these values ['aa', 'ab', 'ae', 'af', 'ak', 'am', 'an', 'ar', 'as', 'av', 'ay', 'az', 'ba', 'be', 'bg', 'bh', 'bi', 'bm', 'bn', 'bo', 'br', 'bs', 'ca', 'ce', 'ch', 'co', 'cr', 'cs', 'cu', 'cv', 'cy', 'da', 'de', 'dv', 'dz', 'ee', 'el', 'en', 'eo', 'es', 'et', 'eu', 'fa', 'ff', 'fi', 'fj', 'fo', 'fr', 'fy', 'ga', 'gd', 'gl', 'gn', 'gu', 'gv', 'ha', 'he', 'hi', 'ho', 'hr', 'ht', 'hu', 'hy', 'hz', 'ia', 'id', 'ie', 'ig', 'ii', 'ik', 'io', 'is', 'it', 'iu', 'ja', 'jv', 'ka', 'kg', 'ki', 'kj', 'kk', 'kl', 'km', 'kn', 'ko', 'kr', 'ks', 'ku', 'kv', 'kw', 'ky', 'la', 'lb', 'lg', 'li', 'ln', 'lo', 'lt', 'lu', 'lv', 'mg', 'mh', 'mi', 'mk', 'ml', 'mn', 'mr', 'ms', 'mt', 'my', 'na', 'nb', 'nd', 'ne', 'ng', 'nl', 'nn', 'no', 'nr', 'nv', 'ny', 'oc', 'oj', 'om', 'or', 'os', 'pa', 'pi', 'pl', 'ps', 'pt', 'qu', 'rm', 'rn', 'ro', 'ru', 'rw', 'sa', 'sc', 'sd', 'se', 'sg', 'si', 'sk', 'sl', 'sm', 'sn', 'so', 'sq', 'sr', 'ss', 'st', 'su', 'sv', 'sw', 'ta', 'te', 'tg', 'th', 'ti', 'tk', 'tl', 'tn', 'to', 'tr', 'ts', 'tt', 'tw', 'ty', 'ug', 'uk', 'ur', 'uz', 've', 'vi', 'vo', 'wa', 'wo', 'xh', 'yi', 'yo', 'za', 'zh', 'zu']",
       });
   });
 
@@ -277,14 +290,17 @@ describe("POST /stuff/search", () => {
             enabled: true,
             id: "3",
             tr: {
-              en: "Gold",
+              en: {
+                description: "",
+                title: "Gold",
+              },
             },
           },
         ],
       });
   });
 
-  it("find by translation - золото", async () => {
+  it("find by title - золото", async () => {
     await supertest(Web.instance.app).post(`${Const.API_MOUNT_POINT}/stuff/search`)
       .set("Authorization", `Bearer ${token}`)
       .send({
@@ -297,7 +313,33 @@ describe("POST /stuff/search", () => {
             enabled: true,
             id: "3",
             tr: {
-              ru: "Золото",
+              ru: {
+                description: "Золотой слиток",
+                title: "Золото",
+              },
+            },
+          },
+        ],
+      });
+  });
+
+  it("find by description - золотой слит", async () => {
+    await supertest(Web.instance.app).post(`${Const.API_MOUNT_POINT}/stuff/search`)
+      .set("Authorization", `Bearer ${token}`)
+      .send({
+        code: "ru",
+        translation: "золотой слит",
+      })
+      .expect(200, {
+        stuffs: [
+          {
+            enabled: true,
+            id: "3",
+            tr: {
+              ru: {
+                description: "Золотой слиток",
+                title: "Золото",
+              },
             },
           },
         ],
@@ -316,8 +358,14 @@ describe("POST /stuff/search", () => {
             enabled: false,
             id: "1",
             tr: {
-              en: "Ebonite",
-              ru: "Эбонит",
+              en: {
+                description: "",
+                title: "Ebonite",
+              },
+              ru: {
+                description: "",
+                title: "Эбонит",
+              },
             },
           },
         ],
@@ -336,8 +384,14 @@ describe("POST /stuff/search", () => {
             enabled: true,
             id: "2",
             tr: {
-              en: "Metal",
-              ru: "Металл",
+              en: {
+                description: "",
+                title: "Metal",
+              },
+              ru: {
+                description: "",
+                title: "Металл",
+              },
             },
           },
         ],
@@ -356,8 +410,14 @@ describe("POST /stuff/search", () => {
             enabled: true,
             id: "3",
             tr: {
-              en: "Gold",
-              ru: "Золото",
+              en: {
+                description: "",
+                title: "Gold",
+              },
+              ru: {
+                description: "Золотой слиток",
+                title: "Золото",
+              },
             },
           },
         ],
@@ -377,13 +437,19 @@ describe("POST /stuff/search", () => {
             enabled: true,
             id: "3",
             tr: {
-              en: "Gold",
+              en: {
+                description: "",
+                title: "Gold",
+              },
             },
           }, {
             enabled: true,
             id: "2",
             tr: {
-              en: "Metal",
+              en: {
+                description: "",
+                title: "Metal",
+              },
             },
           },
         ],
@@ -403,13 +469,19 @@ describe("POST /stuff/search", () => {
             enabled: true,
             id: "3",
             tr: {
-              ru: "Золото",
+              ru: {
+                description: "Золотой слиток",
+                title: "Золото",
+              },
             },
           }, {
             enabled: true,
             id: "2",
             tr: {
-              ru: "Металл",
+              ru: {
+                description: "",
+                title: "Металл",
+              },
             },
           },
         ],
@@ -440,8 +512,14 @@ describe("POST /stuff/search", () => {
             enabled: false,
             id: "1",
             tr: {
-              en: "Ebonite",
-              ru: "Эбонит",
+              en: {
+                description: "",
+                title: "Ebonite",
+              },
+              ru: {
+                description: "",
+                title: "Эбонит",
+              },
             },
           },
         ],
@@ -462,8 +540,14 @@ describe("POST /stuff/search", () => {
             enabled: true,
             id: "2",
             tr: {
-              en: "Metal",
-              ru: "Металл",
+              en: {
+                description: "",
+                title: "Metal",
+              },
+              ru: {
+                description: "",
+                title: "Металл",
+              },
             },
           },
         ],
@@ -484,8 +568,14 @@ describe("POST /stuff/search", () => {
             enabled: true,
             id: "3",
             tr: {
-              en: "Gold",
-              ru: "Золото",
+              en: {
+                description: "",
+                title: "Gold",
+              },
+              ru: {
+                description: "Золотой слиток",
+                title: "Золото",
+              },
             },
           },
         ],
@@ -517,19 +607,28 @@ describe("POST /stuff/search", () => {
             enabled: false,
             id: "1",
             tr: {
-              en: "Ebonite",
+              en: {
+                description: "",
+                title: "Ebonite",
+              },
             },
           }, {
             enabled: true,
             id: "3",
             tr: {
-              en: "Gold",
+              en: {
+                description: "",
+                title: "Gold",
+              },
             },
           }, {
             enabled: true,
             id: "2",
             tr: {
-              en: "Metal",
+              en: {
+                description: "",
+                title: "Metal",
+              },
             },
           },
         ],
@@ -548,19 +647,28 @@ describe("POST /stuff/search", () => {
             enabled: true,
             id: "3",
             tr: {
-              ru: "Золото",
+              ru: {
+                description: "Золотой слиток",
+                title: "Золото",
+              },
             },
           }, {
             enabled: true,
             id: "2",
             tr: {
-              ru: "Металл",
+              ru: {
+                description: "",
+                title: "Металл",
+              },
             },
           }, {
             enabled: false,
             id: "1",
             tr: {
-              ru: "Эбонит",
+              ru: {
+                description: "",
+                title: "Эбонит",
+              },
             },
           },
         ],

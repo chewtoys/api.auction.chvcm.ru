@@ -454,13 +454,18 @@ export class Sequelize extends SuperSequelize {
           primaryKey: true,
           type: "LANGUAGE_CODE",
         },
+        description: {
+          allowNull: false,
+          defaultValue: "",
+          type: SuperSequelize.STRING,
+        },
         stuffid: {
           primaryKey: true,
           type: SuperSequelize.BIGINT,
         },
-        translation: {
+        title: {
           allowNull: false,
-          type: SuperSequelize.JSONB,
+          type: SuperSequelize.STRING,
         },
       }, {
         freezeTableName: true,

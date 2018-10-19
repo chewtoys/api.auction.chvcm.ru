@@ -7050,9 +7050,10 @@ send@0.16.2:
     range-parser "~1.2.0"
     statuses "~1.4.0"
 
-"sequelize@https://github.com/AlendoStudio/sequelize.git#35ddf96264a7f9496bb519085e27358992e6ead8":
+sequelize@^5.0.0-beta.12:
   version "5.0.0-beta.12"
-  resolved "https://github.com/AlendoStudio/sequelize.git#35ddf96264a7f9496bb519085e27358992e6ead8"
+  resolved "https://registry.yarnpkg.com/sequelize/-/sequelize-5.0.0-beta.12.tgz#0b262b2459aa4fd32f66c822b5fa0fa53aa33753"
+  integrity sha512-JE5OFVM8tq2JzozSbMbY1nxYOaiG3IGXwYiPQlvK9NXCUpq5ck51YpepuyD+wL/w0E+73yV9gRianFleonitoQ==
   dependencies:
     bluebird "^3.5.0"
     cls-bluebird "^2.1.0"

@@ -9,6 +9,9 @@ RUN apt-get install libpq-dev && \
 
 WORKDIR /alendo-api.auction.chvcm.ru
 
-CMD PORT='80' HOST='0.0.0.0' yarn web
+ENV PORT 80
+ENV HOST 0.0.0.0
+
+CMD exec node dist/bin/web.js
 
 EXPOSE 80

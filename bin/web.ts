@@ -19,3 +19,13 @@ Web.instantiate();
   await Web.instance.listen();
   debug(`Web listen on port ${Env.PORT} and bind to host ${Env.HOST}`);
 })();
+
+async function handle(signal: string): Promise<void> {
+  await Web.instance.close();
+  await Sequelize.instance.close();
+  await RedisClient.close();
+  debug(`Web was stopped by ${signal} signal`);
+}
+
+process.on("SIGINT", handle);
+process.on("SIGTERM", handle);
