@@ -14,7 +14,7 @@ import {
 
 import * as commander from "commander";
 
-import {EmailNotifications, RedisClient, Sequelize, Unique} from "src";
+import {Const, EmailNotifications, RedisClient, Sequelize, Unique} from "src";
 
 const program = commander
   .description("make admin")
@@ -48,7 +48,7 @@ const form = new ObjectUnit(program, {
   phone: {
     Unit: PhoneUnit,
     payload: {
-      locale: "any",
+      locale: Const.PHONE_LOCALE,
       strictMode: true,
     },
   },

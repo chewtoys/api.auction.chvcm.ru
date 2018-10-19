@@ -42,7 +42,7 @@ export default router;
  * @apiParam {string="ISO 639-1 в нижнем регистре"} language Язык
  * @apiParam {string} name Название огранизации
  * @apiParam {string} password Пароль (учитываются только первые 72 символа)
- * @apiParam {string} phone Телефон
+ * @apiParam {string="+79xxxxxxxxx"} phone Телефон
  * @apiParam {number} psrn Основной государственный регистрационный номер
  *
  * @apiSuccess {string} token Токен аутентификации
@@ -116,7 +116,7 @@ router.post("/", Recaptcha2.instance.middleware, new RequestValidator({
       phone: {
         Unit: PhoneUnit,
         payload: {
-          locale: "any",
+          locale: Const.PHONE_LOCALE,
           strictMode: true,
         },
       },

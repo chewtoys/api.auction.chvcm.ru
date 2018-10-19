@@ -42,7 +42,7 @@ describe("POST /entity/search", () => {
         language: "ru",
         name: "Luminoso",
         password: "super duper password",
-        phone: "+16176829056",
+        phone: "+79123456780",
         psrn: 1_02_76_01_59327_1,
       })
       .expect(200);
@@ -62,7 +62,7 @@ describe("POST /entity/search", () => {
     expect(res.body.entities[0].id).equal("2");
     expect(res.body.entities[0].itn).equal(Number(76_27_01931_7).toString());
     expect(res.body.entities[0].name).equal("Luminoso");
-    expect(res.body.entities[0].phone).equal("+16176829056");
+    expect(res.body.entities[0].phone).equal("+79123456780");
     expect(res.body.entities[0].psrn).equal(Number(1_02_76_01_59327_1).toString());
     expect(new Date(res.body.entities[0].registration)).be.a("Date");
     expect(res.body.entities[0].verified).equal(false);

@@ -211,7 +211,7 @@ describe("POST /employee", () => {
       })
       .expect(400, {
         code: PhoneUnitCodes.WRONG_PHONE,
-        message: "body.phone: invalid phone format for locale any",
+        message: `body.phone: invalid phone format for locale ${Const.PHONE_LOCALE}`,
       });
   });
 

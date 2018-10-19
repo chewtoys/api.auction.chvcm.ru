@@ -94,5 +94,10 @@ export class Const {
   /**
    * Limit to limit
    */
-  public static readonly LIMIT_LIMIT: string = "100";
+  public static readonly LIMIT_LIMIT = "100";
+
+  /**
+   * Phone locale
+   */
+  public static readonly PHONE_LOCALE = "ru-RU";
 }

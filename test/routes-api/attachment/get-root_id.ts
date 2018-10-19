@@ -29,7 +29,7 @@ describe("GET /attachment/:id", () => {
         language: "en",
         name: "Luminoso",
         password: "super duper password",
-        phone: "+16176829056",
+        phone: "+79123456780",
         psrn: 1_02_76_01_59327_1,
       })
       .expect(200)).body.token;

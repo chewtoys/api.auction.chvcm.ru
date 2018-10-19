@@ -44,7 +44,7 @@ describe("GET /user", () => {
         language: "ru",
         name: "Luminoso",
         password: "super duper password",
-        phone: "+16176829056",
+        phone: "+79123456780",
         psrn: 1_02_76_01_59327_1,
       })
       .expect(200)).body.token;
@@ -161,7 +161,7 @@ describe("GET /user", () => {
     expect(res.body.itn).equal(Number(76_27_01931_7).toString());
     expect(res.body.language).equal("ru");
     expect(res.body.name).equal("Luminoso");
-    expect(res.body.phone).equal("+16176829056");
+    expect(res.body.phone).equal("+79123456780");
     expect(res.body.psrn).equal(Number(1_02_76_01_59327_1).toString());
     expect(new Date(res.body.registration)).be.a("Date");
     expect(res.body.tfa).equal(false);

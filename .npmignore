@@ -23,7 +23,6 @@ test/
 .slugignore
 .travis.yml
 cc-test-reporter
-docker-compose*.yml
 Procfile
 renovate.json
 SHASUMS256.txt

@@ -54,7 +54,7 @@ describe("POST /signup", () => {
         language: "ru",
         name: "Luminoso",
         password: "super duper password",
-        phone: "+16176829056",
+        phone: "+79123456780",
         psrn: 1_02_76_01_59327_1,
       })
       .expect(400, {
@@ -71,7 +71,7 @@ describe("POST /signup", () => {
         language: "ru",
         name: "Luminoso",
         password: "super duper password",
-        phone: "+16176829056",
+        phone: "+79123456780",
         psrn: 1_02_76_01_59327_1,
       })
       .expect(400, {
@@ -88,7 +88,7 @@ describe("POST /signup", () => {
         language: "ru",
         name: "Luminoso",
         password: "super duper password",
-        phone: "+16176829056",
+        phone: "+79123456780",
         psrn: 1_02_76_01_59327_1,
       })
       .expect(400, {
@@ -105,7 +105,7 @@ describe("POST /signup", () => {
         itn: 76_27_01931_7,
         name: "Luminoso",
         password: "super duper password",
-        phone: "+16176829056",
+        phone: "+79123456780",
         psrn: 1_02_76_01_59327_1,
       })
       .expect(400, {
@@ -122,7 +122,7 @@ describe("POST /signup", () => {
         itn: 76_27_01931_7,
         language: "ru",
         password: "super duper password",
-        phone: "+16176829056",
+        phone: "+79123456780",
         psrn: 1_02_76_01_59327_1,
       })
       .expect(400, {
@@ -139,7 +139,7 @@ describe("POST /signup", () => {
         itn: 76_27_01931_7,
         language: "ru",
         name: "Luminoso",
-        phone: "+16176829056",
+        phone: "+79123456780",
         psrn: 1_02_76_01_59327_1,
       })
       .expect(400, {
@@ -174,7 +174,7 @@ describe("POST /signup", () => {
         language: "ru",
         name: "Luminoso",
         password: "super duper password",
-        phone: "+16176829056",
+        phone: "+79123456780",
       })
       .expect(400, {
         code: ObjectUnitCodes.OBJECT_MISSING_KEY,
@@ -191,7 +191,7 @@ describe("POST /signup", () => {
         language: "ru",
         name: "Luminoso",
         password: "super duper password",
-        phone: "+16176829056",
+        phone: "+79123456780",
         psrn: 1_02_76_01_59327_1,
       })
       .expect(400, {
@@ -209,7 +209,7 @@ describe("POST /signup", () => {
         language: "ru",
         name: "Luminoso",
         password: "super duper password",
-        phone: "+16176829056",
+        phone: "+79123456780",
         psrn: 1_02_76_01_59327_1,
       })
       .expect(400, {
@@ -227,7 +227,7 @@ describe("POST /signup", () => {
         language: "ru",
         name: "Luminoso",
         password: "super duper password",
-        phone: "+16176829056",
+        phone: "+79123456780",
         psrn: 1_02_76_01_59327_1,
       })
       .expect(400, {
@@ -245,7 +245,7 @@ describe("POST /signup", () => {
         language: null,
         name: "Luminoso",
         password: "super duper password",
-        phone: "+16176829056",
+        phone: "+79123456780",
         psrn: 1_02_76_01_59327_1,
       })
       .expect(400, {
@@ -263,7 +263,7 @@ describe("POST /signup", () => {
         language: "ru",
         name: null,
         password: "super duper password",
-        phone: "+16176829056",
+        phone: "+79123456780",
         psrn: 1_02_76_01_59327_1,
       })
       .expect(400, {
@@ -281,7 +281,7 @@ describe("POST /signup", () => {
         language: "ru",
         name: "Luminoso",
         password: null,
-        phone: "+16176829056",
+        phone: "+79123456780",
         psrn: 1_02_76_01_59327_1,
       })
       .expect(400, {
@@ -317,7 +317,7 @@ describe("POST /signup", () => {
         language: "ru",
         name: "Luminoso",
         password: "super duper password",
-        phone: "+16176829056",
+        phone: "+79123456780",
         psrn: null,
       })
       .expect(400, {
@@ -335,7 +335,7 @@ describe("POST /signup", () => {
         language: "ru",
         name: "Luminoso",
         password: "super duper password",
-        phone: "+16176829056",
+        phone: "+79123456780",
         psrn: 1_02_76_01_59327_1,
       })
       .expect(400, {
@@ -353,7 +353,7 @@ describe("POST /signup", () => {
         language: "ru",
         name: "Luminoso",
         password: "super duper password",
-        phone: "+16176829056",
+        phone: "+79123456780",
         psrn: 1_02_76_01_59327_1,
       })
       .expect(400, {
@@ -371,7 +371,7 @@ describe("POST /signup", () => {
         language: "ru",
         name: "Luminoso",
         password: "super duper password",
-        phone: "+16176829056",
+        phone: "+79123456780",
         psrn: 1_02_76_01_59327_1,
       })
       .expect(400, {
@@ -389,7 +389,7 @@ describe("POST /signup", () => {
         language: "tlh",
         name: "Luminoso",
         password: "super duper password",
-        phone: "+16176829056",
+        phone: "+79123456780",
         psrn: 1_02_76_01_59327_1,
       })
       .expect(400, {
@@ -408,7 +408,7 @@ describe("POST /signup", () => {
         language: "ru",
         name: true,
         password: "super duper password",
-        phone: "+16176829056",
+        phone: "+79123456780",
         psrn: 1_02_76_01_59327_1,
       })
       .expect(400, {
@@ -426,7 +426,7 @@ describe("POST /signup", () => {
         language: "ru",
         name: "Luminoso",
         password: "password",
-        phone: "+16176829056",
+        phone: "+79123456780",
         psrn: 1_02_76_01_59327_1,
       })
       .expect(400, {
@@ -449,7 +449,7 @@ describe("POST /signup", () => {
       })
       .expect(400, {
         code: PhoneUnitCodes.WRONG_PHONE,
-        message: "body.phone: invalid phone format for locale any",
+        message: `body.phone: invalid phone format for locale ${Const.PHONE_LOCALE}`,
       });
   });
 
@@ -462,7 +462,7 @@ describe("POST /signup", () => {
         language: "ru",
         name: "Luminoso",
         password: "super duper password",
-        phone: "+16176829056",
+        phone: "+79123456780",
         psrn: 1_02_76_01_59327,
       })
       .expect(400, {
@@ -480,7 +480,7 @@ describe("POST /signup", () => {
         language: "ru",
         name: "Luminoso",
         password: "super duper password",
-        phone: "+16176829056",
+        phone: "+79123456780",
         psrn: 1_02_76_01_59327_1,
       })
       .expect(200);
@@ -492,7 +492,7 @@ describe("POST /signup", () => {
         language: "ru",
         name: "Luminoso",
         password: "super duper password",
-        phone: "+16176829056",
+        phone: "+79123456780",
         psrn: 1_02_76_01_59327_1,
       })
       .expect(400, {
@@ -510,7 +510,7 @@ describe("POST /signup", () => {
         language: "ru",
         name: "Luminoso",
         password: "super duper password",
-        phone: "+16176829056",
+        phone: "+79123456789",
         psrn: 1_02_76_01_59327_1,
       })
       .expect(200);
@@ -522,7 +522,7 @@ describe("POST /signup", () => {
         language: "ru",
         name: "Luminoso",
         password: "super duper password",
-        phone: "+16176829050",
+        phone: "+79123456780",
         psrn: 1_02_76_01_59327_1,
       })
       .expect(400, {
@@ -540,7 +540,7 @@ describe("POST /signup", () => {
         language: "ru",
         name: "Luminoso",
         password: "super duper password",
-        phone: "+16176829056",
+        phone: "+79123456780",
         psrn: 1_02_76_01_59327_1,
       })
       .expect(200);
@@ -552,7 +552,7 @@ describe("POST /signup", () => {
         language: "ru",
         name: "Luminoso",
         password: "super duper password",
-        phone: "+16176829056",
+        phone: "+79123456780",
         psrn: 1_02_76_01_59327_1,
       })
       .expect(400, {
@@ -570,7 +570,7 @@ describe("POST /signup", () => {
         language: "ru",
         name: "Luminoso",
         password: "super duper password",
-        phone: "+16176829050",
+        phone: "+79123456789",
         psrn: 1_02_76_01_59327_1,
       })
       .expect(200);
@@ -582,7 +582,7 @@ describe("POST /signup", () => {
         language: "ru",
         name: "Luminoso",
         password: "super duper password",
-        phone: "+16176829056",
+        phone: "+79123456780",
         psrn: 1_02_76_01_59327_1,
       })
       .expect(400, {
@@ -600,7 +600,7 @@ describe("POST /signup", () => {
         language: "ru",
         name: "Luminoso",
         password: "super duper password",
-        phone: "+16176829050",
+        phone: "+79123456789",
         psrn: 1_03_37_00_07067_8,
       })
       .expect(200);
@@ -612,7 +612,7 @@ describe("POST /signup", () => {
         language: "ru",
         name: "Luminoso",
         password: "super duper password",
-        phone: "+16176829056",
+        phone: "+79123456780",
         psrn: 1_02_76_01_59327_1,
       })
       .expect(400, {
@@ -630,7 +630,7 @@ describe("POST /signup", () => {
         language: "ru",
         name: "Luminoso",
         password: "super duper password",
-        phone: "+16176829050",
+        phone: "+79123456789",
         psrn: 1_02_76_01_59327_1,
       })
       .expect(200);
@@ -642,7 +642,7 @@ describe("POST /signup", () => {
         language: "ru",
         name: "Luminoso",
         password: "super duper password",
-        phone: "+16176829056",
+        phone: "+79123456780",
         psrn: 1_02_76_01_59327_1,
       })
       .expect(400, {
@@ -662,7 +662,7 @@ describe("POST /signup", () => {
         language: "ru",
         name: "Luminoso",
         password: "super duper password",
-        phone: "+16176829056",
+        phone: "+79123456780",
         psrn: 1_02_76_01_59327_1,
       })
       .expect(200);
@@ -681,7 +681,7 @@ describe("POST /signup", () => {
     expect((entity as IEntityInstance).id).equal("1");
     expect((entity as IEntityInstance).name).equal("Luminoso");
     expect((entity as IEntityInstance).email).equal("entity@example.com");
-    expect((entity as IEntityInstance).phone).equal("+16176829056");
+    expect((entity as IEntityInstance).phone).equal("+79123456780");
     expect((entity as IEntityInstance).authenticator).equal(null);
     expect((entity as IEntityInstance).tfa).equal(false);
     expect((entity as IEntityInstance).language).equal("ru");
@@ -718,7 +718,7 @@ describe("POST /signup", () => {
         language: "en",
         name: "Luminoso",
         password: "super duper password",
-        phone: "+16176829056",
+        phone: "+79123456780",
         psrn: 1_02_76_01_59327_1,
       })
       .expect(200);
@@ -737,7 +737,7 @@ describe("POST /signup", () => {
     expect((entity as IEntityInstance).id).equal("1");
     expect((entity as IEntityInstance).name).equal("Luminoso");
     expect((entity as IEntityInstance).email).equal("entity@example.com");
-    expect((entity as IEntityInstance).phone).equal("+16176829056");
+    expect((entity as IEntityInstance).phone).equal("+79123456780");
     expect((entity as IEntityInstance).authenticator).equal(null);
     expect((entity as IEntityInstance).tfa).equal(false);
     expect((entity as IEntityInstance).language).equal("en");
@@ -774,7 +774,7 @@ describe("POST /signup", () => {
         language: "de",
         name: "Luminoso",
         password: "super duper password",
-        phone: "+16176829056",
+        phone: "+79123456780",
         psrn: 1_02_76_01_59327_1,
       })
       .expect(200);
@@ -793,7 +793,7 @@ describe("POST /signup", () => {
     expect((entity as IEntityInstance).id).equal("1");
     expect((entity as IEntityInstance).name).equal("Luminoso");
     expect((entity as IEntityInstance).email).equal("entity@example.com");
-    expect((entity as IEntityInstance).phone).equal("+16176829056");
+    expect((entity as IEntityInstance).phone).equal("+79123456780");
     expect((entity as IEntityInstance).authenticator).equal(null);
     expect((entity as IEntityInstance).tfa).equal(false);
     expect((entity as IEntityInstance).language).equal("de");

@@ -65,7 +65,7 @@ install:
 - chmod +x ./cc-test-reporter
 # Yarn
 - curl -o- -L https://yarnpkg.com/install.sh | bash -s
-- export PATH="$HOME/.config/yarn/global/node_modules/.bin:$PATH" # https://github.com/tj/commander.js/issues/866
+- export PATH="$HOME/.config/yarn/global/node_modules/.bin:$HOME/.yarn/bin:$PATH" # https://github.com/tj/commander.js/issues/866
 - yarn global add https://github.com/AlendoStudio/node-relebox.git
 - yarn global add https://github.com/AlendoStudio/node-relebox.git # to avoid https://github.com/yarnpkg/yarn/issues/3421
 - yarn install --production false

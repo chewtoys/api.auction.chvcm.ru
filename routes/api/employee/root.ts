@@ -16,6 +16,7 @@ import * as _ from "lodash";
 
 import {
   ApiCodes,
+  Const,
   EmailNotifications,
   IEmployeeInstance,
   Sequelize,
@@ -35,7 +36,7 @@ export default router;
  * @apiParam {string} email Email
  * @apiParam {string="ISO 639-1 в нижнем регистре"} language Язык
  * @apiParam {string} name Имя
- * @apiParam {string} phone Телефон
+ * @apiParam {string="+79xxxxxxxxx"} phone Телефон
  *
  * @apiSuccess {string="1..9223372036854775807"} id ID сотрудника
  *
@@ -84,7 +85,7 @@ router.post("/", new RequestValidator({
       phone: {
         Unit: PhoneUnit,
         payload: {
-          locale: "any",
+          locale: Const.PHONE_LOCALE,
           strictMode: true,
         },
       },
