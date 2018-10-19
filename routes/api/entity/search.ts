@@ -94,7 +94,7 @@ router.post("/", new RequestValidator({
     .action(async () => {
       result = await Sequelize.instance.entity.findAll(_.pickBy({
         attributes: ["banned", "ceo", "email", "id", "itn", "name", "phone", "psrn", "registration", "verified"],
-        limit: req.body.value.limit ? req.body.value.limit.value : undefined,
+        limit: req.body.value.limit ? req.body.value.limit.value : Const.LIMIT_LIMIT,
         offset: req.body.value.offset ? req.body.value.offset.value : undefined,
         order: [
           ["id", "ASC"],

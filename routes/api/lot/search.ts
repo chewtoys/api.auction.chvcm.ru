@@ -115,7 +115,7 @@ router.post("/", new RequestValidator({
             userid: req.body.value.iAmParticipant.value ? req.user.id : undefined,
           }, (v) => v !== undefined) as any,
         } : undefined as any].filter((o) => o !== undefined),
-        limit: req.body.value.limit ? req.body.value.limit.value : undefined,
+        limit: req.body.value.limit ? req.body.value.limit.value : Const.LIMIT_LIMIT,
         offset: req.body.value.offset ? req.body.value.offset.value : undefined,
         order: [
           ["start", "DESC"],

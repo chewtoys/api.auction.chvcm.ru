@@ -126,7 +126,7 @@ router.post("/", new RequestValidator({
             ].filter((v) => !_.isEmpty(v)),
           }, (v) => v !== undefined && (!(v as any instanceof Array) || !_.isEmpty(v))),
         }],
-        limit: req.body.value.limit ? req.body.value.limit.value : undefined,
+        limit: req.body.value.limit ? req.body.value.limit.value : Const.LIMIT_LIMIT,
         offset: req.body.value.offset ? req.body.value.offset.value : undefined,
         order: [
           [Sequelize.instance.stuffTranslations, "title", "ASC"],
