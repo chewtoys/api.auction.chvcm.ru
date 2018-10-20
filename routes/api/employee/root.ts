@@ -16,6 +16,7 @@ import * as _ from "lodash";
 
 import {
   ApiCodes,
+  cleanDeep,
   Const,
   EmailNotifications,
   IEmployeeInstance,
@@ -181,11 +182,11 @@ router.post("/:id", new RequestValidator({
     }, ApiCodes.DB_EMPLOYEE_NOT_FOUND_BY_ID, "employee with same id not found", 400)
     .action(async () => {
       await Sequelize.instance.transaction(async () => {
-        await Sequelize.instance.employee.update(_.pickBy({
-          admin: req.body.value.admin ? req.body.value.admin.value : undefined,
-          banned: req.body.value.banned ? req.body.value.banned.value : undefined,
-          moderator: req.body.value.moderator ? req.body.value.moderator.value : undefined,
-        }, (v) => v !== undefined), {
+        await Sequelize.instance.employee.update(cleanDeep({
+          admin: _.get(req.body.value.admin, "value"),
+          banned: _.get(req.body.value.banned, "value"),
+          moderator: _.get(req.body.value.moderator, "value"),
+        }), {
           where: {
             id: req.params.value.id.value,
           },

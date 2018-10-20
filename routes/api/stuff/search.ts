@@ -14,7 +14,7 @@ import {
 import {Router} from "express";
 import * as _ from "lodash";
 
-import {Const, IStuffInstance, IStuffTranslationsInstance, Sequelize} from "src";
+import {cleanDeep, Const, IStuffInstance, IStuffTranslationsInstance, Sequelize} from "src";
 
 const router = Router();
 export default router;
@@ -107,34 +107,37 @@ router.post("/", new RequestValidator({
   let result: IStuffInstance[] = [];
   await res.achain
     .action(async () => {
-      result = await Sequelize.instance.stuff.findAll(_.pickBy({
-        include: [{
-          model: Sequelize.instance.stuffTranslations,
-          where: _.pickBy({
-            code: req.body.value.code ? req.body.value.code.value : undefined,
-            [Sequelize.op.or]: [
-              _.pickBy({
-                description: req.body.value.translation ? {
-                  [Sequelize.op.iLike]: `%${req.body.value.translation.value}%`,
-                } : undefined,
-              }, (v) => v !== undefined),
-              _.pickBy({
-                title: req.body.value.translation ? {
-                  [Sequelize.op.iLike]: `%${req.body.value.translation.value}%`,
-                } : undefined,
-              }, (v) => v !== undefined),
-            ].filter((v) => !_.isEmpty(v)),
-          }, (v) => v !== undefined && (!(v as any instanceof Array) || !_.isEmpty(v))),
-        }],
-        limit: req.body.value.limit ? req.body.value.limit.value : Const.LIMIT_LIMIT,
-        offset: req.body.value.offset ? req.body.value.offset.value : undefined,
+      result = await Sequelize.instance.stuff.findAll(cleanDeep({
+        include: [
+          {
+            model: Sequelize.instance.stuffTranslations,
+            where: {
+              code: _.get(req.body.value.code, "value"),
+              [Sequelize.op.or]: [
+                {
+                  description: {
+                    [Sequelize.op.iLike]: req.body.value.translation ?
+                      `%${req.body.value.translation.value}%` : undefined,
+                  },
+                }, {
+                  title: {
+                    [Sequelize.op.iLike]: req.body.value.translation ?
+                      `%${req.body.value.translation.value}%` : undefined,
+                  },
+                },
+              ],
+            },
+          },
+        ],
+        limit: _.get(req.body.value.limit, "value", Const.LIMIT_LIMIT),
+        offset: _.get(req.body.value.offset, "value"),
         order: [
           [Sequelize.instance.stuffTranslations, "title", "ASC"],
         ],
-        where: _.pickBy({
-          enabled: req.body.value.enabled ? req.body.value.enabled.value : undefined,
-          id: req.body.value.id ? req.body.value.id.value : undefined,
-        }, (v) => v !== undefined),
+        where: {
+          enabled: _.get(req.body.value.enabled, "value"),
+          id: _.get(req.body.value.id, "value"),
+        },
       }));
     })
     .json(() => {

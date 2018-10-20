@@ -10,7 +10,7 @@ import {
 import {Router} from "express";
 import * as _ from "lodash";
 
-import {Const, IEmployeeInstance, Sequelize} from "src";
+import {cleanDeep, Const, IEmployeeInstance, Sequelize} from "src";
 
 const router = Router();
 export default router;
@@ -96,19 +96,19 @@ router.post("/", new RequestValidator({
   let result: IEmployeeInstance[] = [];
   await res.achain
     .action(async () => {
-      result = await Sequelize.instance.employee.findAll(_.pickBy({
+      result = await Sequelize.instance.employee.findAll(cleanDeep({
         attributes: ["admin", "banned", "email", "id", "moderator", "name", "phone", "registration"],
-        limit: req.body.value.limit ? req.body.value.limit.value : Const.LIMIT_LIMIT,
-        offset: req.body.value.offset ? req.body.value.offset.value : undefined,
+        limit: _.get(req.body.value.limit, "value", Const.LIMIT_LIMIT),
+        offset: _.get(req.body.value.offset, "value"),
         order: [
           ["id", "ASC"],
         ],
-        where: _.pickBy({
-          admin: req.body.value.admin ? req.body.value.admin.value : undefined,
-          banned: req.body.value.banned ? req.body.value.banned.value : undefined,
-          id: req.body.value.id ? req.body.value.id.value : undefined,
-          moderator: req.body.value.moderator ? req.body.value.moderator.value : undefined,
-        }, (v) => v !== undefined),
+        where: {
+          admin: _.get(req.body.value.admin, "value"),
+          banned: _.get(req.body.value.banned, "value"),
+          id: _.get(req.body.value.id, "value"),
+          moderator: _.get(req.body.value.moderator, "value"),
+        },
       }));
     })
     .json(() => {

@@ -15,6 +15,7 @@ import * as _ from "lodash";
 
 import {
   Auth,
+  cleanDeep,
   IStuffInstance,
   Sequelize,
 } from "src";
@@ -157,12 +158,12 @@ router.post("/:id", new RequestValidator({
           await Sequelize.instance.stuffTranslations.bulkCreate(
             Object.keys(req.body.value.tr.value).map((key) => {
               const tr = req.body.value.tr.value[key].value;
-              return _.pickBy({
+              return cleanDeep({
                 code: key,
-                description: tr.description ? tr.description.value : undefined,
+                description: _.get(tr.description, "value"),
                 stuffid: req.params.value.id.value,
                 title: tr.title.value,
-              }, (v) => v !== undefined);
+              });
             }));
         }
       });

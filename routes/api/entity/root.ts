@@ -3,7 +3,7 @@ import {BooleanUnit, ObjectUnit, PgBigSerialUnit, RequestValidator} from "@alend
 import {Router} from "express";
 import * as _ from "lodash";
 
-import {ApiCodes, EmailNotifications, IEntityInstance, Sequelize} from "src";
+import {ApiCodes, cleanDeep, EmailNotifications, IEntityInstance, Sequelize} from "src";
 
 const router = Router();
 export default router;
@@ -68,10 +68,10 @@ router.post("/:id", new RequestValidator({
     }, ApiCodes.DB_ENTITY_NOT_FOUND_BY_ID, "entity with same id not found", 400)
     .action(async () => {
       await Sequelize.instance.transaction(async () => {
-        await Sequelize.instance.entity.update(_.pickBy({
-          banned: req.body.value.banned ? req.body.value.banned.value : undefined,
-          verified: req.body.value.verified ? req.body.value.verified.value : undefined,
-        }, (v) => v !== undefined), {
+        await Sequelize.instance.entity.update(cleanDeep({
+          banned: _.get(req.body.value.banned, "value"),
+          verified: _.get(req.body.value.verified, "value"),
+        }), {
           where: {
             id: req.params.value.id.value,
           },

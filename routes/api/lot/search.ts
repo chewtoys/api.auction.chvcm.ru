@@ -10,7 +10,7 @@ import {
 import {Router} from "express";
 import * as _ from "lodash";
 
-import {Const, ILotInstance, Sequelize} from "src";
+import {cleanDeep, Const, ILotInstance, Sequelize} from "src";
 
 const router = Router();
 export default router;
@@ -108,22 +108,24 @@ router.post("/", new RequestValidator({
   let result: ILotInstance[] = [];
   await res.achain
     .action(async () => {
-      result = await Sequelize.instance.lot.findAll(_.pickBy({
-        include: [req.body.value.iAmParticipant ? {
-          model: Sequelize.instance.lotParticipants,
-          where: _.pickBy({
-            userid: req.body.value.iAmParticipant.value ? req.user.id : undefined,
-          }, (v) => v !== undefined) as any,
-        } : undefined as any].filter((o) => o !== undefined),
-        limit: req.body.value.limit ? req.body.value.limit.value : Const.LIMIT_LIMIT,
-        offset: req.body.value.offset ? req.body.value.offset.value : undefined,
+      result = await Sequelize.instance.lot.findAll(cleanDeep({
+        include: [
+          _.get(req.body.value.iAmParticipant, "value") ? {
+            model: Sequelize.instance.lotParticipants,
+            where: {
+              userid: req.user.id,
+            },
+          } : undefined,
+        ],
+        limit: _.get(req.body.value.limit, "value", Const.LIMIT_LIMIT),
+        offset: _.get(req.body.value.offset, "value"),
         order: [
           ["start", "DESC"],
         ],
-        where: _.pickBy({
-          id: req.body.value.id ? req.body.value.id.value : undefined,
-          stuffid: req.body.value.stuffid ? req.body.value.stuffid.value : undefined,
-        }, (v) => v !== undefined),
+        where: {
+          id: _.get(req.body.value.id, "value"),
+          stuffid: _.get(req.body.value.stuffid, "value"),
+        },
       }));
     })
     .json(() => {

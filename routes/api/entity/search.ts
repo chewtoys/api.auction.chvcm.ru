@@ -10,7 +10,7 @@ import {
 import {Router} from "express";
 import * as _ from "lodash";
 
-import {Const, IEntityInstance, Sequelize} from "src";
+import {cleanDeep, Const, IEntityInstance, Sequelize} from "src";
 
 const router = Router();
 export default router;
@@ -92,18 +92,18 @@ router.post("/", new RequestValidator({
   let result: IEntityInstance[] = [];
   await res.achain
     .action(async () => {
-      result = await Sequelize.instance.entity.findAll(_.pickBy({
+      result = await Sequelize.instance.entity.findAll(cleanDeep({
         attributes: ["banned", "ceo", "email", "id", "itn", "name", "phone", "psrn", "registration", "verified"],
-        limit: req.body.value.limit ? req.body.value.limit.value : Const.LIMIT_LIMIT,
-        offset: req.body.value.offset ? req.body.value.offset.value : undefined,
+        limit: _.get(req.body.value.limit, "value", Const.LIMIT_LIMIT),
+        offset: _.get(req.body.value.offset, "value"),
         order: [
           ["id", "ASC"],
         ],
-        where: _.pickBy({
-          banned: req.body.value.banned ? req.body.value.banned.value : undefined,
-          id: req.body.value.id ? req.body.value.id.value : undefined,
-          verified: req.body.value.verified ? req.body.value.verified.value : undefined,
-        }, (v) => v !== undefined),
+        where: {
+          banned: _.get(req.body.value.banned, "value"),
+          id: _.get(req.body.value.id, "value"),
+          verified: _.get(req.body.value.verified, "value"),
+        },
       }));
     })
     .json(() => {
