@@ -8,6 +8,8 @@ import * as commander from "commander";
 
 import {EmailNotifications, RedisClient} from "src";
 
+// TODO: locale support
+
 const program = commander
   .description("send test email")
   .option("--to [value]", "to")

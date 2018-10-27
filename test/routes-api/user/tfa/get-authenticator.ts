@@ -20,7 +20,7 @@ describe("GET /user/tfa/authenticator", () => {
     reCaptchaMockAdapter.onPost(Recaptcha2.VERIFY_URL).reply(200, {
       success: true,
     });
-    await Sequelize.instance.employee.insertOrUpdate({
+    await Sequelize.instance.employee.upsert({
       email: "admin@example.com",
       language: "ru",
       name: "admin",
@@ -63,7 +63,7 @@ describe("GET /user/tfa/authenticator", () => {
     const service = Const.AUTHENTICATOR_SERVICE;
     expect(res.body.keyuri).equal(`otpauth://totp/${service}:admin?secret=${res.body.secret}&issuer=${service}`);
 
-    const user = await Sequelize.instance.employee.findById("1");
+    const user = await Sequelize.instance.employee.findByPk("1");
     expect((user as IUserInstance).authenticator).equal(res.body.secret);
   });
 });

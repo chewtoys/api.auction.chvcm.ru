@@ -25,7 +25,7 @@ describe("POST /employee/:id", () => {
     reCaptchaMockAdapter.onPost(Recaptcha2.VERIFY_URL).reply(200, {
       success: true,
     });
-    await Sequelize.instance.employee.insertOrUpdate({
+    await Sequelize.instance.employee.upsert({
       admin: true,
       email: "admin@example.com",
       language: "ru",
@@ -183,7 +183,7 @@ describe("POST /employee/:id", () => {
         admin: true,
       })
       .expect(204);
-    const employee = await Sequelize.instance.employee.findById("2");
+    const employee = await Sequelize.instance.employee.findByPk("2");
     expect((employee as IEmployeeInstance).banned).equal(false);
     expect((employee as IEmployeeInstance).admin).equal(true);
     expect((employee as IEmployeeInstance).moderator).equal(false);
@@ -207,7 +207,7 @@ describe("POST /employee/:id", () => {
         admin: true,
       })
       .expect(204);
-    const employee = await Sequelize.instance.employee.findById("2");
+    const employee = await Sequelize.instance.employee.findByPk("2");
     expect((employee as IEmployeeInstance).banned).equal(false);
     expect((employee as IEmployeeInstance).admin).equal(true);
     expect((employee as IEmployeeInstance).moderator).equal(false);
@@ -231,7 +231,7 @@ describe("POST /employee/:id", () => {
         moderator: true,
       })
       .expect(204);
-    const employee = await Sequelize.instance.employee.findById("2");
+    const employee = await Sequelize.instance.employee.findByPk("2");
     expect((employee as IEmployeeInstance).banned).equal(false);
     expect((employee as IEmployeeInstance).admin).equal(false);
     expect((employee as IEmployeeInstance).moderator).equal(true);
@@ -255,7 +255,7 @@ describe("POST /employee/:id", () => {
         moderator: true,
       })
       .expect(204);
-    const employee = await Sequelize.instance.employee.findById("2");
+    const employee = await Sequelize.instance.employee.findByPk("2");
     expect((employee as IEmployeeInstance).banned).equal(false);
     expect((employee as IEmployeeInstance).admin).equal(false);
     expect((employee as IEmployeeInstance).moderator).equal(true);
@@ -281,7 +281,7 @@ describe("POST /employee/:id", () => {
         moderator: true,
       })
       .expect(204);
-    const employee = await Sequelize.instance.employee.findById("2");
+    const employee = await Sequelize.instance.employee.findByPk("2");
     expect((employee as IEmployeeInstance).banned).equal(false);
     expect((employee as IEmployeeInstance).admin).equal(true);
     expect((employee as IEmployeeInstance).moderator).equal(true);
@@ -307,7 +307,7 @@ describe("POST /employee/:id", () => {
         moderator: true,
       })
       .expect(204);
-    const employee = await Sequelize.instance.employee.findById("2");
+    const employee = await Sequelize.instance.employee.findByPk("2");
     expect((employee as IEmployeeInstance).banned).equal(false);
     expect((employee as IEmployeeInstance).admin).equal(true);
     expect((employee as IEmployeeInstance).moderator).equal(true);
@@ -331,7 +331,7 @@ describe("POST /employee/:id", () => {
         admin: false,
       })
       .expect(204);
-    const employee = await Sequelize.instance.employee.findById("2");
+    const employee = await Sequelize.instance.employee.findByPk("2");
     expect((employee as IEmployeeInstance).banned).equal(false);
     expect((employee as IEmployeeInstance).admin).equal(false);
     expect((employee as IEmployeeInstance).moderator).equal(false);
@@ -355,7 +355,7 @@ describe("POST /employee/:id", () => {
         admin: false,
       })
       .expect(204);
-    const employee = await Sequelize.instance.employee.findById("2");
+    const employee = await Sequelize.instance.employee.findByPk("2");
     expect((employee as IEmployeeInstance).banned).equal(false);
     expect((employee as IEmployeeInstance).admin).equal(false);
     expect((employee as IEmployeeInstance).moderator).equal(false);
@@ -379,7 +379,7 @@ describe("POST /employee/:id", () => {
         moderator: false,
       })
       .expect(204);
-    const employee = await Sequelize.instance.employee.findById("2");
+    const employee = await Sequelize.instance.employee.findByPk("2");
     expect((employee as IEmployeeInstance).banned).equal(false);
     expect((employee as IEmployeeInstance).admin).equal(false);
     expect((employee as IEmployeeInstance).moderator).equal(false);
@@ -403,7 +403,7 @@ describe("POST /employee/:id", () => {
         moderator: false,
       })
       .expect(204);
-    const employee = await Sequelize.instance.employee.findById("2");
+    const employee = await Sequelize.instance.employee.findByPk("2");
     expect((employee as IEmployeeInstance).banned).equal(false);
     expect((employee as IEmployeeInstance).admin).equal(false);
     expect((employee as IEmployeeInstance).moderator).equal(false);
@@ -429,7 +429,7 @@ describe("POST /employee/:id", () => {
         moderator: false,
       })
       .expect(204);
-    const employee = await Sequelize.instance.employee.findById("2");
+    const employee = await Sequelize.instance.employee.findByPk("2");
     expect((employee as IEmployeeInstance).banned).equal(false);
     expect((employee as IEmployeeInstance).admin).equal(false);
     expect((employee as IEmployeeInstance).moderator).equal(false);
@@ -453,7 +453,7 @@ describe("POST /employee/:id", () => {
         banned: true,
       })
       .expect(204);
-    const employee = await Sequelize.instance.employee.findById("2");
+    const employee = await Sequelize.instance.employee.findByPk("2");
     expect((employee as IEmployeeInstance).banned).equal(true);
     expect((employee as IEmployeeInstance).admin).equal(false);
     expect((employee as IEmployeeInstance).moderator).equal(false);
@@ -477,7 +477,7 @@ describe("POST /employee/:id", () => {
         banned: false,
       })
       .expect(204);
-    const employee = await Sequelize.instance.employee.findById("2");
+    const employee = await Sequelize.instance.employee.findByPk("2");
     expect((employee as IEmployeeInstance).banned).equal(false);
     expect((employee as IEmployeeInstance).admin).equal(false);
     expect((employee as IEmployeeInstance).moderator).equal(false);
@@ -502,7 +502,7 @@ describe("POST /employee/:id", () => {
         banned: true,
       })
       .expect(204);
-    const employee = await Sequelize.instance.employee.findById("2");
+    const employee = await Sequelize.instance.employee.findByPk("2");
     expect((employee as IEmployeeInstance).banned).equal(true);
     expect((employee as IEmployeeInstance).admin).equal(false);
     expect((employee as IEmployeeInstance).moderator).equal(false);
@@ -532,7 +532,7 @@ describe("POST /employee/:id", () => {
         banned: true,
       })
       .expect(204);
-    const employee = await Sequelize.instance.employee.findById("2");
+    const employee = await Sequelize.instance.employee.findByPk("2");
     expect((employee as IEmployeeInstance).banned).equal(true);
     expect((employee as IEmployeeInstance).admin).equal(false);
     expect((employee as IEmployeeInstance).moderator).equal(false);
@@ -562,7 +562,7 @@ describe("POST /employee/:id", () => {
         banned: true,
       })
       .expect(204);
-    const employee = await Sequelize.instance.employee.findById("2");
+    const employee = await Sequelize.instance.employee.findByPk("2");
     expect((employee as IEmployeeInstance).banned).equal(true);
     expect((employee as IEmployeeInstance).admin).equal(false);
     expect((employee as IEmployeeInstance).moderator).equal(false);
@@ -592,7 +592,7 @@ describe("POST /employee/:id", () => {
         banned: false,
       })
       .expect(204);
-    const employee = await Sequelize.instance.employee.findById("2");
+    const employee = await Sequelize.instance.employee.findByPk("2");
     expect((employee as IEmployeeInstance).banned).equal(false);
     expect((employee as IEmployeeInstance).admin).equal(false);
     expect((employee as IEmployeeInstance).moderator).equal(false);
@@ -622,7 +622,7 @@ describe("POST /employee/:id", () => {
         banned: false,
       })
       .expect(204);
-    const employee = await Sequelize.instance.employee.findById("2");
+    const employee = await Sequelize.instance.employee.findByPk("2");
     expect((employee as IEmployeeInstance).banned).equal(false);
     expect((employee as IEmployeeInstance).admin).equal(false);
     expect((employee as IEmployeeInstance).moderator).equal(false);
@@ -652,7 +652,7 @@ describe("POST /employee/:id", () => {
         banned: false,
       })
       .expect(204);
-    const employee = await Sequelize.instance.employee.findById("2");
+    const employee = await Sequelize.instance.employee.findByPk("2");
     expect((employee as IEmployeeInstance).banned).equal(false);
     expect((employee as IEmployeeInstance).admin).equal(false);
     expect((employee as IEmployeeInstance).moderator).equal(false);

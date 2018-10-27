@@ -23,7 +23,7 @@ describe("POST /user/tfa", () => {
     reCaptchaMockAdapter.onPost(Recaptcha2.VERIFY_URL).reply(200, {
       success: true,
     });
-    await Sequelize.instance.employee.insertOrUpdate({
+    await Sequelize.instance.employee.upsert({
       email: "admin@example.com",
       language: "ru",
       name: "admin",
@@ -144,7 +144,7 @@ describe("POST /user/tfa", () => {
         tfa: true,
       })
       .expect(204);
-    const user = await Sequelize.instance.user.findById("1");
+    const user = await Sequelize.instance.user.findByPk("1");
     expect((user as IUserInstance).tfa).equal(true);
   });
 
@@ -163,7 +163,7 @@ describe("POST /user/tfa", () => {
       })
       .expect(204);
     const user = await
-      Sequelize.instance.user.findById("1");
+      Sequelize.instance.user.findByPk("1");
     expect((user as IUserInstance).tfa).equal(true);
   });
 
@@ -190,7 +190,7 @@ describe("POST /user/tfa", () => {
     });
     expect(recoveryCodesCountBefore).equal(Const.TFA_RECOVERY_CODES_COUNT);
 
-    const userBefore = await Sequelize.instance.user.findById("1");
+    const userBefore = await Sequelize.instance.user.findByPk("1");
     expect((userBefore as IUserInstance).tfa).equal(true);
     expect((userBefore as IUserInstance).authenticator).not.equal(null);
 
@@ -201,7 +201,7 @@ describe("POST /user/tfa", () => {
       })
       .expect(204);
 
-    const userAfter = await Sequelize.instance.user.findById("1");
+    const userAfter = await Sequelize.instance.user.findByPk("1");
     expect((userAfter as IUserInstance).tfa).equal(false);
     expect((userAfter as IUserInstance).authenticator).equal(null);
 
@@ -227,7 +227,7 @@ describe("POST /user/tfa", () => {
         tfa: false,
       })
       .expect(204);
-    const user = await Sequelize.instance.user.findById("1");
+    const user = await Sequelize.instance.user.findByPk("1");
     expect((user as IUserInstance).tfa).equal(false);
   });
 });

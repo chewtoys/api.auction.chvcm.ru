@@ -92,9 +92,14 @@ export class Const {
   public static readonly AUTHENTICATOR_SERVICE = "auction.chvcm.ru";
 
   /**
-   * Limit to limit
+   * Limit to limit (db)
    */
   public static readonly LIMIT_LIMIT = "100";
+
+  /**
+   * Limit to limit (AWS S3)
+   */
+  public static readonly AWS_S3_LIMIT_LIMIT = "1000";
 
   /**
    * Phone locale

@@ -5,7 +5,7 @@
 --   \ \ \/\ \L\ \/\__, `\\ \ \_/\ \L\ \ \ \//\  __/ /\ \L\ \ \ \\'\\ \ \L\ \
 --    \ \_\ \____/\/\____/ \ \__\ \____ \ \_\\ \____\\ `\____\ \___\_\ \____/
 --     \/_/\/___/  \/___/   \/__/\/___L\ \/_/ \/____/ \/_____/\/__//_/\/___/
---                                 /\____/                               v10
+--                                 /\____/                               v11
 --                                 \_/__/                Font Name: Larry 3D
 
 ----------------------------------------------------------------------------
@@ -405,16 +405,16 @@ CREATE TYPE CURRENCY AS ENUM (
 -- Common data of employees and entities
 CREATE TABLE users_common (
   id            BIGSERIAL PRIMARY KEY, -- id
-  name          TEXT                     NOT NULL, -- name
-  email         TEXT                     NOT NULL UNIQUE, -- email
-  phone         TEXT                     NOT NULL UNIQUE, -- mobile phone
+  name          TEXT          NOT NULL, -- name
+  email         TEXT          NOT NULL UNIQUE, -- email
+  phone         TEXT          NOT NULL UNIQUE, -- mobile phone
   password      TEXT, -- password hash with salt
   authenticator TEXT, -- Google Authenticator secret
-  tfa           BOOLEAN                  NOT NULL, -- is two-factor authentication enabled?
-  language      LANGUAGE_CODE            NOT NULL, -- preferred language
-  banned        BOOLEAN                  NOT NULL, -- is user was banned?
-  type          USER_TYPE                NOT NULL, -- user type
-  registration  TIMESTAMP WITH TIME ZONE NOT NULL -- registration date
+  tfa           BOOLEAN       NOT NULL, -- is two-factor authentication enabled?
+  language      LANGUAGE_CODE NOT NULL, -- preferred language
+  banned        BOOLEAN       NOT NULL, -- is user was banned?
+  type          USER_TYPE     NOT NULL, -- user type
+  registration  TIMESTAMPTZ   NOT NULL -- registration date
 );
 
 -- Additional data of employees
@@ -435,13 +435,6 @@ CREATE TABLE users_entities (
   verified BOOLEAN NOT NULL -- is entity was verified?
 );
 
--- Attachments
-CREATE TABLE attachments (
-  userid BIGINT REFERENCES users_entities (userid)
-  ON DELETE RESTRICT ON UPDATE CASCADE PRIMARY KEY, -- entity id
-  url    TEXT NOT NULL
-);
-
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ TOKENS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ --
 
 -- Two-factor authentication purgatory
@@ -449,7 +442,7 @@ CREATE TABLE tokens_tfa_purgatory (
   token   TEXT PRIMARY KEY, -- token
   userid  BIGINT REFERENCES users_common (id)
   ON DELETE RESTRICT ON UPDATE CASCADE NOT NULL, -- user id
-  expires TIMESTAMP WITH TIME ZONE     NOT NULL -- expires date
+  expires TIMESTAMPTZ                  NOT NULL -- expires date
 );
 
 -- Two-factor authentication (via email) tokens
@@ -471,7 +464,7 @@ CREATE TABLE tokens_password_reset (
   token   TEXT PRIMARY KEY, -- token
   userid  BIGINT REFERENCES users_common (id)
   ON DELETE RESTRICT ON UPDATE CASCADE NOT NULL, -- user id
-  expires TIMESTAMP WITH TIME ZONE     NOT NULL -- expires date
+  expires TIMESTAMPTZ                  NOT NULL -- expires date
 );
 
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ AUCTION ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ --
@@ -485,9 +478,9 @@ CREATE TABLE stuffs (
 -- Auction stuff translations
 CREATE TABLE stuff_translations (
   stuffid     BIGINT REFERENCES stuffs (id)
-  ON DELETE RESTRICT ON UPDATE CASCADE, -- stuff id
+  ON DELETE CASCADE ON UPDATE CASCADE, -- stuff id
   code        LANGUAGE_CODE, -- language code
-  title TEXT NOT NULL, -- title
+  title       TEXT NOT NULL, -- title
   description TEXT NOT NULL, -- description
   PRIMARY KEY (code, stuffid)
 );
@@ -500,8 +493,8 @@ CREATE TABLE lots (
   type         LOT_TYPE                                NOT NULL, -- lot type
   amount       NUMERIC                                 NOT NULL, -- amount
   amount_type  LOT_AMOUNT_TYPE                         NOT NULL, -- amount type
-  start        TIMESTAMP WITH TIME ZONE                NOT NULL, -- start time
-  finish       TIMESTAMP WITH TIME ZONE                NOT NULL, -- end time
+  start        TIMESTAMPTZ                             NOT NULL, -- start time
+  finish       TIMESTAMPTZ                             NOT NULL, -- end time
   buffer       INTERVAL                                NOT NULL, -- buffer interval
   startbid     NUMERIC                                 NOT NULL, -- start bid
   step         NUMERIC                                 NOT NULL, -- auction step
@@ -633,8 +626,8 @@ BEGIN
               WHEN NEW.registration IS NULL
                       THEN NOW()
               ELSE NEW.registration END)
-      RETURNING id, tfa, registration
-        INTO NEW.id, NEW.tfa, NEW.registration;
+      RETURNING id, tfa, banned, registration
+        INTO NEW.id, NEW.tfa, NEW.banned, NEW.registration;
     INSERT INTO users_employees (userid, admin, moderator)
     VALUES (NEW.id,
             CASE
@@ -718,8 +711,8 @@ BEGIN
               WHEN NEW.registration IS NULL
                       THEN NOW()
               ELSE NEW.registration END)
-      RETURNING id, tfa, registration
-        INTO NEW.id, NEW.tfa, NEW.registration;
+      RETURNING id, tfa, banned, registration
+        INTO NEW.id, NEW.tfa, NEW.banned, NEW.registration;
     INSERT INTO users_entities (userid, ceo, psrn, itn, verified)
     VALUES (NEW.id,
             NEW.ceo,
@@ -778,7 +771,7 @@ IMMUTABLE;
 CREATE FUNCTION lots_update_trigger()
   RETURNS TRIGGER AS $$
 DECLARE
-  _now    TIMESTAMP WITH TIME ZONE;
+  _now    TIMESTAMPTZ;
   _buffer INTERVAL;
 BEGIN
   IF (NEW.winner IS NULL OR NEW.winbid IS NULL)
@@ -787,8 +780,10 @@ BEGIN
   END IF;
   _now = NOW();
   _buffer = abs_interval(NEW.buffer);
-  INSERT INTO lot_participants (lotid, userid) VALUES (NEW.id, NEW.winner) ON CONFLICT (lotid, userid)
-                                                                                       DO NOTHING;
+  INSERT INTO lot_participants (lotid, userid)
+  VALUES (NEW.id, NEW.winner)
+  ON CONFLICT (lotid, userid)
+              DO NOTHING;
   SELECT count(*) FROM lot_participants WHERE lotid = NEW.id
     INTO NEW.participants;
   IF (NEW.type = 'sale' AND (OLD.winbid IS NULL AND NEW.winbid < NEW.startbid OR
@@ -800,7 +795,7 @@ BEGIN
     NEW.winner = OLD.winner;
   ELSEIF (NEW.finish - _now < _buffer)
     THEN
-      NEW.finish = NEW.finish + _buffer - (NEW.finish - _now);
+      NEW.finish = _now + _buffer;
   END IF;
   RETURN NEW;
 END;

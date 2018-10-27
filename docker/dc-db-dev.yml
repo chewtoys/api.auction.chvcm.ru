@@ -30,12 +30,13 @@ services:
       RABBITMQ_DEFAULT_PASS: "${RABBITMQ_PASS}"
     volumes:
     - "${RABBITMQ_VOLUME}:/var/lib/rabbitmq"
-  fakes3:
-    build:
-      context: fakes3
-      dockerfile: Dockerfile
+  s3proxy:
+    image: "andrewgaul/s3proxy:${S3PROXY_TAG}"
     restart: "${COMPOSE_RESTART}"
     ports:
-    - "${FAKES3_PORT}:4567"
+    - "${S3PROXY_PORT}:80"
+    environment:
+      S3PROXY_IDENTITY: "${S3PROXY_ACCESS_KEY_ID}"
+      S3PROXY_CREDENTIAL: "${S3PROXY_SECRET_ACCESS_KEY}"
     volumes:
-    - "${FAKES3_VOLUME}:/mnt/fakes3_root"
+    - "${S3PROXY_VOLUME}:/data"

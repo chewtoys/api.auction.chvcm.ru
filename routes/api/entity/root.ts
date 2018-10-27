@@ -61,7 +61,7 @@ router.post("/:id", new RequestValidator({
   let entity: IEntityInstance | null = null;
   await res.achain
     .action(async () => {
-      entity = await Sequelize.instance.entity.findById(req.params.value.id.value);
+      entity = await Sequelize.instance.entity.findByPk(req.params.value.id.value);
     })
     .check(() => {
       return !!entity;
@@ -69,8 +69,8 @@ router.post("/:id", new RequestValidator({
     .action(async () => {
       await Sequelize.instance.transaction(async () => {
         await Sequelize.instance.entity.update(cleanDeep({
-          banned: _.get(req.body.value.banned, "value"),
-          verified: _.get(req.body.value.verified, "value"),
+          banned: _.get(req.body.value.banned, "value"), // TODO: поддержка кастомного сообщения для бана
+          verified: _.get(req.body.value.verified, "value"), // TODO: force disable verified on banned
         }), {
           where: {
             id: req.params.value.id.value,

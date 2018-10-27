@@ -1,3 +1,5 @@
+// TODO: move to separate package
+
 const dgram = require("dgram");
 
 const Message = require("dns-protocol").default;

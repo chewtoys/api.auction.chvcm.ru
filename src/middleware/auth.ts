@@ -1,3 +1,6 @@
+// tslint:disable no-reference
+/// <reference path="../../types/index.d.ts" />
+
 import {NextFunction, Request, Response} from "express";
 
 import {
@@ -12,6 +15,8 @@ import {
   Jwt,
   Sequelize,
 } from "../index";
+
+// TODO: use 403 forbidden for requireXXX
 
 /**
  * Auth middleware collection
@@ -127,7 +132,7 @@ export class Auth {
       })
       .fork(Const.USER_TYPE_EMPLOYEE)
       .action(async () => {
-        req.employee = (await Sequelize.instance.employee.findById(verifiedUser.id)) as IEmployeeAttributes;
+        req.employee = (await Sequelize.instance.employee.findByPk(verifiedUser.id)) as IEmployeeAttributes;
         commonUser = req.employee;
       })
       .check(() => {
@@ -135,7 +140,7 @@ export class Auth {
       }, ApiCodes.DB_EMPLOYEE_NOT_FOUND_BY_ID, "employee with same id not found", 401)
       .fork(Const.USER_TYPE_ENTITY)
       .action(async () => {
-        req.entity = (await Sequelize.instance.entity.findById(verifiedUser.id)) as IEntityAttributes;
+        req.entity = (await Sequelize.instance.entity.findByPk(verifiedUser.id)) as IEntityAttributes;
         commonUser = req.entity;
       })
       .check(() => {

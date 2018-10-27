@@ -5,7 +5,7 @@
 --   \ \ \/\ \L\ \/\__, `\\ \ \_/\ \L\ \ \ \//\  __/ /\ \L\ \ \ \\'\\ \ \L\ \
 --    \ \_\ \____/\/\____/ \ \__\ \____ \ \_\\ \____\\ `\____\ \___\_\ \____/
 --     \/_/\/___/  \/___/   \/__/\/___L\ \/_/ \/____/ \/_____/\/__//_/\/___/
---                                 /\____/                               v10
+--                                 /\____/                               v11
 --                                 \_/__/                Font Name: Larry 3D
 
 DROP VIEW employees;
@@ -21,7 +21,6 @@ DROP TABLE tokens_tfa_purgatory;
 DROP TABLE tokens_tfa_recovery;
 DROP TABLE tokens_password_reset;
 
-DROP TABLE attachments;
 DROP TABLE users_employees;
 DROP TABLE users_entities;
 DROP TABLE users_common;

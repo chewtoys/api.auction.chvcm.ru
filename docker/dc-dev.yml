@@ -14,7 +14,7 @@ services:
     - postgres
     - redis
     - rabbitmq
-    - fakes3
+    - s3proxy
     - mail
   mail:
     image: analogic/poste.io:2

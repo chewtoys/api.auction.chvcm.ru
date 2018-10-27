@@ -3,5 +3,23 @@ html
     meta(charset="utf-8")
     meta(name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no")
     link(rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css" data-inline)
+    link(rel="stylesheet" href="/emails/templates/master.css" data-inline)
   body
-    block content
+    div.email-margin-top
+      img(src="/emails/templates/logo.png" alt="logo").mx-auto.d-block
+    div.email-margin-top
+      div.container
+        block content
+        small.text-muted
+          = t("master.you_received_this_email_part1")
+          a(href="https://auction.chvcm.ru" target="_blank") auction.chvcm.ru
+          | .
+          = t("master.you_received_this_email_part2")
+    hr
+    div.container-fluid
+      address
+        strong АО "Челябинторцветмет"
+        br
+        a(href="mailto:info@chvcm.ru") info@chvcm.ru
+        br
+        a(href="tel:+73517411406") +7(351) 741 14 06

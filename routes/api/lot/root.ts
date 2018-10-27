@@ -178,7 +178,7 @@ router.post("/", new RequestValidator({
   let stuff: IStuffInstance | null;
   await res.achain
     .action(async () => {
-      stuff = await Sequelize.instance.stuff.findById(req.body.value.stuffid.value, {
+      stuff = await Sequelize.instance.stuff.findByPk(req.body.value.stuffid.value, {
         attributes: ["id"],
       });
     })

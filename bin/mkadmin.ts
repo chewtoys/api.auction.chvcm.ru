@@ -27,7 +27,7 @@ const program = commander
 RedisClient.instantiate();
 EmailNotifications.instantiateSmtp();
 Sequelize.instantiateWorker();
-PgEnumUnitClient.instantiate(Sequelize.instance);
+PgEnumUnitClient.instantiate(Sequelize.instance as any); // TODO: remove "as any" when will be used normal types
 PgEnumUnitCacheMemory.instantiate();
 
 const form = new ObjectUnit(program, {

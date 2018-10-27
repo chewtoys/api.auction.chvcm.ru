@@ -30,7 +30,7 @@ describe("POST /stuff/:id", () => {
     reCaptchaMockAdapter.onPost(Recaptcha2.VERIFY_URL).reply(200, {
       success: true,
     });
-    await Sequelize.instance.employee.insertOrUpdate({
+    await Sequelize.instance.employee.upsert({
       email: "admin@example.com",
       language: "ru",
       moderator: true,
@@ -271,7 +271,7 @@ describe("POST /stuff/:id", () => {
         },
       })
       .expect(204);
-    const stuff = await Sequelize.instance.stuff.findById("1", {
+    const stuff = await Sequelize.instance.stuff.findByPk("1", {
       include: [{
         model: Sequelize.instance.stuffTranslations,
       }],
@@ -325,7 +325,7 @@ describe("POST /stuff/:id", () => {
         },
       })
       .expect(204);
-    const stuff = await Sequelize.instance.stuff.findById("1", {
+    const stuff = await Sequelize.instance.stuff.findByPk("1", {
       include: [{
         model: Sequelize.instance.stuffTranslations,
       }],

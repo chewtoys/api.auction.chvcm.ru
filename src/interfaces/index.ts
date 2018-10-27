@@ -1,4 +1,3 @@
-export * from "./attachment";
 export * from "./employee";
 export * from "./entity";
 export * from "./isignUser";

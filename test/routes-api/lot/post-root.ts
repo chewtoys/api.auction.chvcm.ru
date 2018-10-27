@@ -23,7 +23,7 @@ describe("POST /lot", () => {
     reCaptchaMockAdapter.onPost(Recaptcha2.VERIFY_URL).reply(200, {
       success: true,
     });
-    await Sequelize.instance.employee.insertOrUpdate({
+    await Sequelize.instance.employee.upsert({
       email: "admin@example.com",
       language: "ru",
       moderator: true,
@@ -129,7 +129,7 @@ describe("POST /lot", () => {
         id: "1",
       });
 
-    const lot = await Sequelize.instance.lot.findById("1") as ILotInstance;
+    const lot = await Sequelize.instance.lot.findByPk("1") as ILotInstance;
     expect(lot.id).equal("1");
     expect(lot.stuffid).equal("1");
     expect(lot.type).equal("sale");

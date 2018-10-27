@@ -3,21 +3,21 @@ import {Router} from "express";
 const router = Router();
 export default router;
 
-import attachment from "./attachment/index";
-import employee from "./employee/index";
-import entity from "./entity/index";
-import lot from "./lot/index";
-import password from "./password/index";
-import stuff from "./stuff/index";
-import tfa from "./tfa/index";
-import user from "./user/index";
+import attachments from "./attachments";
+import employee from "./employee";
+import entity from "./entity";
+import lot from "./lot";
+import password from "./password";
+import stuff from "./stuff";
+import tfa from "./tfa";
+import user from "./user";
 
 import limits from "./limits";
 import ping from "./ping";
 import signin from "./signin";
 import signup from "./signup";
 
-router.use("/attachment", attachment);
+router.use("/attachments", attachments);
 router.use("/employee", employee);
 router.use("/entity", entity);
 router.use("/lot", lot);

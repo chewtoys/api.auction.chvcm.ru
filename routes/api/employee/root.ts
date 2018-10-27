@@ -175,7 +175,7 @@ router.post("/:id", new RequestValidator({
   let employee: IEmployeeInstance | null = null;
   await res.achain
     .action(async () => {
-      employee = await Sequelize.instance.employee.findById(req.params.value.id.value);
+      employee = await Sequelize.instance.employee.findByPk(req.params.value.id.value);
     })
     .check(() => {
       return !!employee;
@@ -184,7 +184,7 @@ router.post("/:id", new RequestValidator({
       await Sequelize.instance.transaction(async () => {
         await Sequelize.instance.employee.update(cleanDeep({
           admin: _.get(req.body.value.admin, "value"),
-          banned: _.get(req.body.value.banned, "value"),
+          banned: _.get(req.body.value.banned, "value"), // TODO: поддержка кастомного сообщения для бана
           moderator: _.get(req.body.value.moderator, "value"),
         }), {
           where: {

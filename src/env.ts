@@ -23,7 +23,7 @@ export class Env {
   // DB
 
   /**
-   * Redis URL
+   * Redis URL in format redis://host:6379
    * @type {string}
    */
   public static readonly REDIS_URL: string = process.env.REDIS_URL as string;
@@ -60,6 +60,26 @@ export class Env {
    * @type {boolean}
    */
   public static readonly DATABASE_SSL: boolean = !!process.env.DATABASE_SSL;
+
+  /**
+   * AWS endpoint in format "https://{service}.{region}.amazonaws.com"
+   */
+  public static readonly AWS_ENDPOINT: string = process.env.AWS_ENDPOINT as string;
+
+  /**
+   * AWS access key ID
+   */
+  public static readonly AWS_ACCESS_KEY_ID: string = process.env.AWS_ACCESS_KEY_ID as string;
+
+  /**
+   * AWS secret access key
+   */
+  public static readonly AWS_SECRET_ACCESS_KEY: string = process.env.AWS_SECRET_ACCESS_KEY as string;
+
+  /**
+   * AWS S3 bucket name
+   */
+  public static readonly AWS_S3_BUCKET: string = process.env.AWS_S3_BUCKET as string;
 
   // web
 

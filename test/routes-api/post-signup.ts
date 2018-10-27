@@ -677,7 +677,7 @@ describe("POST /signup", () => {
     expect(parsedToken.id).equal("1");
     expect(parsedToken.type).equal("entity");
 
-    const entity = await Sequelize.instance.entity.findById("1");
+    const entity = await Sequelize.instance.entity.findByPk("1");
     expect((entity as IEntityInstance).id).equal("1");
     expect((entity as IEntityInstance).name).equal("Luminoso");
     expect((entity as IEntityInstance).email).equal("entity@example.com");
@@ -733,7 +733,7 @@ describe("POST /signup", () => {
     expect(parsedToken.id).equal("1");
     expect(parsedToken.type).equal("entity");
 
-    const entity = await Sequelize.instance.entity.findById("1");
+    const entity = await Sequelize.instance.entity.findByPk("1");
     expect((entity as IEntityInstance).id).equal("1");
     expect((entity as IEntityInstance).name).equal("Luminoso");
     expect((entity as IEntityInstance).email).equal("entity@example.com");
@@ -789,7 +789,7 @@ describe("POST /signup", () => {
     expect(parsedToken.id).equal("1");
     expect(parsedToken.type).equal("entity");
 
-    const entity = await Sequelize.instance.entity.findById("1");
+    const entity = await Sequelize.instance.entity.findByPk("1");
     expect((entity as IEntityInstance).id).equal("1");
     expect((entity as IEntityInstance).name).equal("Luminoso");
     expect((entity as IEntityInstance).email).equal("entity@example.com");

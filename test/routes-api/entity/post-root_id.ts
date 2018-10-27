@@ -25,7 +25,7 @@ describe("POST /entity/:id", () => {
     reCaptchaMockAdapter.onPost(Recaptcha2.VERIFY_URL).reply(200, {
       success: true,
     });
-    await Sequelize.instance.employee.insertOrUpdate({
+    await Sequelize.instance.employee.upsert({
       email: "admin@example.com",
       language: "ru",
       moderator: true,
@@ -161,7 +161,7 @@ describe("POST /entity/:id", () => {
       .send({})
       .expect(204);
 
-    const entity = await Sequelize.instance.entity.findById("2");
+    const entity = await Sequelize.instance.entity.findByPk("2");
     expect((entity as IEntityInstance).banned).equal(false);
     expect((entity as IEntityInstance).verified).equal(false);
 
@@ -187,7 +187,7 @@ describe("POST /entity/:id", () => {
       })
       .expect(204);
 
-    const entity = await Sequelize.instance.entity.findById("2");
+    const entity = await Sequelize.instance.entity.findByPk("2");
     expect((entity as IEntityInstance).banned).equal(true);
     expect((entity as IEntityInstance).verified).equal(false);
 
@@ -218,7 +218,7 @@ describe("POST /entity/:id", () => {
       })
       .expect(204);
 
-    const entity = await Sequelize.instance.entity.findById("2");
+    const entity = await Sequelize.instance.entity.findByPk("2");
     expect((entity as IEntityInstance).banned).equal(true);
     expect((entity as IEntityInstance).verified).equal(false);
 
@@ -249,7 +249,7 @@ describe("POST /entity/:id", () => {
       })
       .expect(204);
 
-    const entity = await Sequelize.instance.entity.findById("2");
+    const entity = await Sequelize.instance.entity.findByPk("2");
     expect((entity as IEntityInstance).banned).equal(true);
     expect((entity as IEntityInstance).verified).equal(false);
 
@@ -279,7 +279,7 @@ describe("POST /entity/:id", () => {
       })
       .expect(204);
 
-    const entity = await Sequelize.instance.entity.findById("2");
+    const entity = await Sequelize.instance.entity.findByPk("2");
     expect((entity as IEntityInstance).banned).equal(true);
     expect((entity as IEntityInstance).verified).equal(false);
 
@@ -305,7 +305,7 @@ describe("POST /entity/:id", () => {
       })
       .expect(204);
 
-    const entity = await Sequelize.instance.entity.findById("2");
+    const entity = await Sequelize.instance.entity.findByPk("2");
     expect((entity as IEntityInstance).banned).equal(false);
     expect((entity as IEntityInstance).verified).equal(false);
 
@@ -336,7 +336,7 @@ describe("POST /entity/:id", () => {
       })
       .expect(204);
 
-    const entity = await Sequelize.instance.entity.findById("2");
+    const entity = await Sequelize.instance.entity.findByPk("2");
     expect((entity as IEntityInstance).banned).equal(false);
     expect((entity as IEntityInstance).verified).equal(false);
 
@@ -367,7 +367,7 @@ describe("POST /entity/:id", () => {
       })
       .expect(204);
 
-    const entity = await Sequelize.instance.entity.findById("2");
+    const entity = await Sequelize.instance.entity.findByPk("2");
     expect((entity as IEntityInstance).banned).equal(false);
     expect((entity as IEntityInstance).verified).equal(false);
 
@@ -398,7 +398,7 @@ describe("POST /entity/:id", () => {
       })
       .expect(204);
 
-    const entity = await Sequelize.instance.entity.findById("2");
+    const entity = await Sequelize.instance.entity.findByPk("2");
     expect((entity as IEntityInstance).banned).equal(false);
     expect((entity as IEntityInstance).verified).equal(false);
 
@@ -424,7 +424,7 @@ describe("POST /entity/:id", () => {
       })
       .expect(204);
 
-    const entity = await Sequelize.instance.entity.findById("2");
+    const entity = await Sequelize.instance.entity.findByPk("2");
     expect((entity as IEntityInstance).banned).equal(false);
     expect((entity as IEntityInstance).verified).equal(true);
 
@@ -455,7 +455,7 @@ describe("POST /entity/:id", () => {
       })
       .expect(204);
 
-    const entity = await Sequelize.instance.entity.findById("2");
+    const entity = await Sequelize.instance.entity.findByPk("2");
     expect((entity as IEntityInstance).banned).equal(false);
     expect((entity as IEntityInstance).verified).equal(true);
 
@@ -486,7 +486,7 @@ describe("POST /entity/:id", () => {
       })
       .expect(204);
 
-    const entity = await Sequelize.instance.entity.findById("2");
+    const entity = await Sequelize.instance.entity.findByPk("2");
     expect((entity as IEntityInstance).banned).equal(false);
     expect((entity as IEntityInstance).verified).equal(true);
 
@@ -516,7 +516,7 @@ describe("POST /entity/:id", () => {
       })
       .expect(204);
 
-    const entity = await Sequelize.instance.entity.findById("2");
+    const entity = await Sequelize.instance.entity.findByPk("2");
     expect((entity as IEntityInstance).banned).equal(false);
     expect((entity as IEntityInstance).verified).equal(true);
 
@@ -542,7 +542,7 @@ describe("POST /entity/:id", () => {
       })
       .expect(204);
 
-    const entity = await Sequelize.instance.entity.findById("2");
+    const entity = await Sequelize.instance.entity.findByPk("2");
     expect((entity as IEntityInstance).banned).equal(false);
     expect((entity as IEntityInstance).verified).equal(false);
 
@@ -573,12 +573,12 @@ describe("POST /entity/:id", () => {
       })
       .expect(204);
 
-    const entity = await Sequelize.instance.entity.findById("2");
+    const entity = await Sequelize.instance.entity.findByPk("2");
     expect((entity as IEntityInstance).banned).equal(false);
     expect((entity as IEntityInstance).verified).equal(false);
 
     sinon.assert.calledOnce(spyMail);
-    expect(spyMail.args[0][0].originalMessage.subject).equal("Your account is not verified!");
+    expect(spyMail.args[0][0].originalMessage.subject).equal("Your account is awaiting verification!");
     expect(spyMail.args[0][0].originalMessage.from).equal(Env.EMAIL_FROM);
     expect(spyMail.args[0][0].originalMessage.to).equal("entity@example.com");
     expect(spyMail.args[0][0].originalMessage.html).contains("Luminoso");
@@ -604,12 +604,12 @@ describe("POST /entity/:id", () => {
       })
       .expect(204);
 
-    const entity = await Sequelize.instance.entity.findById("2");
+    const entity = await Sequelize.instance.entity.findByPk("2");
     expect((entity as IEntityInstance).banned).equal(false);
     expect((entity as IEntityInstance).verified).equal(false);
 
     sinon.assert.calledOnce(spyMail);
-    expect(spyMail.args[0][0].originalMessage.subject).equal("Your account is not verified!");
+    expect(spyMail.args[0][0].originalMessage.subject).equal("Your account is awaiting verification!");
     expect(spyMail.args[0][0].originalMessage.from).equal(Env.EMAIL_FROM);
     expect(spyMail.args[0][0].originalMessage.to).equal("entity@example.com");
     expect(spyMail.args[0][0].originalMessage.html).contains("Luminoso");
@@ -635,7 +635,7 @@ describe("POST /entity/:id", () => {
       })
       .expect(204);
 
-    const entity = await Sequelize.instance.entity.findById("2");
+    const entity = await Sequelize.instance.entity.findByPk("2");
     expect((entity as IEntityInstance).banned).equal(false);
     expect((entity as IEntityInstance).verified).equal(false);
 

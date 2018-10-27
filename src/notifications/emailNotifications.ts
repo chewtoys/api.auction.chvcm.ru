@@ -93,6 +93,7 @@ export class EmailNotifications extends EventEmitter {
       juiceResources: {
         preserveImportant: true,
         webResources: {
+          images: true,
           relativeTo: baseDir,
         },
       },
@@ -289,7 +290,11 @@ export class EmailNotifications extends EventEmitter {
    * Send "unverified" message
    * @param entity Entity
    */
-  public async unverified(entity: IEntityAttributes) {
+  public async unverified(entity: {
+    email?: string;
+    language?: string;
+    name?: string;
+  }) {
     await this.send({
       locals: {
         locale: entity.language,
@@ -305,10 +310,13 @@ export class EmailNotifications extends EventEmitter {
   /**
    * Send "test" message
    * @param to To
+   * @param locale Locale
    */
-  public async test(to: string) {
+  public async test(to: string, locale: string = "en") {
     await this.send({
-      locals: {},
+      locals: {
+        locale,
+      },
       message: {
         to,
       },

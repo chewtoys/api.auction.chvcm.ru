@@ -4,7 +4,6 @@ import * as SuperSequelize from "sequelize";
 import {Const} from "../const";
 import {Env} from "../env";
 import {
-  IAttachmentAttributes, IAttachmentInstance, IAttachmentModel,
   IEmployeeAttributes, IEmployeeInstance, IEmployeeModel,
   IEntityAttributes, IEntityInstance, IEntityModel,
   ILotAttributes, ILotInstance, ILotModel,
@@ -146,7 +145,6 @@ export class Sequelize extends SuperSequelize {
   private _user: IUserModel = undefined as any;
   private _employee: IEmployeeModel = undefined as any;
   private _entity: IEntityModel = undefined as any;
-  private _attachment: IAttachmentModel = undefined as any;
   private _tokensTfaPurgatory: ITokensTfaPurgatoryModel = undefined as any;
   private _tokensPasswordReset: ITokensPasswordResetModel = undefined as any;
   private _tokensTfaRecovery: ITokensTfaRecoveryModel = undefined as any;
@@ -183,7 +181,6 @@ export class Sequelize extends SuperSequelize {
     this.defineUser();
     this.defineEmployee();
     this.defineEntity();
-    this.defineAttachment();
     this.defineTokensTfaPurgatory();
     this.defineTokensPasswordReset();
     this.defineTokensTfaRecovery();
@@ -216,14 +213,6 @@ export class Sequelize extends SuperSequelize {
    */
   public get entity() {
     return this._entity;
-  }
-
-  /**
-   * Attachment
-   * @return {IAttachmentModel}
-   */
-  public get attachment() {
-    return this._attachment;
   }
 
   /**
@@ -342,28 +331,6 @@ export class Sequelize extends SuperSequelize {
     };
     this._entity = this.define<IEntityInstance, IEntityAttributes>("entities", attributes, {
       freezeTableName: true,
-    });
-  }
-
-  private defineAttachment() {
-    this._attachment = this.define<IAttachmentInstance, IAttachmentAttributes>("attachments", {
-      url: {
-        allowNull: false,
-        type: SuperSequelize.TEXT,
-      },
-      userid: {
-        primaryKey: true,
-        type: SuperSequelize.BIGINT,
-      },
-    }, {
-      freezeTableName: true,
-    });
-    this.entity.hasMany(this._attachment, {
-      foreignKey: "userid",
-      sourceKey: "id",
-    });
-    this._attachment.belongsTo(this.entity, {
-      foreignKey: "userid",
     });
   }
 

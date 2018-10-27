@@ -11,18 +11,26 @@ import {PgEnumUnitCacheMemory, PgEnumUnitClient} from "@alendo/express-req-valid
 import MockAdapter from "axios-mock-adapter";
 import {afterEach, beforeEach} from "mocha";
 
-import {EmailNotifications, PgMigrate, Recaptcha2, RedisClient, Sequelize, Web} from "../src";
+import {EmailNotifications, PgMigrate, Recaptcha2, RedisClient, S3, Sequelize, Web} from "../src";
 
 export let reCaptchaMockAdapter: MockAdapter;
 
+export function allowReCaptcha(): void {
+  reCaptchaMockAdapter.onPost(Recaptcha2.VERIFY_URL).reply(200, {
+    success: true,
+  });
+}
+
 beforeEach(async () => {
+  await S3.emptyBucket(true);
+
   RedisClient.instantiate();
   await RedisClient.flushdb();
 
   EmailNotifications.instantiateSmtp();
 
   Sequelize.instantiateWeb();
-  PgEnumUnitClient.instantiate(Sequelize.instance);
+  PgEnumUnitClient.instantiate(Sequelize.instance as any); // TODO: remove "as any" when will be used normal types
   PgEnumUnitCacheMemory.instantiate();
 
   await Sequelize.instance.query("CREATE SCHEMA IF NOT EXISTS public;");

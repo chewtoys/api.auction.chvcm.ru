@@ -12,7 +12,10 @@ describe("GET /limits", () => {
           json: Env.EXPRESS_BODY_PARSER_LIMIT_JSON,
           raw: Env.EXPRESS_BODY_PARSER_LIMIT_RAW,
         },
-        limit: Const.LIMIT_LIMIT,
+        limits: {
+          attachments: Const.AWS_S3_LIMIT_LIMIT,
+          db: Const.LIMIT_LIMIT,
+        },
       });
   });
 });

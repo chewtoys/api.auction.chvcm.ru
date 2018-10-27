@@ -24,6 +24,10 @@ env:
   - DATABASE_NATIVE=true
   - DATABASE_POOL_MAX_WEB=10
   - DATABASE_POOL_MAX_WORKER=10
+  - AWS_ENDPOINT=http://localhost:4567
+  - AWS_ACCESS_KEY_ID=key
+  - AWS_SECRET_ACCESS_KEY=secret
+  - AWS_S3_BUCKET=api.auction.chvcm.ru
   # Web
   - PORT=8080
   - HOST=0.0.0.0
@@ -53,11 +57,13 @@ env:
   - RABBITMQ_USER=guest
   - RABBITMQ_PASS=guest
   - RABBITMQ_VOLUME=/mnt/alendo-api.auction.chvcm.ru-rabbitmq-ramdisk
-  # fakes3
-  - FAKES3_PORT=4567
-  - FAKES3_VOLUME=/mnt/alendo-api.auction.chvcm.ru-fakes3-ramdisk
+  # s3poxy
+  - S3PROXY_PORT=4567
+  - S3PROXY_ACCESS_KEY_ID=key
+  - S3PROXY_SECRET_ACCESS_KEY=secret
+  - S3PROXY_VOLUME=/mnt/alendo-api.auction.chvcm.ru-s3poxy-ramdisk
   matrix:
-  - POSTGRES_TAG=10 REDIS_TAG=4 RABBITMQ_TAG=3-management
+  - POSTGRES_TAG=11 REDIS_TAG=5 RABBITMQ_TAG=3-management S3PROXY_TAG=latest
 
 install:
 # Code Climate
@@ -65,13 +71,13 @@ install:
 - chmod +x ./cc-test-reporter
 # Yarn
 - curl -o- -L https://yarnpkg.com/install.sh | bash -s
-- export PATH="$HOME/.config/yarn/global/node_modules/.bin:$HOME/.yarn/bin:$PATH" # https://github.com/tj/commander.js/issues/866
+- export PATH="$HOME/.config/yarn/global/node_modules/.bin:$HOME/.yarn/bin:$PATH" # TODO: https://github.com/tj/commander.js/issues/866
 - yarn global add https://github.com/AlendoStudio/node-relebox.git
-- yarn global add https://github.com/AlendoStudio/node-relebox.git # to avoid https://github.com/yarnpkg/yarn/issues/3421
+- yarn global add https://github.com/AlendoStudio/node-relebox.git # TODO: to avoid https://github.com/yarnpkg/yarn/issues/3421
 - yarn install --production false
 
 before_script:
-# https://github.com/travis-ci/travis-ci/issues/4842#issuecomment-311527059
+# TODO: https://github.com/travis-ci/travis-ci/issues/4842#issuecomment-311527059
 - sudo service postgresql stop
 - while sudo lsof -Pi :5432 -sTCP:LISTEN -t; do sleep 1; done
 # Docker
@@ -118,6 +124,8 @@ jobs:
     before_deploy:
     - rm -rf dist
     - yarn pack
+    - yarn build-apidoc
+    - tar -cf apidoc.tgz apidoc
     - sha256sum *.tgz > SHASUMS256.txt
     - cat SHASUMS256.txt
     deploy:
