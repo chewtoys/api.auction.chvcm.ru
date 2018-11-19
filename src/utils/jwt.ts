@@ -6,6 +6,7 @@ import {ISignUser} from "../interfaces";
 
 /**
  * JSON Web Token
+ * TODO: refactoring it
  */
 export class Jwt {
   /**

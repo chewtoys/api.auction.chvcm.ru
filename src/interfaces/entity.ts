@@ -4,8 +4,8 @@ import {IUserCommonAttributes} from "./user";
 
 export interface IEntityAttributes extends IUserCommonAttributes {
   readonly ceo?: string;
-  readonly psrn?: string;
   readonly itn?: string;
+  readonly psrn?: string;
   readonly verified?: boolean;
 }
 

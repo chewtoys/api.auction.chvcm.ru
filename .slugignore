@@ -3,6 +3,7 @@
 
 docker/
 test/
+uml/
 
 .codeclimate.yml
 .dockerignore

@@ -1,4 +1,5 @@
 apidoc/
+uml/**/*.png
 
 cc-test-reporter
 SHASUMS256.txt

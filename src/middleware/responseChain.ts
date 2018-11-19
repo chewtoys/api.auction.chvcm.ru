@@ -5,6 +5,7 @@ import {ApiCodes} from "../apiCodes";
 
 /**
  * Response chain
+ * TODO: refactoring it
  */
 export class ResponseChain extends SuperResponseChain<ResponseChain> {
   /**

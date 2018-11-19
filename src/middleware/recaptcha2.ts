@@ -10,6 +10,7 @@ import {Env} from "../env";
 
 /**
  * reCAPTCHA v2
+ * TODO: refactoring it
  */
 export class Recaptcha2 extends SuperRecaptcha2 {
   /**
@@ -30,7 +31,7 @@ export class Recaptcha2 extends SuperRecaptcha2 {
   }
 
   /**
-   * @apiDefine v000Recaptcha2
+   * @apiDefine v100Recaptcha2
    *
    * @apiError (Unauthorized 401 - reCAPTCHA запретила доступ) {string="WRONG_RECAPTCHA"} code Код ошибки
    * @apiError (Unauthorized 401 - reCAPTCHA запретила доступ) {string} message Подробное описание ошибки

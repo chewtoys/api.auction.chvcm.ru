@@ -16,80 +16,14 @@ import {
   Sequelize,
 } from "../index";
 
-// TODO: use 403 forbidden for requireXXX
+// TODO: refactoring it
 
 /**
  * Auth middleware collection
  */
 export class Auth {
   /**
-   * @apiDefine v000AuthSignUser
-   *
-   * @apiSuccess {boolean} tfa Включена ли двухэтапная аутентификация?
-   * @apiSuccess {string} token Токен аутентификации
-   */
-
-  /**
-   * Sign user
-   * @param callbacks Callbacks
-   */
-  public static signUser(...callbacks: Array<(req: Request) => Promise<void>>):
-    (req: Request, res: Response) => Promise<void> {
-    return async (req: Request, res: Response) => {
-      let token: string;
-      await res.achain
-        .action(async () => {
-          token = await Jwt.signUser({
-            id: req.user.id as string,
-            type: req.user.type as string,
-          });
-        })
-        .action(async () => {
-          await Sequelize.instance.transaction(async () => {
-            for (const callback of callbacks) {
-              await callback(req);
-            }
-            await EmailNotifications.instance.signin(req.user);
-          });
-        })
-        .json(() => {
-          return {
-            tfa: req.user.tfa,
-            token,
-          };
-        })
-        .execute();
-    };
-  }
-
-  /**
-   * Delete purgatory token
-   * @param {e.Request} req Request
-   * @return {Promise<void>}
-   */
-  public static async deletePurgatoryToken(req: Request) {
-    await Sequelize.instance.tokensTfaPurgatory.destroy({
-      where: {
-        token: req.token,
-      },
-    });
-  }
-
-  /**
-   * Delete recovery token
-   * @param {e.Request} req Request
-   * @return {Promise<void>}
-   */
-  public static async deleteRecoveryToken(req: Request) {
-    await Sequelize.instance.tokensTfaRecovery.destroy({
-      where: {
-        token: req.body.value.token.value,
-      },
-    });
-  }
-
-  /**
-   * @apiDefine v000AuthAuth
+   * @apiDefine v100AuthAuth
    *
    * @apiHeader (Authorization) {string} Authorization **Bearer** токен аутентификации
    *
@@ -152,7 +86,6 @@ export class Auth {
       }, ApiCodes.BANNED, "user was banned", 401)
       .action(() => {
         req.user = {
-          authenticator: commonUser.authenticator,
           banned: commonUser.banned,
           email: commonUser.email,
           id: commonUser.id,
@@ -169,7 +102,7 @@ export class Auth {
   }
 
   /**
-   * @apiDefine v000AuthPurgatory
+   * @apiDefine v100AuthPurgatory
    *
    * @apiHeader (Authorization Header) {string} Authorization **Bearer** временный токен аутентификации
    *
@@ -213,10 +146,10 @@ export class Auth {
   }
 
   /**
-   * @apiDefine v000AuthRequireModerator
+   * @apiDefine v100AuthRequireModerator
    *
-   * @apiError (Unauthorized 401 - Требуется модератор) {string="REQUIRED_MODERATOR"} code Код ошибки
-   * @apiError (Unauthorized 401 - Требуется модератор) {string} message Подробное описание ошибки
+   * @apiError (Forbidden 403 - Требуется модератор) {string="REQUIRED_MODERATOR"} code Код ошибки
+   * @apiError (Forbidden 403 - Требуется модератор) {string} message Подробное описание ошибки
    */
 
   /**
@@ -230,15 +163,15 @@ export class Auth {
     await res.achain
       .check(() => {
         return !!req.employee && !!req.employee.moderator;
-      }, ApiCodes.REQUIRED_MODERATOR, "required moderator", 401)
+      }, ApiCodes.REQUIRED_MODERATOR, "required moderator", 403)
       .execute(next);
   }
 
   /**
-   * @apiDefine v000AuthRequireAdmin
+   * @apiDefine v100AuthRequireAdmin
    *
-   * @apiError (Unauthorized 401 - Требуется администратор) {string="REQUIRED_ADMIN"} code Код ошибки
-   * @apiError (Unauthorized 401 - Требуется администратор) {string} message Подробное описание ошибки
+   * @apiError (Forbidden 403 - Требуется администратор) {string="REQUIRED_ADMIN"} code Код ошибки
+   * @apiError (Forbidden 403 - Требуется администратор) {string} message Подробное описание ошибки
    */
 
   /**
@@ -252,38 +185,16 @@ export class Auth {
     await res.achain
       .check(() => {
         return !!req.employee && !!req.employee.admin;
-      }, ApiCodes.REQUIRED_ADMIN, "required admin", 401)
+      }, ApiCodes.REQUIRED_ADMIN, "required admin", 403)
       .execute(next);
   }
 
   /**
-   * @apiDefine v000AuthRequireEntity
+   * @apiDefine v100AuthRequireVerifiedEntity
    *
-   * @apiError (Unauthorized 401 - Требуется юридическое лицо) {string="REQUIRED_ENTITY"} code Код ошибки
-   * @apiError (Unauthorized 401 - Требуется юридическое лицо) {string} message Подробное описание ошибки
-   */
-
-  /**
-   * Require entity access
-   * @param {e.Request} req Request
-   * @param {e.Response} res Response
-   * @param {e.NextFunction} next Next function
-   * @return {Promise<void>}
-   */
-  public static async requireEntity(req: Request, res: Response, next: NextFunction) {
-    await res.achain
-      .check(() => {
-        return !!req.entity;
-      }, ApiCodes.REQUIRED_ENTITY, "required entity", 401)
-      .execute(next);
-  }
-
-  /**
-   * @apiDefine v000AuthRequireVerifiedEntity
-   *
-   * @apiError (Unauthorized 401 - Требуется проверенное юридическое лицо) {string="REQUIRED_VERIFIED_ENTITY"} code
+   * @apiError (Forbidden 403 - Требуется проверенное юридическое лицо) {string="REQUIRED_VERIFIED_ENTITY"} code
    * Код ошибки
-   * @apiError (Unauthorized 401 - Требуется проверенное юридическое лицо) {string} message Подробное описание ошибки
+   * @apiError (Forbidden 403 - Требуется проверенное юридическое лицо) {string} message Подробное описание ошибки
    */
 
   /**
@@ -297,7 +208,7 @@ export class Auth {
     await res.achain
       .check(() => {
         return !!req.entity && !!req.entity.verified;
-      }, ApiCodes.REQUIRED_VERIFIED_ENTITY, "required verified entity", 401)
+      }, ApiCodes.REQUIRED_VERIFIED_ENTITY, "required verified entity", 403)
       .execute(next);
   }
 }

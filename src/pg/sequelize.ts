@@ -1,4 +1,5 @@
 import * as cuid from "cuid";
+import * as moment from "moment";
 import * as SuperSequelize from "sequelize";
 
 import {Const} from "../const";
@@ -11,7 +12,7 @@ import {
   IStuffAttributes, IStuffInstance, IStuffModel,
   IStuffTranslationsAttributes, IStuffTranslationsInstance, IStuffTranslationsModel,
   ITokensPasswordResetAttributes, ITokensPasswordResetInstance, ITokensPasswordResetModel,
-  ITokensTfaEmailAttributes, ITokensTfaEmailInstance, ITokensTfaEmailModel,
+  ITokensTfaOtpAttributes, ITokensTfaOtpInstance, ITokensTfaOtpModel,
   ITokensTfaPurgatoryAttributes, ITokensTfaPurgatoryInstance, ITokensTfaPurgatoryModel,
   ITokensTfaRecoveryAttributes, ITokensTfaRecoveryInstance, ITokensTfaRecoveryModel,
   IUserAttributes, IUserInstance, IUserModel,
@@ -24,7 +25,7 @@ export class Sequelize extends SuperSequelize {
   /**
    * Instantiate instance for Web
    */
-  public static instantiateWeb() {
+  public static instantiateWeb(): void {
     Sequelize._instance = new Sequelize({
       poolMax: Env.DATABASE_POOL_MAX_WEB || Env.DATABASE_POOL_MAX_WORKER,
     });
@@ -33,7 +34,7 @@ export class Sequelize extends SuperSequelize {
   /**
    * Instantiate instance for Worker
    */
-  public static instantiateWorker() {
+  public static instantiateWorker(): void {
     Sequelize._instance = new Sequelize({
       poolMax: Env.DATABASE_POOL_MAX_WORKER || Env.DATABASE_POOL_MAX_WEB,
     });
@@ -41,127 +42,33 @@ export class Sequelize extends SuperSequelize {
 
   /**
    * Operators
-   * @return {sequelize.Operators}
    */
-  public static get op() {
+  public static get op(): SuperSequelize.Operators {
     return SuperSequelize.Op;
   }
 
   /**
    * Instance
-   * @return {Sequelize}
    */
-  public static get instance() {
+  public static get instance(): Sequelize {
     return Sequelize._instance;
   }
 
   private static _instance: Sequelize;
 
-  private static get defineUserCommonAttributes(): SuperSequelize.DefineAttributes {
-    return {
-      authenticator: {
-        allowNull: true,
-        type: SuperSequelize.STRING,
-      },
-      banned: {
-        allowNull: false,
-        defaultValue: false,
-        type: SuperSequelize.BOOLEAN,
-      },
-      email: {
-        allowNull: false,
-        type: SuperSequelize.STRING,
-        unique: true,
-      },
-      id: {
-        autoIncrement: true,
-        primaryKey: true,
-        type: SuperSequelize.BIGINT,
-      },
-      language: {
-        allowNull: false,
-        type: "LANGUAGE_CODE",
-      },
-      name: {
-        allowNull: false,
-        type: SuperSequelize.STRING,
-      },
-      password: {
-        allowNull: true,
-        type: SuperSequelize.STRING,
-      },
-      phone: {
-        allowNull: false,
-        type: SuperSequelize.STRING,
-        unique: true,
-      },
-      registration: {
-        allowNull: false,
-        defaultValue: SuperSequelize.NOW,
-        type: SuperSequelize.DATE,
-      },
-      tfa: {
-        allowNull: false,
-        defaultValue: false,
-        type: SuperSequelize.BOOLEAN,
-      },
-    };
-  }
-
-  private static get defineTokensBaseAttributes(): SuperSequelize.DefineAttributes {
-    return {
-      token: {
-        defaultValue() {
-          return cuid();
-        },
-        primaryKey: true,
-        type: SuperSequelize.STRING,
-      },
-    };
-  }
-
-  private static get defineTokensTfaRecoveryAttributes(): SuperSequelize.DefineAttributes {
-    const attributes = Sequelize.defineTokensBaseAttributes;
-    attributes.userid = {
-      allowNull: false,
-      type: SuperSequelize.BIGINT,
-    };
-    return attributes;
-  }
-
-  private static defineTokensTfaPurgatoryAndPasswordResetAttributes(expiresin: number):
-    SuperSequelize.DefineAttributes {
-    const attributes = Sequelize.defineTokensTfaRecoveryAttributes;
-    attributes.expires = {
-      allowNull: false,
-      defaultValue() {
-        return new Date(Date.now() + expiresin);
-      },
-      type: SuperSequelize.DATE,
-    };
-    return attributes;
-  }
-
   private _user: IUserModel = undefined as any;
   private _employee: IEmployeeModel = undefined as any;
   private _entity: IEntityModel = undefined as any;
   private _tokensTfaPurgatory: ITokensTfaPurgatoryModel = undefined as any;
-  private _tokensPasswordReset: ITokensPasswordResetModel = undefined as any;
+  private _tokensTfaOtp: ITokensTfaOtpModel = undefined as any;
   private _tokensTfaRecovery: ITokensTfaRecoveryModel = undefined as any;
-  private _tokensTfaEmail: ITokensTfaEmailModel = undefined as any;
+  private _tokensPasswordReset: ITokensPasswordResetModel = undefined as any;
   private _stuff: IStuffModel = undefined as any;
   private _stuffTranslations: IStuffTranslationsModel = undefined as any;
   private _lot: ILotModel = undefined as any;
   private _lotParticipants: ILotParticipantsModel = undefined as any;
 
-  /**
-   * Sequelize constructor
-   * @param {{poolMax: number}} options Options
-   */
-  public constructor(options: {
-    /**
-     * Max pool connections
-     */
+  private constructor(options: {
     poolMax: number,
   }) {
     super(Env.DATABASE_URL, {
@@ -182,9 +89,9 @@ export class Sequelize extends SuperSequelize {
     this.defineEmployee();
     this.defineEntity();
     this.defineTokensTfaPurgatory();
+    this.defineTokensTfaOtp();
     this.defineTokensPasswordReset();
     this.defineTokensTfaRecovery();
-    this.defineTokensTfaEmail();
     this.defineStuff();
     this.defineStuffTranslations();
     this.defineLot();
@@ -193,151 +100,283 @@ export class Sequelize extends SuperSequelize {
 
   /**
    * User
-   * @return {IUserModel}
    */
-  public get user() {
+  public get user(): IUserModel {
     return this._user;
   }
 
   /**
    * Employee
-   * @return {IEmployeeModel}
    */
-  public get employee() {
+  public get employee(): IEmployeeModel {
     return this._employee;
   }
 
   /**
    * Entity
-   * @return {IEntityModel}
    */
-  public get entity() {
+  public get entity(): IEntityModel {
     return this._entity;
   }
 
   /**
    * Tokens TFA purgatory
-   * @return {ITokensTfaPurgatoryModel}
    */
-  public get tokensTfaPurgatory() {
+  public get tokensTfaPurgatory(): ITokensTfaPurgatoryModel {
     return this._tokensTfaPurgatory;
   }
 
   /**
-   * Tokens password reset
-   * @return {ITokensPasswordResetModel}
+   * Tokens TFA otp
    */
-  public get tokensPasswordReset() {
-    return this._tokensPasswordReset;
+  public get tokensTfaOtp(): ITokensTfaOtpModel {
+    return this._tokensTfaOtp;
   }
 
   /**
    * Tokens TFA recovery
-   * @return {ITokensTfaRecoveryModel}
    */
-  public get tokensTfaRecovery() {
+  public get tokensTfaRecovery(): ITokensTfaRecoveryModel {
     return this._tokensTfaRecovery;
   }
 
   /**
-   * Tokens TFA email
-   * @return {ITokensTfaEmailModel}
+   * Tokens password reset
    */
-  public get tokensTfaEmail() {
-    return this._tokensTfaEmail;
+  public get tokensPasswordReset(): ITokensPasswordResetModel {
+    return this._tokensPasswordReset;
   }
 
   /**
    * Stuff
-   * @return {IStuffModel}
    */
-  public get stuff() {
+  public get stuff(): IStuffModel {
     return this._stuff;
   }
 
   /**
    * Stuff translations
-   * @return {IStuffTranslationsModel}
    */
-  public get stuffTranslations() {
+  public get stuffTranslations(): IStuffTranslationsModel {
     return this._stuffTranslations;
   }
 
   /**
    * Lot
-   * @return {ILotModel}
    */
-  public get lot() {
+  public get lot(): ILotModel {
     return this._lot;
   }
 
   /**
    * Lot participants
-   * @return {ILotParticipantsModel}
    */
-  public get lotParticipants() {
+  public get lotParticipants(): ILotParticipantsModel {
     return this._lotParticipants;
   }
 
-  private defineUser() {
-    const attributes = Sequelize.defineUserCommonAttributes;
-    attributes.type = {
-      allowNull: false,
-      type: "USER_TYPE",
-      values: ["employee", "entity"],
-    };
-    this._user = this.define<IUserInstance, IUserAttributes>("users_common", attributes, {
+  private defineUser(): void {
+    this._user = this.define<IUserInstance, IUserAttributes>("users_common", {
+      banned: {
+        allowNull: false,
+        defaultValue: false,
+        type: SuperSequelize.BOOLEAN,
+      },
+      email: {
+        allowNull: false,
+        type: SuperSequelize.TEXT,
+        unique: true,
+      },
+      id: {
+        autoIncrement: true,
+        primaryKey: true,
+        type: SuperSequelize.BIGINT,
+      },
+      language: {
+        allowNull: false,
+        type: "LANGUAGE_CODE",
+      },
+      name: {
+        allowNull: false,
+        type: SuperSequelize.TEXT,
+      },
+      password: {
+        allowNull: true,
+        type: SuperSequelize.TEXT,
+      },
+      phone: {
+        allowNull: false,
+        type: SuperSequelize.TEXT,
+        unique: true,
+      },
+      registration: {
+        allowNull: false,
+        defaultValue: SuperSequelize.NOW,
+        type: SuperSequelize.DATE,
+      },
+      tfa: {
+        allowNull: false,
+        defaultValue: false,
+        type: SuperSequelize.BOOLEAN,
+      },
+      type: {
+        allowNull: false,
+        type: "USER_TYPE",
+      },
+    }, {
       freezeTableName: true,
     });
   }
 
-  private defineEmployee() {
-    const attributes = Sequelize.defineUserCommonAttributes;
-    attributes.admin = {
-      allowNull: false,
-      defaultValue: false,
-      type: SuperSequelize.BOOLEAN,
-    };
-    attributes.moderator = {
-      allowNull: false,
-      defaultValue: false,
-      type: SuperSequelize.BOOLEAN,
-    };
-    this._employee = this.define<IEmployeeInstance, IEmployeeAttributes>("employees", attributes, {
+  private defineEmployee(): void {
+    this._employee = this.define<IEmployeeInstance, IEmployeeAttributes>("employees", {
+      admin: {
+        allowNull: false,
+        defaultValue: false,
+        type: SuperSequelize.BOOLEAN,
+      },
+      banned: {
+        allowNull: false,
+        defaultValue: false,
+        type: SuperSequelize.BOOLEAN,
+      },
+      email: {
+        allowNull: false,
+        type: SuperSequelize.TEXT,
+        unique: true,
+      },
+      id: {
+        autoIncrement: true,
+        primaryKey: true,
+        type: SuperSequelize.BIGINT,
+      },
+      language: {
+        allowNull: false,
+        type: "LANGUAGE_CODE",
+      },
+      moderator: {
+        allowNull: false,
+        defaultValue: false,
+        type: SuperSequelize.BOOLEAN,
+      },
+      name: {
+        allowNull: false,
+        type: SuperSequelize.TEXT,
+      },
+      password: {
+        allowNull: true,
+        type: SuperSequelize.TEXT,
+      },
+      phone: {
+        allowNull: false,
+        type: SuperSequelize.TEXT,
+        unique: true,
+      },
+      registration: {
+        allowNull: false,
+        defaultValue: SuperSequelize.NOW,
+        type: SuperSequelize.DATE,
+      },
+      tfa: {
+        allowNull: false,
+        defaultValue: false,
+        type: SuperSequelize.BOOLEAN,
+      },
+    }, {
       freezeTableName: true,
     });
   }
 
-  private defineEntity() {
-    const attributes = Sequelize.defineUserCommonAttributes;
-    attributes.ceo = {
-      allowNull: false,
-      type: SuperSequelize.STRING,
-    };
-    attributes.psrn = {
-      allowNull: false,
-      type: SuperSequelize.BIGINT,
-      unique: true,
-    };
-    attributes.itn = {
-      allowNull: false,
-      type: SuperSequelize.BIGINT,
-      unique: true,
-    };
-    attributes.verified = {
-      allowNull: false,
-      defaultValue: false,
-      type: SuperSequelize.BOOLEAN,
-    };
-    this._entity = this.define<IEntityInstance, IEntityAttributes>("entities", attributes, {
+  private defineEntity(): void {
+    this._entity = this.define<IEntityInstance, IEntityAttributes>("entities", {
+      banned: {
+        allowNull: false,
+        defaultValue: false,
+        type: SuperSequelize.BOOLEAN,
+      },
+      ceo: {
+        allowNull: false,
+        type: SuperSequelize.TEXT,
+      },
+      email: {
+        allowNull: false,
+        type: SuperSequelize.TEXT,
+        unique: true,
+      },
+      id: {
+        autoIncrement: true,
+        primaryKey: true,
+        type: SuperSequelize.BIGINT,
+      },
+      itn: {
+        allowNull: false,
+        type: SuperSequelize.BIGINT,
+        unique: true,
+      },
+      language: {
+        allowNull: false,
+        type: "LANGUAGE_CODE",
+      },
+      name: {
+        allowNull: false,
+        type: SuperSequelize.TEXT,
+      },
+      password: {
+        allowNull: true,
+        type: SuperSequelize.TEXT,
+      },
+      phone: {
+        allowNull: false,
+        type: SuperSequelize.TEXT,
+        unique: true,
+      },
+      psrn: {
+        allowNull: false,
+        type: SuperSequelize.BIGINT,
+        unique: true,
+      },
+      registration: {
+        allowNull: false,
+        defaultValue: SuperSequelize.NOW,
+        type: SuperSequelize.DATE,
+      },
+      tfa: {
+        allowNull: false,
+        defaultValue: false,
+        type: SuperSequelize.BOOLEAN,
+      },
+      verified: {
+        allowNull: false,
+        defaultValue: false,
+        type: SuperSequelize.BOOLEAN,
+      },
+    }, {
       freezeTableName: true,
     });
   }
 
-  private defineTokensTfaPurgatory() {
+  private defineTokensTfaPurgatory(): void {
     this._tokensTfaPurgatory = this.define<ITokensTfaPurgatoryInstance, ITokensTfaPurgatoryAttributes>(
-      "tokens_tfa_purgatory",
-      Sequelize.defineTokensTfaPurgatoryAndPasswordResetAttributes(Const.TOKENS_TFA_PURGATORY_EXPIRESIN), {
+      "tokens_tfa_purgatory", {
+        expires: {
+          allowNull: false,
+          defaultValue() {
+            return moment().add(Const.TOKENS_TFA_PURGATORY_EXPIRESIN).toDate();
+          },
+          type: SuperSequelize.DATE,
+        },
+        token: {
+          defaultValue() {
+            return cuid();
+          },
+          primaryKey: true,
+          type: SuperSequelize.TEXT,
+        },
+        userid: {
+          allowNull: false,
+          type: SuperSequelize.BIGINT,
+        },
+      }, {
         freezeTableName: true,
       });
     this.user.hasMany(this._tokensTfaPurgatory, {
@@ -346,27 +385,52 @@ export class Sequelize extends SuperSequelize {
     });
     this._tokensTfaPurgatory.belongsTo(this.user, {
       foreignKey: "userid",
+      targetKey: "id",
     });
   }
 
-  private defineTokensPasswordReset() {
-    this._tokensPasswordReset = this.define<ITokensPasswordResetInstance, ITokensPasswordResetAttributes>(
-      "tokens_password_reset",
-      Sequelize.defineTokensTfaPurgatoryAndPasswordResetAttributes(Const.TOKENS_PASSWORD_RESET_EXPIRESIN), {
+  private defineTokensTfaOtp(): void {
+    this._tokensTfaOtp = this.define<ITokensTfaOtpInstance, ITokensTfaOtpAttributes>(
+      "tokens_tfa_otp", {
+        token: {
+          allowNull: false,
+          type: SuperSequelize.TEXT,
+        },
+        type: {
+          allowNull: false,
+          type: "OTP_TYPE",
+        },
+        userid: {
+          primaryKey: true,
+          type: SuperSequelize.BIGINT,
+        },
+      }, {
         freezeTableName: true,
       });
-    this.user.hasMany(this._tokensPasswordReset, {
+    this.user.hasOne(this._tokensTfaOtp, {
       foreignKey: "userid",
-      sourceKey: "id",
     });
-    this._tokensPasswordReset.belongsTo(this.user, {
+    this._tokensTfaOtp.belongsTo(this.user, {
       foreignKey: "userid",
+      targetKey: "id",
     });
   }
 
-  private defineTokensTfaRecovery() {
+  private defineTokensTfaRecovery(): void {
     this._tokensTfaRecovery = this.define<ITokensTfaRecoveryInstance, ITokensTfaRecoveryAttributes>(
-      "tokens_tfa_recovery", Sequelize.defineTokensTfaRecoveryAttributes, {
+      "tokens_tfa_recovery", {
+        token: {
+          defaultValue() {
+            return cuid();
+          },
+          primaryKey: true,
+          type: SuperSequelize.TEXT,
+        },
+        userid: {
+          allowNull: false,
+          type: SuperSequelize.BIGINT,
+        },
+      }, {
         freezeTableName: true,
       });
     this.user.hasMany(this._tokensTfaRecovery, {
@@ -375,30 +439,50 @@ export class Sequelize extends SuperSequelize {
     });
     this._tokensTfaRecovery.belongsTo(this.user, {
       foreignKey: "userid",
+      targetKey: "id",
     });
   }
 
-  private defineTokensTfaEmail() {
-    const attributes = Sequelize.defineTokensBaseAttributes;
-    attributes.purgatory = {
-      allowNull: false,
-      type: SuperSequelize.STRING,
-    };
-    this._tokensTfaEmail = this.define<ITokensTfaEmailInstance, ITokensTfaEmailAttributes>(
-      "tokens_tfa_email", attributes, {
+  private defineTokensPasswordReset(): void {
+    this._tokensPasswordReset = this.define<ITokensPasswordResetInstance, ITokensPasswordResetAttributes>(
+      "tokens_password_reset", {
+        expires: {
+          allowNull: false,
+          defaultValue() {
+            return moment().add(Const.TOKENS_PASSWORD_RESET_EXPIRESIN).toDate();
+          },
+          type: SuperSequelize.DATE,
+        },
+        token: {
+          defaultValue() {
+            return cuid();
+          },
+          primaryKey: true,
+          type: SuperSequelize.TEXT,
+        },
+        userid: {
+          allowNull: false,
+          type: SuperSequelize.BIGINT,
+        },
+      }, {
         freezeTableName: true,
       });
-    this.tokensTfaPurgatory.hasMany(this._tokensTfaEmail, {
-      foreignKey: "purgatory",
-      sourceKey: "token",
+    this.user.hasMany(this._tokensPasswordReset, {
+      foreignKey: "userid",
+      sourceKey: "id",
     });
-    this._tokensTfaEmail.belongsTo(this.tokensTfaPurgatory, {
-      foreignKey: "purgatory",
+    this._tokensPasswordReset.belongsTo(this.user, {
+      foreignKey: "userid",
+      targetKey: "id",
     });
   }
 
-  private defineStuff() {
+  private defineStuff(): void {
     this._stuff = this.define<IStuffInstance, IStuffAttributes>("stuffs", {
+      amount_type: {
+        allowNull: false,
+        type: "AMOUNT_TYPE",
+      },
       enabled: {
         allowNull: false,
         defaultValue: true,
@@ -414,7 +498,7 @@ export class Sequelize extends SuperSequelize {
     });
   }
 
-  private defineStuffTranslations() {
+  private defineStuffTranslations(): void {
     this._stuffTranslations = this.define<IStuffTranslationsInstance, IStuffTranslationsAttributes>(
       "stuff_translations", {
         code: {
@@ -424,7 +508,7 @@ export class Sequelize extends SuperSequelize {
         description: {
           allowNull: false,
           defaultValue: "",
-          type: SuperSequelize.STRING,
+          type: SuperSequelize.TEXT,
         },
         stuffid: {
           primaryKey: true,
@@ -432,7 +516,7 @@ export class Sequelize extends SuperSequelize {
         },
         title: {
           allowNull: false,
-          type: SuperSequelize.STRING,
+          type: SuperSequelize.TEXT,
         },
       }, {
         freezeTableName: true,
@@ -443,18 +527,15 @@ export class Sequelize extends SuperSequelize {
     });
     this._stuffTranslations.belongsTo(this.stuff, {
       foreignKey: "stuffid",
+      targetKey: "id",
     });
   }
 
-  private defineLot() {
+  private defineLot(): void {
     this._lot = this.define<ILotInstance, ILotAttributes>("lots", {
       amount: {
         allowNull: false,
         type: SuperSequelize.NUMERIC,
-      },
-      amount_type: {
-        allowNull: false,
-        type: "LOT_AMOUNT_TYPE",
       },
       buffer: {
         allowNull: false,
@@ -513,6 +594,7 @@ export class Sequelize extends SuperSequelize {
     });
     this._lot.belongsTo(this.stuff, {
       foreignKey: "stuffid",
+      targetKey: "id",
     });
     this.entity.hasMany(this._lot, {
       foreignKey: "winner",
@@ -520,10 +602,11 @@ export class Sequelize extends SuperSequelize {
     });
     this._lot.belongsTo(this.entity, {
       foreignKey: "winner",
+      targetKey: "id",
     });
   }
 
-  private defineLotParticipants() {
+  private defineLotParticipants(): void {
     this._lotParticipants = this.define<ILotParticipantsInstance, ILotParticipantsAttributes>(
       "lot_participants", {
         lotid: {
@@ -543,6 +626,7 @@ export class Sequelize extends SuperSequelize {
     });
     this._lotParticipants.belongsTo(this.lot, {
       foreignKey: "lotid",
+      targetKey: "id",
     });
     this.entity.hasMany(this._lotParticipants, {
       foreignKey: "userid",
@@ -550,6 +634,7 @@ export class Sequelize extends SuperSequelize {
     });
     this._lotParticipants.belongsTo(this.entity, {
       foreignKey: "userid",
+      targetKey: "id",
     });
   }
 }

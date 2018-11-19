@@ -15,7 +15,7 @@ export class PgMigrate extends SuperPgMigrate {
   public constructor() {
     super({
       client: Sequelize.instance as any, // TODO: remove "as any" when will be used normal types
-      path: path.join(baseDir, "db"),
+      path: path.join(baseDir, "db", "migrations"),
       tableName: `"public"."alendo-pg-migrate"`,
     });
   }

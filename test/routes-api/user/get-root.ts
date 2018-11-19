@@ -1,7 +1,6 @@
-import {reCaptchaMockAdapter} from "../../common";
+import {allowReCaptcha} from "../../common";
 
 import {expect} from "chai";
-import {beforeEach, describe, it} from "mocha";
 import * as supertest from "supertest";
 
 import {
@@ -9,7 +8,6 @@ import {
   Bcrypt,
   Const,
   Jwt,
-  Recaptcha2,
   Sequelize,
   Web,
 } from "../../../src";
@@ -18,10 +16,9 @@ describe("GET /user", () => {
   let tokenEmployee: string;
   let tokenEntity: string;
   beforeEach(async () => {
-    reCaptchaMockAdapter.onPost(Recaptcha2.VERIFY_URL).reply(200, {
-      success: true,
-    });
-    await Sequelize.instance.employee.upsert({
+    allowReCaptcha();
+
+    await Sequelize.instance.employee.create({
       admin: true,
       email: "admin@example.com",
       language: "ru",
@@ -36,7 +33,8 @@ describe("GET /user", () => {
         password: "super duper password",
       })
       .expect(200)).body.token;
-    tokenEntity = (await supertest(Web.instance.app).post(`${Const.API_MOUNT_POINT}/signup`)
+
+    tokenEntity = (await supertest(Web.instance.app).post(`${Const.API_MOUNT_POINT}/entities`)
       .send({
         ceo: "Catherine Havasi",
         email: "entity@example.com",
@@ -67,7 +65,7 @@ describe("GET /user", () => {
       });
   });
 
-  it("401 DB_EMPLOYEE_NOT_FOUND_BY_ID", async () => {
+  it("401 Unauthorized - DB_EMPLOYEE_NOT_FOUND_BY_ID", async () => {
     await supertest(Web.instance.app).get(`${Const.API_MOUNT_POINT}/user`)
       .set("Authorization", `Bearer ${await Jwt.signUser({
         id: "3",
@@ -79,7 +77,7 @@ describe("GET /user", () => {
       });
   });
 
-  it("401 DB_ENTITY_NOT_FOUND_BY_ID", async () => {
+  it("401 Unauthorized - DB_ENTITY_NOT_FOUND_BY_ID", async () => {
     await supertest(Web.instance.app).get(`${Const.API_MOUNT_POINT}/user`)
       .set("Authorization", `Bearer ${await Jwt.signUser({
         id: "3",
@@ -91,7 +89,7 @@ describe("GET /user", () => {
       });
   });
 
-  it("401 BANNED - employee", async () => {
+  it("401 Unauthorized - BANNED - employee", async () => {
     await Sequelize.instance.employee.update({
       banned: true,
     }, {
@@ -107,7 +105,7 @@ describe("GET /user", () => {
       });
   });
 
-  it("401 BANNED - entity", async () => {
+  it("401 Unauthorized - BANNED - entity", async () => {
     await Sequelize.instance.entity.update({
       banned: true,
     }, {

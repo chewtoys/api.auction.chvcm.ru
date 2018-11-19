@@ -1,9 +1,9 @@
 import * as SuperSequelize from "sequelize";
 
-import {ITokensTfaRecoveryAttributes} from "./tokensTfaRecovery";
-
-export interface ITokensPasswordResetAttributes extends ITokensTfaRecoveryAttributes {
+export interface ITokensPasswordResetAttributes {
   readonly expires?: Date;
+  readonly token?: string;
+  readonly userid?: string;
 }
 
 export type ITokensPasswordResetInstance =

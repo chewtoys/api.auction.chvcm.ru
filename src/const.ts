@@ -1,17 +1,18 @@
-import ms = require("ms");
+import {DurationInputObject} from "moment";
 import {ZXCVBNScore} from "zxcvbn";
 
 import {Env} from "./env";
 
 /**
  * Constants
+ * TODO: refactoring it
  */
 export class Const {
   /**
    * API mount point
    * @type {string}
    */
-  public static readonly API_MOUNT_POINT: string = "/api/v0";
+  public static readonly API_MOUNT_POINT: string = "/api/v1";
 
   /**
    * Production environment
@@ -57,15 +58,13 @@ export class Const {
 
   /**
    * Tokens (password reset) lifetime in milliseconds
-   * @type {number}
    */
-  public static readonly TOKENS_PASSWORD_RESET_EXPIRESIN: number = ms("1 hours") as number;
+  public static readonly TOKENS_PASSWORD_RESET_EXPIRESIN: DurationInputObject = {hours: 1};
 
   /**
    * Tokens (tfa purgatory) lifetime in milliseconds
-   * @type {number}
    */
-  public static readonly TOKENS_TFA_PURGATORY_EXPIRESIN: number = ms("1 hours") as number;
+  public static readonly TOKENS_TFA_PURGATORY_EXPIRESIN: DurationInputObject = {hours: 1};
 
   /**
    * User type (employee)

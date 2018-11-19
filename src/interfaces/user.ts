@@ -1,16 +1,15 @@
 import * as SuperSequelize from "sequelize";
 
 export interface IUserCommonAttributes {
-  readonly id?: string;
-  readonly name?: string;
-  readonly email?: string;
-  readonly phone?: string;
-  readonly password?: string | null;
-  readonly authenticator?: string | null;
-  readonly tfa?: boolean;
-  readonly language?: string;
   readonly banned?: boolean;
+  readonly email?: string;
+  readonly id?: string;
+  readonly language?: string;
+  readonly name?: string;
+  readonly password?: string | null;
+  readonly phone?: string;
   readonly registration?: Date;
+  readonly tfa?: boolean;
 }
 
 export interface IUserAttributes extends IUserCommonAttributes {

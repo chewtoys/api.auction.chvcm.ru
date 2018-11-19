@@ -5,6 +5,7 @@ import {Env} from "../env";
 
 /**
  * Redis client
+ * TODO: refactoring it
  */
 export class RedisClient {
   /**

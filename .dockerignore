@@ -11,6 +11,7 @@ docs/
 node_modules/
 scripts/
 test/
+uml/
 
 *.tgz
 .codeclimate.yml

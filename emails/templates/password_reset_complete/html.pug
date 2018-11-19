@@ -1,4 +1,4 @@
-extends ../master
-block content
-  p= t("password_reset_complete.text", name)
-  // TODO: redesign email
+extends ../dear
+block content-dear
+  p
+    | !{t("password_reset_complete.text")}

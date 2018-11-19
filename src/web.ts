@@ -19,6 +19,7 @@ import rootRoute from "../routes/index";
 
 /**
  * Web
+ * TODO: refactoring it
  */
 export class Web {
   /**

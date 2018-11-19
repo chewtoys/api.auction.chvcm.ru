@@ -2,9 +2,11 @@ import {NextFunction, Request, Response} from "express";
 
 import {ApiCodes} from "../apiCodes";
 import {Sequelize} from "../pg";
+import cleanDeep from "../utils/clean-deep";
 
 /**
  * Unique middleware collection
+ * TODO: refactoring it
  */
 export class Unique {
   /**
@@ -14,13 +16,19 @@ export class Unique {
    * @return {Promise}
    * @throws Error
    */
-  public static async checkEmailAndPhone(email: string, phone: string): Promise<{
+  public static async checkEmailAndPhone(email?: string, phone?: string): Promise<{
     email: boolean,
     phone: boolean,
   }> {
+    if (!email && !phone) {
+      return {
+        email: false,
+        phone: false,
+      };
+    }
     const users = await Sequelize.instance.user.findAll({
       attributes: ["email", "phone"],
-      where: {
+      where: cleanDeep({
         [Sequelize.op.or]: [
           {
             email,
@@ -28,7 +36,7 @@ export class Unique {
             phone,
           },
         ],
-      },
+      }),
     });
     return {
       email: users.some((user) => user.email === email),
@@ -66,24 +74,24 @@ export class Unique {
   }
 
   /**
-   * @apiDefine v000UniqueCheckEmailAndPhone
+   * @apiDefine v100UniqueCheckEmailAndPhone
    *
-   * @apiError (Bad Request 400 - Пользователь уже существует) {string="DB_USER_FOUND_BY_EMAIL_AND_PHONE"} code
+   * @apiError (Conflict 409 - Пользователь уже существует) {string="DB_USER_FOUND_BY_EMAIL_AND_PHONE"} code
    * Код ошибки
-   * @apiError (Bad Request 400 - Пользователь уже существует) {string} message Подробное описание ошибки
+   * @apiError (Conflict 409 - Пользователь уже существует) {string} message Подробное описание ошибки
    *
-   * @apiError (Bad Request 400 - Email уже существует) {string="DB_USER_FOUND_BY_EMAIL"} code Код ошибки
-   * @apiError (Bad Request 400 - Email уже существует) {string} message Подробное описание ошибки
+   * @apiError (Conflict 409 - Email уже существует) {string="DB_USER_FOUND_BY_EMAIL"} code Код ошибки
+   * @apiError (Conflict 409 - Email уже существует) {string} message Подробное описание ошибки
    *
-   * @apiError (Bad Request 400 - Телефон уже существует) {string="DB_USER_FOUND_BY_PHONE"} code Код ошибки
-   * @apiError (Bad Request 400 - Телефон уже существует) {string} message Подробное описание ошибки
+   * @apiError (Conflict 409 - Телефон уже существует) {string="DB_USER_FOUND_BY_PHONE"} code Код ошибки
+   * @apiError (Conflict 409 - Телефон уже существует) {string} message Подробное описание ошибки
    */
 
   /**
    * Check email and phone for unique middleware
    * @param getEmailAndPhone Get email and phone
    */
-  public static checkEmailAndPhoneMiddleware(getEmailAndPhone: (req: Request) => { email: string, phone: string }) {
+  public static checkEmailAndPhoneMiddleware(getEmailAndPhone: (req: Request) => { email?: string, phone?: string }) {
     return async (req: Request, res: Response, next: NextFunction) => {
       let checkResult: {
         email: boolean,
@@ -96,29 +104,29 @@ export class Unique {
         })
         .check(() => {
           return !(checkResult.email && checkResult.phone);
-        }, ApiCodes.DB_USER_FOUND_BY_EMAIL_AND_PHONE, "user with same email and phone already exists", 400)
+        }, ApiCodes.DB_USER_FOUND_BY_EMAIL_AND_PHONE, "user with same email and phone already exists", 409)
         .check(() => {
           return !(checkResult.email && !checkResult.phone);
-        }, ApiCodes.DB_USER_FOUND_BY_EMAIL, "user with same email already exists", 400)
+        }, ApiCodes.DB_USER_FOUND_BY_EMAIL, "user with same email already exists", 409)
         .check(() => {
           return !(!checkResult.email && checkResult.phone);
-        }, ApiCodes.DB_USER_FOUND_BY_PHONE, "user with same phone already exists", 400)
+        }, ApiCodes.DB_USER_FOUND_BY_PHONE, "user with same phone already exists", 409)
         .execute(next);
     };
   }
 
   /**
-   * @apiDefine v000UniqueCheckItnAndPsrn
+   * @apiDefine v100UniqueCheckItnAndPsrn
    *
-   * @apiError (Bad Request 400 - Юридическое лицо уже существует) {string="DB_ENTITY_FOUND_BY_ITN_AND_PSRN"} code
+   * @apiError (Conflict 409 - Юридическое лицо уже существует) {string="DB_ENTITY_FOUND_BY_ITN_AND_PSRN"} code
    * Код ошибки
-   * @apiError (Bad Request 400 - Юридическое лицо уже существует) {string} message Подробное описание ошибки
+   * @apiError (Conflict 409 - Юридическое лицо уже существует) {string} message Подробное описание ошибки
    *
-   * @apiError (Bad Request 400 - ИНН уже существует) {string="DB_ENTITY_FOUND_BY_ITN"} code Код ошибки
-   * @apiError (Bad Request 400 - ИНН уже существует) {string} message Подробное описание ошибки
+   * @apiError (Conflict 409 - ИНН уже существует) {string="DB_ENTITY_FOUND_BY_ITN"} code Код ошибки
+   * @apiError (Conflict 409 - ИНН уже существует) {string} message Подробное описание ошибки
    *
-   * @apiError (Bad Request 400 - ОГРН уже существует) {string="DB_ENTITY_FOUND_BY_PSRN"} code Код ошибки
-   * @apiError (Bad Request 400 - ОГРН уже существует) {string} message Подробное описание ошибки
+   * @apiError (Conflict 409 - ОГРН уже существует) {string="DB_ENTITY_FOUND_BY_PSRN"} code Код ошибки
+   * @apiError (Conflict 409 - ОГРН уже существует) {string} message Подробное описание ошибки
    */
 
   /**
@@ -138,13 +146,13 @@ export class Unique {
         })
         .check(() => {
           return !(checkResult.itn && checkResult.psrn);
-        }, ApiCodes.DB_ENTITY_FOUND_BY_ITN_AND_PSRN, "entity with same itn and psrn already exists", 400)
+        }, ApiCodes.DB_ENTITY_FOUND_BY_ITN_AND_PSRN, "entity with same itn and psrn already exists", 409)
         .check(() => {
           return !(checkResult.itn && !checkResult.psrn);
-        }, ApiCodes.DB_ENTITY_FOUND_BY_ITN, "entity with same itn already exists", 400)
+        }, ApiCodes.DB_ENTITY_FOUND_BY_ITN, "entity with same itn already exists", 409)
         .check(() => {
           return !(!checkResult.itn && checkResult.psrn);
-        }, ApiCodes.DB_ENTITY_FOUND_BY_PSRN, "entity with same psrn already exists", 400)
+        }, ApiCodes.DB_ENTITY_FOUND_BY_PSRN, "entity with same psrn already exists", 409)
         .execute(next);
     };
   }

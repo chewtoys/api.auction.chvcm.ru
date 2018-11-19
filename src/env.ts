@@ -2,6 +2,7 @@ import * as bytes from "bytes";
 
 /**
  * Environment variables
+ * TODO: refactoring it
  */
 export class Env {
   // Node.js

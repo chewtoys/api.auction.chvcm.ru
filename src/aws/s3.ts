@@ -8,6 +8,7 @@ export class S3 {
   /**
    * Create client
    * @param createBucket Create bucket?
+   * @throws Error
    */
   public static async createClient(createBucket: boolean = true): Promise<AWS.S3> {
     const s3 = new AWS.S3({
@@ -34,6 +35,7 @@ export class S3 {
   /**
    * Empty bucket
    * @param deleteBucket Delete bucket?
+   * @throws Error
    */
   public static async emptyBucket(deleteBucket: boolean = false): Promise<void> {
     const s3 = await S3.createClient(false);

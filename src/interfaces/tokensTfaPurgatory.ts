@@ -1,9 +1,9 @@
 import * as SuperSequelize from "sequelize";
 
-import {ITokensTfaRecoveryAttributes} from "./tokensTfaRecovery";
-
-export interface ITokensTfaPurgatoryAttributes extends ITokensTfaRecoveryAttributes {
+export interface ITokensTfaPurgatoryAttributes {
   readonly expires?: Date;
+  readonly token?: string;
+  readonly userid?: string;
 }
 
 export type ITokensTfaPurgatoryInstance =

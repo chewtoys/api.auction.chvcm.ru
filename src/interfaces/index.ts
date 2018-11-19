@@ -6,7 +6,7 @@ export * from "./lotParticipants";
 export * from "./stuff";
 export * from "./stuffTranslations";
 export * from "./tokensPasswordReset";
-export * from "./tokensTfaEmail";
+export * from "./tokensTfaOtp";
 export * from "./tokensTfaPurgatory";
 export * from "./tokensTfaRecovery";
 export * from "./user";

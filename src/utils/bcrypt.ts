@@ -4,6 +4,7 @@ import {Const} from "../const";
 
 /**
  * Bcrypt
+ * TODO: refactoring it
  */
 export class Bcrypt {
   /**

@@ -11,10 +11,7 @@ html
       div.container
         block content
         small.text-muted
-          = t("master.you_received_this_email_part1")
-          a(href="https://auction.chvcm.ru" target="_blank") auction.chvcm.ru
-          | .
-          = t("master.you_received_this_email_part2")
+          | !{t("master.you_received_this_email")}
     hr
     div.container-fluid
       address

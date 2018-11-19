@@ -1,4 +1,6 @@
-extends ../master
-block content
-  p= t("password_reset.text", name, token)
-  // TODO: redesign email
+extends ../dear
+block content-dear
+  p
+    | !{t("password_reset.text")}
+  div.alert.alert-info
+    samp= token

@@ -1,20 +1,31 @@
 import {EventEmitter} from "events";
 
-import * as debug from "debug";
 import * as path from "path";
+import * as util from "util";
 
 import * as cachePugTemplates from "cache-pug-templates";
+import * as debug from "debug";
 import * as Email from "email-templates";
+import * as marked from "marked";
 import * as nodemailer from "nodemailer";
 
 import {baseDir} from "../../global";
 import {Const} from "../const";
 import {Env} from "../env";
-import {IEntityAttributes, IUserAttributes} from "../interfaces";
 import {RedisClient} from "../redis";
+
+async function renderMarkdown(markdown?: string): Promise<string> {
+  if (!markdown) {
+    return "";
+  }
+  return await util.promisify(
+    (src: string, callback: (error: Error | null, html: string) => void) => marked(src, callback))(markdown);
+}
 
 /**
  * "EmailOptions" interface from Type definitions for node-email-templates 3.5
+ * TODO: move to interfaces
+ * TODO: move user interface to IUserEmailInterface
  */
 interface IEmailOptions {
   /**
@@ -35,6 +46,7 @@ interface IEmailOptions {
 
 /**
  * Email notifications
+ * TODO: refactoring it
  */
 export class EmailNotifications extends EventEmitter {
   /**
@@ -116,7 +128,11 @@ export class EmailNotifications extends EventEmitter {
    * Send "signin" message
    * @param user User
    */
-  public async signin(user: IUserAttributes) {
+  public async signin(user: {
+    email?: string;
+    language?: string;
+    name?: string;
+  }) {
     await this.send({
       locals: {
         locale: user.language,
@@ -131,16 +147,20 @@ export class EmailNotifications extends EventEmitter {
 
   /**
    * Send "signup" message
-   * @param user
+   * @param entity
    */
-  public async signup(user: IUserAttributes) {
+  public async signup(entity: {
+    email?: string;
+    language?: string;
+    name?: string;
+  }) {
     await this.send({
       locals: {
-        locale: user.language,
-        name: user.name,
+        locale: entity.language,
+        name: entity.name,
       },
       message: {
-        to: user.email as string,
+        to: entity.email as string,
       },
       template: "signup",
     });
@@ -150,7 +170,11 @@ export class EmailNotifications extends EventEmitter {
    * Send "signinTfa" message
    * @param user User
    */
-  public async signinTfa(user: IUserAttributes) {
+  public async signinTfa(user: {
+    email?: string;
+    language?: string;
+    name?: string;
+  }) {
     await this.send({
       locals: {
         locale: user.language,
@@ -164,30 +188,16 @@ export class EmailNotifications extends EventEmitter {
   }
 
   /**
-   * Send "tfaEmail" message
-   * @param user User
-   * @param token Token
-   */
-  public async tfaEmail(user: IUserAttributes, token: string) {
-    await this.send({
-      locals: {
-        locale: user.language,
-        name: user.name,
-        token,
-      },
-      message: {
-        to: user.email as string,
-      },
-      template: "tfa_email",
-    });
-  }
-
-  /**
    * Send "passwordReset" message
    * @param user User
    * @param token Token
    */
-  public async passwordReset(user: IUserAttributes, token: string) {
+  public async passwordReset(user: {
+                               email?: string;
+                               language?: string;
+                               name?: string;
+                             },
+                             token: string) {
     await this.send({
       locals: {
         locale: user.language,
@@ -205,7 +215,11 @@ export class EmailNotifications extends EventEmitter {
    * Send "passwordResetComplete" message
    * @param user User
    */
-  public async passwordResetComplete(user: IUserAttributes) {
+  public async passwordResetComplete(user: {
+    email?: string;
+    language?: string;
+    name?: string;
+  }) {
     await this.send({
       locals: {
         locale: user.language,
@@ -222,7 +236,11 @@ export class EmailNotifications extends EventEmitter {
    * Send "inviteEmployee" message
    * @param user User
    */
-  public async inviteEmployee(user: IUserAttributes) {
+  public async inviteEmployee(user: {
+    email?: string;
+    language?: string;
+    name?: string;
+  }) {
     await this.send({
       locals: {
         locale: user.language,
@@ -239,10 +257,16 @@ export class EmailNotifications extends EventEmitter {
    * Send "banned" message
    * @param user User
    */
-  public async banned(user: IUserAttributes) {
+  public async banned(user: {
+    email?: string;
+    language?: string;
+    message?: string;
+    name?: string;
+  }) {
     await this.send({
       locals: {
         locale: user.language,
+        message: await renderMarkdown(user.message),
         name: user.name,
       },
       message: {
@@ -256,7 +280,11 @@ export class EmailNotifications extends EventEmitter {
    * Send "unbanned" message
    * @param user User
    */
-  public async unbanned(user: IUserAttributes) {
+  public async unbanned(user: {
+    email?: string;
+    language?: string;
+    name?: string;
+  }) {
     await this.send({
       locals: {
         locale: user.language,
@@ -270,10 +298,14 @@ export class EmailNotifications extends EventEmitter {
   }
 
   /**
-   * Send "entity" message
+   * Send "verified" message
    * @param entity Entity
    */
-  public async verified(entity: IEntityAttributes) {
+  public async verified(entity: {
+    email?: string;
+    language?: string;
+    name?: string;
+  }) {
     await this.send({
       locals: {
         locale: entity.language,

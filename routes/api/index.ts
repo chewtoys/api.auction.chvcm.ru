@@ -3,36 +3,24 @@ import {Router} from "express";
 const router = Router();
 export default router;
 
-import attachments from "./attachments";
-import employee from "./employee";
-import entity from "./entity";
-import lot from "./lot";
-import password from "./password";
-import stuff from "./stuff";
-import tfa from "./tfa";
-import user from "./user";
-
-import limits from "./limits";
-import ping from "./ping";
+import employees from "./employees";
+import entities from "./entities";
+// import lots from "./lots"; // TODO: refactoring it
 import signin from "./signin";
-import signup from "./signup";
+import stuffs from "./stuffs";
+import user from "./user";
+import utils from "./utils";
 
-router.use("/attachments", attachments);
-router.use("/employee", employee);
-router.use("/entity", entity);
-router.use("/lot", lot);
-router.use("/password", password);
-router.use("/stuff", stuff);
-router.use("/tfa", tfa);
-router.use("/user", user);
-
-router.use("/limits", limits);
-router.use("/ping", ping);
+router.use("/employees", employees);
+router.use("/entities", entities);
+// router.use("/lots", lots);
 router.use("/signin", signin);
-router.use("/signup", signup);
+router.use("/stuffs", stuffs);
+router.use("/user", user);
+router.use("/utils", utils);
 
 /**
- * @apiDefine v000CommonHeaders
+ * @apiDefine v100CommonHeaders
  * @apiHeader (Accept-Encoding) {string="gzip", "deflate", "identity"} [Accept-Encoding]
  * Перечень поддерживаемых способов кодирования содержимого сущности при передаче
  *
