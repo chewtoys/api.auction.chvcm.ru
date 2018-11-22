@@ -1,6 +1,6 @@
 import {Request, Response} from "express";
 
-import {EmailNotifications, Sequelize} from "src/index";
+import {EmailNotifications, Sequelize} from "src";
 
 export default async function unverifyEntity(req: Request, res: Response) {
   await res.achain

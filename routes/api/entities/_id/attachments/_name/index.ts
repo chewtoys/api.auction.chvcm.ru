@@ -2,7 +2,7 @@ import {ObjectUnit, RequestValidator} from "@alendo/express-req-validator";
 
 import {Router} from "express";
 
-import {AttachmentNameUnit} from "src/index";
+import {AttachmentNameUnit} from "src";
 
 import root from "./root";
 

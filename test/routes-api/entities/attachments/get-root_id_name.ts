@@ -7,7 +7,7 @@ import * as supertest from "supertest";
 
 import {ApiCodes, Bcrypt, Const, Jwt, Sequelize, Web} from "../../../../src";
 
-describe("GET /attachments/:id/:name", () => {
+describe("GET /entities/:id/attachments/:name", () => {
   let tokenEmployee: string;
   let tokenEntity: string;
 
@@ -41,7 +41,7 @@ describe("GET /attachments/:id/:name", () => {
         phone: "+79123456780",
         psrn: 1_02_76_01_59327_1,
       })
-      .expect(200)).body.token;
+      .expect(201)).body.token;
   });
 
   it("Bad Request 400 - wrong id (wrong symbols)", async () => {
@@ -180,7 +180,6 @@ describe("GET /attachments/:id/:name", () => {
   it("Not Found 404 - entity not found", async () => {
     await supertest(Web.instance.app).get(`${Const.API_MOUNT_POINT}/entities/999/attachments/files.zip`)
       .set("Authorization", `Bearer ${tokenEmployee}`)
-      .set("Content-Type", "application/octet-stream")
       .expect(404, {
         code: ApiCodes.DB_ENTITY_NOT_FOUND_BY_ID,
         message: "entity with same id not found",
@@ -190,7 +189,6 @@ describe("GET /attachments/:id/:name", () => {
   it("Not Found 404 - attachment nor found", async () => {
     await supertest(Web.instance.app).get(`${Const.API_MOUNT_POINT}/entities/2/attachments/files.zip`)
       .set("Authorization", `Bearer ${tokenEntity}`)
-      .set("Content-Type", "application/octet-stream")
       .expect(404, {
         code: ApiCodes.ATTACHMENT_NOT_FOUND,
         message: "The specified key does not exist.",
@@ -213,7 +211,6 @@ describe("GET /attachments/:id/:name", () => {
     const resEmployee = await supertest(Web.instance.app)
       .get(`${Const.API_MOUNT_POINT}/entities/2/attachments/files.zip`)
       .set("Authorization", `Bearer ${tokenEmployee}`)
-      .set("Content-Type", "application/octet-stream")
       .expect(200, Buffer.of());
     expect(resEmployee.type).equal("application/octet-stream");
   });
@@ -228,14 +225,12 @@ describe("GET /attachments/:id/:name", () => {
     const resEntity = await supertest(Web.instance.app)
       .get(`${Const.API_MOUNT_POINT}/entities/2/attachments/files.zip`)
       .set("Authorization", `Bearer ${tokenEntity}`)
-      .set("Content-Type", "application/octet-stream")
       .expect(200, Buffer.from("Hello AWS!"));
     expect(resEntity.type).equal("application/octet-stream");
 
     const resEmployee = await supertest(Web.instance.app)
       .get(`${Const.API_MOUNT_POINT}/entities/2/attachments/files.zip`)
       .set("Authorization", `Bearer ${tokenEmployee}`)
-      .set("Content-Type", "application/octet-stream")
       .expect(200, Buffer.from("Hello AWS!"));
     expect(resEmployee.type).equal("application/octet-stream");
   });
@@ -250,14 +245,12 @@ describe("GET /attachments/:id/:name", () => {
     const resEntity = await supertest(Web.instance.app)
       .get(`${Const.API_MOUNT_POINT}/entities/2/attachments/files.zip`)
       .set("Authorization", `Bearer ${tokenEntity}`)
-      .set("Content-Type", "application/octet-stream")
       .expect(200, Buffer.of(0, 1, 200, 0, 20, 40));
     expect(resEntity.type).equal("application/octet-stream");
 
     const resEmployee = await supertest(Web.instance.app)
       .get(`${Const.API_MOUNT_POINT}/entities/2/attachments/files.zip`)
       .set("Authorization", `Bearer ${tokenEmployee}`)
-      .set("Content-Type", "application/octet-stream")
       .expect(200, Buffer.of(0, 1, 200, 0, 20, 40));
     expect(resEmployee.type).equal("application/octet-stream");
   });

@@ -159,7 +159,7 @@ router.use(Recaptcha2.instance.middleware, new RequestValidator({
       return {
         token,
       };
-    }) // TODO: 201 here!
+    }, 201)
     .action(async () => {
       await EmailNotifications.instance.signup(entity);
     })

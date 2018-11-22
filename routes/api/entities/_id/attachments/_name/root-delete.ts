@@ -1,6 +1,6 @@
 import {Router} from "express";
 
-import {Env, S3} from "src/index";
+import {Env, S3} from "src";
 
 import unverifyEntity from "../../unverifyEntity";
 

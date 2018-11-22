@@ -1,7 +1,7 @@
-import {AWSError} from "aws-sdk";
+import * as AWS from "aws-sdk";
 import {Router} from "express";
 
-import {ApiCodes, Env, ResponseChain, S3} from "src/index";
+import {ApiCodes, Env, ResponseChain, S3} from "src";
 
 const router = Router({
   mergeParams: true,
@@ -16,9 +16,12 @@ export default router;
  * @apiGroup Entities
  * @apiPermission Юридическое лицо или модератор
  *
- * @apiDescription В теле ответа должны быть переданы сырые байты вложения
+ * @apiDescription В теле ответа должны быть переданы сырые байты вложения через стрим
  *
  * @apiHeader (Content-Type ответа) {string="application/octet-stream"} Content-Type
+ * Формат и способ представления сущности
+ *
+ * @apiHeader (Content-Type неудачного ответа) {string="application/json"} Content-Type
  * Формат и способ представления сущности
  *
  * @apiParam {string="1..9223372036854775807"} :id ID юридического лица
@@ -45,20 +48,38 @@ export default router;
  * @apiUse v100AuthAuth
  */
 router.use(async (req, res) => {
-  let awsError: AWSError;
+  let s3: AWS.S3;
+  let awsError: AWS.AWSError;
   await res.achain
     .action(async () => {
-      const s3 = await S3.createClient();
-      try {
-        const attachment = await s3.getObject({ // TODO: stream support
+      s3 = await S3.createClient();
+    })
+    .action(() => {
+      return new Promise((resolve) => {
+        let isType = false;
+        const setResType = () => {
+          if (!isType) {
+            res.type("application/octet-stream");
+            isType = true;
+          }
+        };
+
+        s3.getObject({
           Bucket: Env.AWS_S3_BUCKET,
           Key: `entities/${req.params.id}/attachments/${req.params.name}`,
-        }).promise();
-        res.type("application/octet-stream");
-        res.status(200).send(attachment.Body);
-      } catch (e) {
-        awsError = e;
-      }
+        }).createReadStream()
+          .on("error", (error: AWS.AWSError) => {
+            awsError = error;
+            resolve();
+          })
+          .on("end", () => {
+            setResType();
+            res.status(200).send();
+            resolve();
+          })
+          .on("data", setResType)
+          .pipe(res);
+      });
     })
     .checkout(() => {
       return awsError && awsError.statusCode === 404 ? "404" : awsError ? "error" : ResponseChain.DEFAULT;

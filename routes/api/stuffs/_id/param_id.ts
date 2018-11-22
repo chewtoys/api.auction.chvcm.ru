@@ -1,6 +1,6 @@
 import {NextFunction, Request, Response} from "express";
 
-import {ApiCodes, Sequelize} from "src/index";
+import {ApiCodes, Sequelize} from "src";
 
 export default async function paramId(req: Request, res: Response, next: NextFunction) {
   let isStuffExists: boolean;

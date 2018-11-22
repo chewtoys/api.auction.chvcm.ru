@@ -7,7 +7,7 @@ import * as supertest from "supertest";
 
 import {ApiCodes, Bcrypt, Const, Jwt, Sequelize, Web} from "../../../../src";
 
-describe("GET /attachments/:id", () => {
+describe("GET /entities/:id/attachments", () => {
   let tokenEmployee: string;
   let tokenEntity: string;
 
@@ -41,7 +41,7 @@ describe("GET /attachments/:id", () => {
         phone: "+79123456780",
         psrn: 1_02_76_01_59327_1,
       })
-      .expect(200)).body.token;
+      .expect(201)).body.token;
   });
 
   it("Bad Request 400 - wrong id (wrong symbols)", async () => {

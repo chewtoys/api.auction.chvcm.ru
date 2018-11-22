@@ -3,7 +3,7 @@ import {ObjectUnit, PgLimitUnit, RequestValidator, StringUnit} from "@alendo/exp
 import {Router} from "express";
 import * as _ from "lodash";
 
-import {cleanDeep, Const, Env, S3} from "src/index";
+import {cleanDeep, Const, Env, S3} from "src";
 
 const router = Router({
   mergeParams: true,

@@ -45,7 +45,7 @@ describe("GET /user", () => {
         phone: "+79123456780",
         psrn: 1_02_76_01_59327_1,
       })
-      .expect(200)).body.token;
+      .expect(201)).body.token;
   });
 
   it("401 Unauthorized - verify user (jwt must be provided)", async () => {

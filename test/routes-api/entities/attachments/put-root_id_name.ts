@@ -20,7 +20,7 @@ import {
   Web,
 } from "../../../../src";
 
-describe("PUT /attachments/:id/:name", () => {
+describe("PUT /entities/:id/attachments/:name", () => {
   let tokenEmployee: string;
   let tokenEntity: string;
 
@@ -57,7 +57,7 @@ describe("PUT /attachments/:id/:name", () => {
         phone: "+79123456780",
         psrn: 1_02_76_01_59327_1,
       })
-      .expect(200)).body.token;
+      .expect(201)).body.token;
 
     await waitForExpect(() => {
       sinon.assert.calledTwice(spyMail);

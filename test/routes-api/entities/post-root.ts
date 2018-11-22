@@ -478,7 +478,7 @@ describe("POST /entities", () => {
         phone: "+79123456780",
         psrn: 1_02_76_01_59327_1,
       })
-      .expect(200);
+      .expect(201);
     await supertest(Web.instance.app).post(`${Const.API_MOUNT_POINT}/entities`)
       .send({
         ceo: "Catherine Havasi",
@@ -508,7 +508,7 @@ describe("POST /entities", () => {
         phone: "+79123456789",
         psrn: 1_02_76_01_59327_1,
       })
-      .expect(200);
+      .expect(201);
     await supertest(Web.instance.app).post(`${Const.API_MOUNT_POINT}/entities`)
       .send({
         ceo: "Catherine Havasi",
@@ -538,7 +538,7 @@ describe("POST /entities", () => {
         phone: "+79123456780",
         psrn: 1_02_76_01_59327_1,
       })
-      .expect(200);
+      .expect(201);
     await supertest(Web.instance.app).post(`${Const.API_MOUNT_POINT}/entities`)
       .send({
         ceo: "Catherine Havasi",
@@ -568,7 +568,7 @@ describe("POST /entities", () => {
         phone: "+79123456789",
         psrn: 1_02_76_01_59327_1,
       })
-      .expect(200);
+      .expect(201);
     await supertest(Web.instance.app).post(`${Const.API_MOUNT_POINT}/entities`)
       .send({
         ceo: "Catherine Havasi",
@@ -598,7 +598,7 @@ describe("POST /entities", () => {
         phone: "+79123456789",
         psrn: 1_03_37_00_07067_8,
       })
-      .expect(200);
+      .expect(201);
     await supertest(Web.instance.app).post(`${Const.API_MOUNT_POINT}/entities`)
       .send({
         ceo: "Catherine Havasi",
@@ -628,7 +628,7 @@ describe("POST /entities", () => {
         phone: "+79123456789",
         psrn: 1_02_76_01_59327_1,
       })
-      .expect(200);
+      .expect(201);
     await supertest(Web.instance.app).post(`${Const.API_MOUNT_POINT}/entities`)
       .send({
         ceo: "Catherine Havasi",
@@ -661,7 +661,7 @@ describe("POST /entities", () => {
         phone: "+79123456780",
         psrn: 1_02_76_01_59327_1,
       })
-      .expect(200);
+      .expect(201);
 
     await waitForExpect(() => {
       sinon.assert.calledOnce(spyMail);
@@ -719,7 +719,7 @@ describe("POST /entities", () => {
         phone: "+79123456780",
         psrn: 1_02_76_01_59327_1,
       })
-      .expect(200);
+      .expect(201);
 
     await waitForExpect(() => {
       sinon.assert.calledOnce(spyMail);

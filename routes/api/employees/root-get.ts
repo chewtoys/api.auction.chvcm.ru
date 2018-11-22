@@ -9,7 +9,7 @@ import {
 import {Router} from "express";
 import * as _ from "lodash";
 
-import {cleanDeep, Const, IEmployeeInstance, Sequelize} from "src/index";
+import {cleanDeep, Const, IEmployeeInstance, Sequelize} from "src";
 
 const router = Router();
 export default router;
