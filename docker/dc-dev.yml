@@ -7,30 +7,30 @@ services:
       dockerfile: docker/web/Dockerfile
     restart: "${COMPOSE_RESTART}"
     ports:
-    - "${WEB_PORT}:80"
+      - "${WEB_PORT}:80"
     env_file:
-    - web/.env
+      - web/.env
     depends_on:
-    - postgres
-    - redis
-    - rabbitmq
-    - s3proxy
-    - mail
+      - postgres
+      - redis
+      - rabbitmq
+      - s3proxy
+      - mail
   mail:
     image: analogic/poste.io:2
     hostname: "${MAIL_HOSTNAME}"
     dns: dns-mailoop
     restart: "${COMPOSE_RESTART}"
     ports:
-    - "${MAIL_PORT_WEB}:80"
+      - "${MAIL_PORT_WEB}:80"
     environment:
       HTTPS: 'OFF'
       DISABLE_CLAMAV: 'TRUE'
     volumes:
-    - /etc/localtime:/etc/localtime:ro
-    - "${MAIL_VOLUME}:/data"
+      - /etc/localtime:/etc/localtime:ro
+      - "${MAIL_VOLUME}:/data"
     depends_on:
-    - dns-mailoop
+      - dns-mailoop
   dns-mailoop:
     build:
       context: dns-mailoop
