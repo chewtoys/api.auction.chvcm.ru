@@ -97,7 +97,7 @@ export class Web {
 
     this.app.use(helmet());
 
-    this.app.use(express.static(path.join(baseDir, "build")));
+    this.app.use(express.static(path.join(baseDir, "public", "dist")));
 
     this.app.use(cors({
       origin(origin, callback) {
