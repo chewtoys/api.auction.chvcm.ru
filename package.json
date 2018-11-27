@@ -11,7 +11,7 @@
   },
   "scripts": {
     "build-src": "rimraf dist && tsc",
-    "build-public": "rimraf build && nuxt build",
+    "build-public": "nuxt build",
     "build-apidoc": "apidoc -i routes -i src -o apidoc",
     "postinstall": "yarn build-src && yarn build-public",
     "test": "rimraf dist && mocha",
