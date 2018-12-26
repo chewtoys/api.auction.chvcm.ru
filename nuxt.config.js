@@ -19,6 +19,9 @@ module.exports = {
     API_ENDPOINT: process.env.API_ENDPOINT || constSharedJson.API_MOUNT_POINT,
     RECAPTCHA_SITE: process.env.RECAPTCHA_SITE,
   },
+  generate: {
+    dir: "build",
+  },
   head: {
     link: [
       {rel: "shortcut icon", href: "/favicon.ico", type: "image/x-icon"}
@@ -41,5 +44,5 @@ module.exports = {
     linkExactActiveClass: "active",
     mode: "hash",
   },
-  srcDir: path.join(__dirname, "public"),
+  srcDir: "public",
 };
