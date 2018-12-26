@@ -4,10 +4,10 @@
  * @param expectation Expectation that has to complete without throwing
  * @param timeout Maximum wait interval, 4500ms by default
  * @param interval Wait-between-retries interval, 50ms by default
- * TODO: move to separate package
+ * TODO: move to separate package or send PR
  */
 export function waitForExpect(
-  expectation: () => Promise<void> | void,
+  expectation: () => Promise<void> | void, // TODO: PR allow promise expectation
   timeout: number = 4500, interval: number = 50): Promise<void> {
   const startTime = Date.now();
   return new Promise((resolve, reject) => {

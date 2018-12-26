@@ -9,7 +9,7 @@ import {EmailNotifications, Env, RedisClient, Sequelize, Web} from "src";
 
 RedisClient.instantiate();
 EmailNotifications.instantiateSmtp();
-Sequelize.instantiateWeb();
+Sequelize.instantiate();
 PgEnumUnitClient.instantiate(Sequelize.instance as any); // TODO: remove "as any" when will be used normal types
 PgEnumUnitCacheMemory.instantiate();
 Web.instantiate();

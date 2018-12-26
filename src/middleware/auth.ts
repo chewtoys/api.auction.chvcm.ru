@@ -2,11 +2,11 @@
 /// <reference path="../../types/index.d.ts" />
 
 import {NextFunction, Request, Response} from "express";
+import * as io from "socket.io";
 
 import {
   ApiCodes,
   Const,
-  EmailNotifications,
   IEmployeeAttributes,
   IEntityAttributes,
   ISignUser,
@@ -99,6 +99,20 @@ export class Auth {
         };
       })
       .execute(next);
+  }
+
+  /**
+   * Auth via auth token middleware for Socket.IO
+   * @param socket Socket
+   * @param next Next function
+   */
+  public static async authIO(socket: io.Socket, next: (error?: Error) => void): Promise<void> {
+    try {
+      await Jwt.verifyUser(socket.handshake.query.token);
+    } catch (error) {
+      return next(error);
+    }
+    next();
   }
 
   /**

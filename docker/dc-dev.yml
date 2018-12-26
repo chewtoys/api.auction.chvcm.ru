@@ -13,7 +13,6 @@ services:
     depends_on:
       - postgres
       - redis
-      - rabbitmq
       - s3proxy
       - mail
   mail:

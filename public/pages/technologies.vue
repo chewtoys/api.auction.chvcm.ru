@@ -6,23 +6,23 @@
       hr.my-4
       ul.nav.nav-pills
         li.nav-item
-          router-link(to="/").nav-link
-            i.fas.fa-caret-left
-            =" "
-            | Back
-        li.nav-item
           nuxt-link(to="/technologies/nodejs").nav-link
             i.fab.fa-node-js
             =" "
             | Node.js
         li.nav-item
           nuxt-link(to="/technologies/express").nav-link
-            i.fas.fa-network-wired
+            i.fas.fa-feather
             =" "
             | Express.js
         li.nav-item
+          nuxt-link(to="/technologies/socketio").nav-link
+            i.fas.fa-rocket
+            =" "
+            | Socket.IO
+        li.nav-item
           nuxt-link(to="/technologies/typescript").nav-link
-            i.fab.fa-js-square
+            i.fas.fa-file-code
             =" "
             | TypeScript
         li.nav-item

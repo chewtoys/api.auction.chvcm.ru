@@ -19,17 +19,6 @@ services:
       - "${REDIS_PORT}:6379"
     volumes:
       - "${REDIS_VOLUME}:/data"
-  rabbitmq:
-    image: "rabbitmq:${RABBITMQ_TAG}"
-    restart: "${COMPOSE_RESTART}"
-    ports:
-      - "${RABBITMQ_PORT}:5672"
-      - "${RABBITMQ_PORT_WEB}:15672"
-    environment:
-      RABBITMQ_DEFAULT_USER: "${RABBITMQ_USER}"
-      RABBITMQ_DEFAULT_PASS: "${RABBITMQ_PASS}"
-    volumes:
-      - "${RABBITMQ_VOLUME}:/var/lib/rabbitmq"
   s3proxy:
     image: "andrewgaul/s3proxy:${S3PROXY_TAG}"
     restart: "${COMPOSE_RESTART}"

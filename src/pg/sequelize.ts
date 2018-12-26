@@ -23,20 +23,11 @@ import {
  */
 export class Sequelize extends SuperSequelize {
   /**
-   * Instantiate instance for Web
+   * Instantiate instance
    */
-  public static instantiateWeb(): void {
+  public static instantiate(): void {
     Sequelize._instance = new Sequelize({
-      poolMax: Env.DATABASE_POOL_MAX_WEB || Env.DATABASE_POOL_MAX_WORKER,
-    });
-  }
-
-  /**
-   * Instantiate instance for Worker
-   */
-  public static instantiateWorker(): void {
-    Sequelize._instance = new Sequelize({
-      poolMax: Env.DATABASE_POOL_MAX_WORKER || Env.DATABASE_POOL_MAX_WEB,
+      poolMax: Env.DATABASE_POOL_MAX,
     });
   }
 
@@ -570,6 +561,10 @@ export class Sequelize extends SuperSequelize {
       step: {
         allowNull: false,
         type: SuperSequelize.NUMERIC,
+      },
+      strict: {
+        allowNull: false,
+        type: SuperSequelize.BOOLEAN,
       },
       stuffid: {
         allowNull: false,

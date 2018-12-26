@@ -11,5 +11,15 @@
     components: {
       NavbarComponent,
     },
+    head: {
+      script: [
+        {
+          src: "https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit",
+          async: "",
+          body: true,
+          defer: "",
+        },
+      ],
+    },
   };
 </script>

@@ -35,11 +35,12 @@ export class RedisClient {
 
   /**
    * Close connection
+   * @param client Client (instance by default)
    * @throws Error
    */
-  public static async close(): Promise<void> {
+  public static async close(client?: redis.RedisClient): Promise<void> {
     await util.promisify((callback) => {
-      this._instance.quit(callback);
+      (client || this._instance).quit(callback);
     })();
   }
 

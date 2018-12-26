@@ -52,7 +52,7 @@
   export default {
     head() {
       return {
-        title: "Welcome!",
+        title: "Welcome",
       };
     },
   };

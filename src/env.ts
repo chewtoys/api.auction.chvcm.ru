@@ -46,15 +46,8 @@ export class Env {
    * PostgreSQL max pool clients for Web
    * @type {number}
    */
-  public static readonly DATABASE_POOL_MAX_WEB: number =
-    parseInt(process.env.DATABASE_POOL_MAX_WEB as string, 10);
-
-  /**
-   * PostgreSQL max pool clients for Worker
-   * @type {number}
-   */
-  public static readonly DATABASE_POOL_MAX_WORKER: number =
-    parseInt(process.env.DATABASE_POOL_MAX_WORKER as string, 10);
+  public static readonly DATABASE_POOL_MAX: number =
+    parseInt(process.env.DATABASE_POOL_MAX as string, 10);
 
   /**
    * Does PostgreSQL use secure connection?

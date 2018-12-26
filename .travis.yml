@@ -14,13 +14,12 @@ env:
     # Node.js
     - NODE_ENV=staging
     # @alendo/recaptcha
-    - RECAPTCHA_SECRET=google
+    - RECAPTCHA_SECRET=6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe
     # DB
     - REDIS_URL=redis://localhost:6379
     - DATABASE_URL=postgresql://postgres:postgres@localhost:5432/postgres
     - DATABASE_NATIVE=true
-    - DATABASE_POOL_MAX_WEB=10
-    - DATABASE_POOL_MAX_WORKER=10
+    - DATABASE_POOL_MAX=10
     - AWS_ENDPOINT=http://localhost:4567
     - AWS_ACCESS_KEY_ID=key
     - AWS_SECRET_ACCESS_KEY=secret
@@ -48,19 +47,13 @@ env:
     # Redis
     - REDIS_PORT=6379
     - REDIS_VOLUME=/mnt/alendo-api.auction.chvcm.ru-redis-ramdisk
-    # RabbitMQ
-    - RABBITMQ_PORT=5672
-    - RABBITMQ_PORT_WEB=15672
-    - RABBITMQ_USER=guest
-    - RABBITMQ_PASS=guest
-    - RABBITMQ_VOLUME=/mnt/alendo-api.auction.chvcm.ru-rabbitmq-ramdisk
     # s3poxy
     - S3PROXY_PORT=4567
     - S3PROXY_ACCESS_KEY_ID=key
     - S3PROXY_SECRET_ACCESS_KEY=secret
     - S3PROXY_VOLUME=/mnt/alendo-api.auction.chvcm.ru-s3poxy-ramdisk
   matrix:
-    - POSTGRES_TAG=11 REDIS_TAG=5 RABBITMQ_TAG=3-management S3PROXY_TAG=latest
+    - POSTGRES_TAG=11 REDIS_TAG=5 S3PROXY_TAG=latest
 
 before_install:
   - curl -o- -L https://yarnpkg.com/install.sh | bash -s

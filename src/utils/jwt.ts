@@ -40,7 +40,7 @@ export class Jwt {
     return new Promise<string>((resolve, reject) => {
       jwt.sign(payload, Env.JWT_SECRET, {
         algorithm: Const.JWT_ALGORITHM,
-        expiresIn: Const.JWT_EXPIRESIN,
+        expiresIn: Const.JWT_EXPIRESIN, // TODO: promisify here!
       }, (error: Error, token: string) => {
         if (error) {
           reject(error);
@@ -54,7 +54,7 @@ export class Jwt {
   private static verify<T>(token: string): Promise<T> {
     return new Promise<T>((resolve, reject) => {
       jwt.verify(token, Env.JWT_SECRET, {
-        algorithms: Const.JWT_ALGORITHMS,
+        algorithms: Const.JWT_ALGORITHMS, // TODO: promisify here!
       }, (error, decoded) => {
         if (error) {
           reject(error);

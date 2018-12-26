@@ -5,7 +5,7 @@ export default router;
 
 import employees from "./employees";
 import entities from "./entities";
-// import lots from "./lots"; // TODO: refactoring it
+import lots from "./lots";
 import signin from "./signin";
 import stuffs from "./stuffs";
 import user from "./user";
@@ -13,7 +13,7 @@ import utils from "./utils";
 
 router.use("/employees", employees);
 router.use("/entities", entities);
-// router.use("/lots", lots);
+router.use("/lots", lots);
 router.use("/signin", signin);
 router.use("/stuffs", stuffs);
 router.use("/user", user);

@@ -1,21 +1,23 @@
 import * as http from "http";
 import * as path from "path";
+import * as util from "util";
 
 import * as bodyParser from "body-parser";
 import * as compression from "compression";
+import * as cors from "cors";
 import * as express from "express";
 import {Express} from "express";
 import * as bearerToken from "express-bearer-token";
 import * as helmet from "helmet";
 import * as morgan from "morgan";
+import * as io from "socket.io";
+import * as ioRedis from "socket.io-redis";
 
-import * as cors from "cors";
 import {baseDir} from "../global";
 import {Const} from "./const";
 import {Env} from "./env";
-import {ResponseChain} from "./index";
-
-import rootRoute from "../routes/index";
+import {Auth, ResponseChain} from "./middleware";
+import {RedisClient} from "./redis";
 
 /**
  * Web
@@ -41,10 +43,17 @@ export class Web {
 
   private readonly _app: Express;
   private readonly _server: http.Server;
+  private readonly _io: io.Server;
+  private readonly _redisAdapter: ioRedis.RedisAdapter;
 
   private constructor() {
     this._app = express();
     this._server = http.createServer(this._app);
+    this._io = io(this.server, {
+      transports: Const.SOCKET_TRANSPORTS,
+    });
+    this._redisAdapter = ioRedis(Env.REDIS_URL);
+    this._io.adapter(this._redisAdapter);
     this.init();
   }
 
@@ -65,27 +74,49 @@ export class Web {
   }
 
   /**
+   * Socket.io
+   */
+  public get io(): io.Server {
+    return this._io;
+  }
+
+  /**
+   * Socket.io Redis adapter
+   */
+  public get redisAdapter(): ioRedis.RedisAdapter {
+    return this._redisAdapter;
+  }
+
+  /**
+   * Socket.io API namespace
+   * @return {SocketIO.Namespace}
+   */
+  public get nsp(): io.Namespace {
+    return this.io.of(Const.API_MOUNT_POINT);
+  }
+
+  /**
    * Close all connections
    * @returns {Promise<void>}
    */
   public async close() {
-    await this.closeServer(this.server);
+    await util.promisify((callback) => this.server.close(callback))();
+    await util.promisify((callback) => this.io.close(() => callback(null, {})))();
+    await RedisClient.close(this.redisAdapter.pubClient);
+    await RedisClient.close(this.redisAdapter.subClient);
   }
 
   /**
    * Listen
-   * @returns {Promise<void>}
+   * @throws Error
    */
-  public listen(): Promise<void> {
-    return new Promise<void>((resolve) => {
-      this.server.listen(Env.PORT, Env.HOST, () => {
-        resolve();
-      });
-    });
+  public async listen(): Promise<void> {
+    await util.promisify((callback) => this.server.listen(Env.PORT, Env.HOST, callback))();
   }
 
   private init() {
     this.initApp();
+    this.initIO();
   }
 
   private initApp() {
@@ -120,13 +151,12 @@ export class Web {
     this.app.use(ResponseChain.errorHandlerMiddleware);
   }
 
-  private closeServer(server: {
-    close(callback: () => void): any;
-  }): Promise<void> {
-    return new Promise<void>((resolve) => {
-      server.close(() => {
-        resolve();
-      });
+  private initIO() {
+    this.nsp.use(Auth.authIO);
+    this.nsp.on("connection", (socket) => {
+      socket.join("lots");
     });
   }
 }
+
+import rootRoute from "../routes/index";

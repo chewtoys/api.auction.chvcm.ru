@@ -8,7 +8,7 @@ import transform from "./transform";
  * This function is fork of https://github.com/nunofgs/clean-deep with symbols support and removed options
  * Also this method use modified lodash
  * @param object Object
- * TODO: move to separate package
+ * TODO: move to separate package or send PR
  */
 export function cleanDeep(object: any): any {
   return transform(object, (result: any, value: any, key: any) => {

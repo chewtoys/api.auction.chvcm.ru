@@ -1,7 +1,13 @@
+import * as path from "path";
+
 import {DurationInputObject} from "moment";
 import {ZXCVBNScore} from "zxcvbn";
 
+import {baseDir} from "../global";
 import {Env} from "./env";
+
+// tslint:disable no-var-requires
+const constSharedJson = require(path.join(baseDir, "src", "const-shared.json"));
 
 /**
  * Constants
@@ -12,7 +18,7 @@ export class Const {
    * API mount point
    * @type {string}
    */
-  public static readonly API_MOUNT_POINT: string = "/api/v1";
+  public static readonly API_MOUNT_POINT: string = constSharedJson.API_MOUNT_POINT;
 
   /**
    * Production environment
@@ -104,4 +110,9 @@ export class Const {
    * Phone locale
    */
   public static readonly PHONE_LOCALE = "ru-RU";
+
+  /**
+   * Socket.IO transports
+   */
+  public static readonly SOCKET_TRANSPORTS: string[] = ["websocket", "polling"];
 }
