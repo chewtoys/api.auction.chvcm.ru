@@ -25,7 +25,7 @@ export default router;
 /**
  * @api {post} /employees Создать нового сотрудника
  * @apiVersion 1.0.0
- * @apiName Invite
+ * @apiName InviteEmployee
  * @apiGroup Employees
  * @apiPermission Администратор
  *

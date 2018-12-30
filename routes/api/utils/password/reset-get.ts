@@ -17,7 +17,7 @@ export default router;
 /**
  * @api {get} /utils/password/reset Отправить на указанный email токен для сброса пароля
  * @apiVersion 1.0.0
- * @apiName PasswordResetSendEmail
+ * @apiName SendPasswordResetEmail
  * @apiGroup Utils
  * @apiPermission Гость
  *

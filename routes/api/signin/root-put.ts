@@ -15,7 +15,7 @@ router.use(Auth.authPurgatory);
 /**
  * @api {put} /signin Завершить двухэтапную аутентификацию
  * @apiVersion 1.0.0
- * @apiName TFA
+ * @apiName SignInWithTFA
  * @apiGroup SignIn
  * @apiPermission Временный пользователь
  *

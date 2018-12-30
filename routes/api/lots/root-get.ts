@@ -1,40 +1,37 @@
-// import {
-//   BooleanUnit,
-//   ObjectUnit,
-//   PgBigSerialUnit,
-//   PgLimitUnit,
-//   PgOffsetUnit,
-//   RequestValidator,
-// } from "@alendo/express-req-validator";
-//
-// import {Router} from "express";
-// import * as _ from "lodash";
-//
-// import {cleanDeep, Const, ILotInstance, Sequelize} from "src";
-//
-// const router = Router();
-// export default router;
-//
-// // tslint:disable max-line-length
+import {
+  ObjectUnit,
+  PgBigSerialUnit,
+  PgLimitUnit,
+  PgOffsetUnit,
+  RequestValidator,
+} from "@alendo/express-req-validator";
+
+import {Router} from "express";
+import * as _ from "lodash";
+
+import {cleanDeep, Const, ILotInstance, Sequelize} from "src";
+
+const router = Router();
+export default router;
+
+// tslint:disable max-line-length
 /**
- * @api {post} /lot/search Поиск по лотам
+ * @api {get} /lots Получить список лотов
  * @apiVersion 1.0.0
- * @apiName Search
- * @apiGroup Lot
+ * @apiName ListLots
+ * @apiGroup Lots
  * @apiPermission Пользователь
  *
  * @apiDescription Результаты отсортированы по дате начала аукциона в порядке убывания
  *
- * @apiParam {boolean} [iAmParticipant] Фильтр по тем лотам в которых пользователь принимал участие
- * @apiParam {string="1..9223372036854775807"} [id] Фильтр по ID лота
- * @apiParam {string="0..100"} [limit] Лимит
- * @apiParam {string="0..9223372036854775807"} [offset] Оффсет
- * @apiParam {string="1..9223372036854775807"} [stuffid] Фильтр по ID материала
+ * @apiParam (Query) {string="1..9223372036854775807"} [id] Фильтр по ID лота
+ * @apiParam (Query) {string="0..100"} [limit] Лимит (не учитывается когда задан ID лота)
+ * @apiParam (Query) {string="0..9223372036854775807"} [offset] Оффсет (не учитывается когда задан ID лота)
+ * @apiParam (Query) {string="1..9223372036854775807"} [stuffid] Фильтр по ID материала
  *
- * @apiSuccess {object[]} lots Массив лотов
+ * @apiSuccess {object[]} lots Список лотов
  * @apiSuccess {string="до 131072 разрядов перед десятичной точкой; до 16383 разрядов после десятичной точки"} lots.amount
  * Количество материала > 0
- * @apiSuccess {string="kg","piece"} lots.amount_type Тип количества
  * @apiSuccess {object} lots.buffer
  * Интервал времени, который всегда должен оставаться между временем последней ставки и временем окончания аукциона
  * @apiSuccess {number} [lots.buffer.years] Годы
@@ -53,20 +50,15 @@
  * Начальная ставка >= 0
  * @apiSuccess {string="до 131072 разрядов перед десятичной точкой; до 16383 разрядов после десятичной точки"} lots.step
  * Шаг аукциона >= 0
+ * @apiSuccess {boolean} lots.strict Автовычисление ставки
  * @apiSuccess {string="1..9223372036854775807"} lots.stuffid ID материала
  * @apiSuccess {string="purchase", "sale"} lots.type Тип аукциона
  * @apiSuccess {string="до 131072 разрядов перед десятичной точкой; до 16383 разрядов после десятичной точки"} [lots.winbid]
- * Ставка победителя
+ * Ставка победителя >= 0
  * @apiSuccess {string="1..9223372036854775807"} [lots.winner] ID победителя
  *
- * @apiError (Bad Request 400 - Параметр равен null) {string="OBJECT_NULL_VALUE"} code Код ошибки
- * @apiError (Bad Request 400 - Параметр равен null) {string} message Подробное описание ошибки
- *
- * @apiError (Bad Request 400 - Параметр iAmParticipant неверный) {string="WRONG_BOOLEAN"} code Код ошибки
- * @apiError (Bad Request 400 - Параметр iAmParticipant неверный) {string} message Подробное описание ошибки
- *
- * @apiError (Bad Request 400 - Параметр id и stuffid неверный) {string="WRONG_PG_BIGSERIAL"} code Код ошибки
- * @apiError (Bad Request 400 - Параметр id и stuffid неверный) {string} message Подробное описание ошибки
+ * @apiError (Bad Request 400 - Параметр id или stuffid неверный) {string="WRONG_PG_BIGSERIAL"} code Код ошибки
+ * @apiError (Bad Request 400 - Параметр id или stuffid неверный) {string} message Подробное описание ошибки
  *
  * @apiError (Bad Request 400 - Параметр limit неверный) {string="WRONG_PG_LIMIT"} code Код ошибки
  * @apiError (Bad Request 400 - Параметр limit неверный) {string} message Подробное описание ошибки
@@ -77,78 +69,68 @@
  * @apiUse v100CommonHeaders
  * @apiUse v100AuthAuth
  */
-// router.post("/", new RequestValidator({
-//   body: {
-//     Unit: ObjectUnit,
-//     payload: {
-//       iAmParticipant: {
-//         Unit: BooleanUnit,
-//         optional: true,
-//       },
-//       id: {
-//         Unit: PgBigSerialUnit,
-//         optional: true,
-//       },
-//       limit: {
-//         Unit: PgLimitUnit,
-//         optional: true,
-//         payload: Const.LIMIT_LIMIT,
-//       },
-//       offset: {
-//         Unit: PgOffsetUnit,
-//         optional: true,
-//       },
-//       stuffid: {
-//         Unit: PgBigSerialUnit,
-//         optional: true,
-//       },
-//     },
-//   },
-// }).middleware, async (req, res) => {
-//   let result: ILotInstance[] = [];
-//   await res.achain
-//     .action(async () => {
-//       result = await Sequelize.instance.lot.findAll(cleanDeep({
-//         include: [
-//           _.get(req.body.value.iAmParticipant, "value") ? {
-//             model: Sequelize.instance.lotParticipants,
-//             where: {
-//               userid: req.user.id,
-//             },
-//           } : undefined,
-//         ],
-//         limit: _.get(req.body.value.limit, "value", Const.LIMIT_LIMIT),
-//         offset: _.get(req.body.value.offset, "value"),
-//         order: [
-//           ["start", "DESC"],
-//         ],
-//         where: {
-//           id: _.get(req.body.value.id, "value"),
-//           stuffid: _.get(req.body.value.stuffid, "value"),
-//         },
-//       }));
-//     })
-//     .json(() => {
-//       return {
-//         lots: result.map((lot) => {
-//           return {
-//             amount: lot.amount,
-//             amount_type: lot.amount_type,
-//             buffer: lot.buffer,
-//             currency: lot.currency,
-//             finish: lot.finish,
-//             id: lot.id,
-//             participants: lot.participants,
-//             start: lot.start,
-//             startbid: lot.startbid,
-//             step: lot.step,
-//             stuffid: lot.stuffid,
-//             type: lot.type,
-//             winbid: lot.winbid || undefined,
-//             winner: lot.winner || undefined,
-//           };
-//         }),
-//       };
-//     })
-//     .execute();
-// });
+router.use(new RequestValidator({
+  query: {
+    Unit: ObjectUnit,
+    payload: {
+      id: {
+        Unit: PgBigSerialUnit,
+        optional: true,
+      },
+      limit: {
+        Unit: PgLimitUnit,
+        optional: true,
+        payload: Const.LIMIT_LIMIT,
+      },
+      offset: {
+        Unit: PgOffsetUnit,
+        optional: true,
+      },
+      stuffid: {
+        Unit: PgBigSerialUnit,
+        optional: true,
+      },
+    },
+  },
+}).middleware, async (req, res) => {
+  let result: ILotInstance[] = [];
+  await res.achain
+    .action(async () => {
+      result = await Sequelize.instance.lot.findAll(cleanDeep({
+        limit: _.get(req.query.value.id, "value") ? undefined :
+          _.get(req.query.value.limit, "value", Const.LIMIT_LIMIT),
+        offset: _.get(req.query.value.id, "value") ? undefined :
+          _.get(req.query.value.offset, "value"),
+        order: [
+          ["start", "DESC"],
+        ],
+        where: {
+          id: _.get(req.query.value.id, "value"),
+          stuffid: _.get(req.query.value.stuffid, "value"),
+        },
+      }));
+    })
+    .json(() => {
+      return {
+        lots: result.map((lot) => {
+          return {
+            amount: lot.amount,
+            buffer: lot.buffer,
+            currency: lot.currency,
+            finish: lot.finish,
+            id: lot.id,
+            participants: lot.participants,
+            start: lot.start,
+            startbid: lot.startbid,
+            step: lot.step,
+            strict: lot.strict,
+            stuffid: lot.stuffid,
+            type: lot.type,
+            winbid: lot.winbid || undefined,
+            winner: lot.winner || undefined,
+          };
+        }),
+      };
+    })
+    .execute();
+});

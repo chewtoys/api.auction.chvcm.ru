@@ -9,7 +9,7 @@ export default router;
  * @api {get} /utils/limits Получить лимиты сервера
  *
  * @apiVersion 1.0.0
- * @apiName Limits
+ * @apiName GetLimits
  * @apiGroup Utils
  * @apiPermission Гость
  *

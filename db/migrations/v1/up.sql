@@ -783,8 +783,8 @@ BEGIN
   IF (NEW.type = 'sale' AND (OLD.winbid IS NULL AND NEW.winbid < NEW.startbid OR
                              OLD.winbid IS NOT NULL AND NEW.winbid < OLD.winbid + NEW.step) OR
       NEW.type = 'purchase' AND (OLD.winbid IS NULL AND NEW.winbid > NEW.startbid OR
-                                 OLD.winbid IS NOT NULL AND OLD.winbid = 0 OR
-                                 OLD.winbid IS NOT NULL AND NEW.winbid > OLD.winbid - NEW.step))
+                                 OLD.winbid IS NOT NULL AND NEW.winbid > OLD.winbid - NEW.step) OR
+      NEW.winbid = OLD.winbid)
   THEN
     NEW.winbid = OLD.winbid;
     NEW.winner = OLD.winner;

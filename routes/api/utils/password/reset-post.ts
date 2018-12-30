@@ -17,7 +17,7 @@ export default router;
 /**
  * @api {post} /utils/password/reset Сбросить пароль
  * @apiVersion 1.0.0
- * @apiName PasswordReset
+ * @apiName ResetPassword
  * @apiGroup Utils
  * @apiPermission Временный пользователь
  *

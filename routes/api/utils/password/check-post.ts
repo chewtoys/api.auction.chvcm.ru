@@ -11,7 +11,7 @@ export default router;
 /**
  * @api {post} /utils/password/check Проверить пароль
  * @apiVersion 1.0.0
- * @apiName PasswordCheck
+ * @apiName CheckPassword
  * @apiGroup Utils
  * @apiPermission Гость
  *

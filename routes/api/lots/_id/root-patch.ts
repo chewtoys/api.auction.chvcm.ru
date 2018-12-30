@@ -1,4 +1,11 @@
-import {ObjectUnit, PgBigSerialUnit, PgNumericUnit, RequestValidator} from "@alendo/express-req-validator";
+import {
+  ObjectUnit,
+  PgBigSerialUnit,
+  PgNumericUnit,
+  PgNumericUnitCodes,
+  RequestValidator,
+} from "@alendo/express-req-validator";
+import {ChainCodes} from "@alendo/express-res-chain";
 
 import {Router} from "express";
 import * as _ from "lodash";
@@ -11,6 +18,18 @@ const router = Router({
 export default router;
 
 router.use(Auth.requireVerifiedEntity);
+
+function numericOverflowCode(error?: Error) {
+  return error ? ChainCodes.INTERNAL_SERVER_ERROR : PgNumericUnitCodes.WRONG_PG_NUMERIC;
+}
+
+function numericOverflowMessage(error?: Error) {
+  return error ? error.message : "body.winbid: value overflows numeric format";
+}
+
+function numericOverflowStatus(error?: Error) {
+  return error ? 500 : 400;
+}
 
 // tslint:disable max-line-length
 /**
@@ -88,23 +107,31 @@ router.use(new RequestValidator({
 }).middleware, async (req, res) => {
   let lots: [number, ILotInstance[]];
   await res.achain
-    .action(async () => {
-      lots = await Sequelize.instance.lot.update(cleanDeep({
-        winbid: _.get(req.body.value.winbid, "value"),
-        winner: _.get(req.body.value.winbid, "value") ? req.entity.id : undefined,
-      }), {
-        returning: true,
-        where: {
-          finish: {
-            [Sequelize.op.gt]: new Date(),
+    .check(async () => {
+      try {
+        lots = await Sequelize.instance.lot.update(cleanDeep({
+          winbid: _.get(req.body.value.winbid, "value"),
+          winner: _.get(req.body.value.winbid, "value") ? req.entity.id : undefined,
+        }), {
+          returning: true,
+          where: {
+            finish: {
+              [Sequelize.op.gt]: new Date(),
+            },
+            id: req.params.id,
+            start: {
+              [Sequelize.op.lt]: new Date(),
+            },
           },
-          id: req.params.id,
-          start: {
-            [Sequelize.op.lt]: new Date(),
-          },
-        },
-      });
-    })
+        });
+      } catch (error) {
+        if (error.message !== "value overflows numeric format") {
+          throw error;
+        }
+        return false;
+      }
+      return true;
+    }, numericOverflowCode, numericOverflowMessage, numericOverflowStatus)
     .action(() => {
       lots[1].map((lot) => SocketNotifications.lots_lot(lot));
     })

@@ -36,7 +36,7 @@ function intervalOverflowCode(error?: Error) {
 }
 
 function intervalOverflowMessage(error?: Error) {
-  return error ? error.message : `body.buffer: interval out of range`;
+  return error ? error.message : "body.buffer: interval out of range";
 }
 
 function intervalOverflowStatus(error?: Error) {
@@ -63,8 +63,8 @@ function intervalOverflowStatus(error?: Error) {
  * @apiParam {number} [buffer.seconds] Секунды
  * @apiParam {number} [buffer.milliseconds] Миллисекунды
  * @apiParam {string="ISO 4217:2015 в нижнем регистре"} currency Валюта
- * @apiParam {string="ISO 8601"} finish Время окончания аукциона
- * @apiParam {string="ISO 8601"} start Время начала аукциона
+ * @apiParam {string="ISO 8601"} finish Время окончания аукциона (не может быть раньше времени начала)
+ * @apiParam {string="ISO 8601"} start Время начала аукциона (не может быть в прошлом)
  * @apiParam {string="до 131072 разрядов перед десятичной точкой; до 16383 разрядов после десятичной точки"} startbid
  * Начальная ставка >= 0
  * @apiParam {string="до 131072 разрядов перед десятичной точкой; до 16383 разрядов после десятичной точки"} step
@@ -220,13 +220,13 @@ router.use(new RequestValidator({
         lot = await await Sequelize.instance.lot.create((req.body as ObjectUnit).mappedValues, {
           returning: true,
         });
-        return true;
       } catch (error) {
         if (error.message !== "interval out of range") {
           throw error;
         }
         return false;
       }
+      return true;
     }, intervalOverflowCode, intervalOverflowMessage, intervalOverflowStatus)
     .action(() => {
       SocketNotifications.lots_lot(lot);
