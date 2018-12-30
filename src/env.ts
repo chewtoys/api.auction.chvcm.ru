@@ -98,14 +98,14 @@ export class Env {
   /**
    * Maximum size in "bytes" notation for json body
    */
-  public static readonly EXPRESS_BODY_PARSER_LIMIT_JSON: number =
-    bytes(process.env.EXPRESS_BODY_PARSER_LIMIT_JSON as string);
+  public static readonly EXPRESS_BODY_LIMIT_JSON: number =
+    bytes(process.env.EXPRESS_BODY_LIMIT_JSON as string);
 
   /**
    * Max size in "bytes" notation for raw body
    */
-  public static readonly EXPRESS_BODY_PARSER_LIMIT_RAW: number =
-    bytes(process.env.EXPRESS_BODY_PARSER_LIMIT_RAW as string);
+  public static readonly EXPRESS_BODY_LIMIT_RAW: number =
+    bytes(process.env.EXPRESS_BODY_LIMIT_RAW as string);
 
   // email
 

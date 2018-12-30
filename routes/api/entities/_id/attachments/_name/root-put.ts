@@ -1,4 +1,7 @@
+import * as stream from "stream";
+
 import {Router} from "express";
+import * as createError from "http-errors";
 
 import {ApiCodes, Env, S3} from "src";
 
@@ -17,7 +20,7 @@ export default router;
  * @apiGroup Entities
  * @apiPermission Юридическое лицо или модератор
  *
- * @apiDescription В теле запроса должны быть переданы сырые байты вложения
+ * @apiDescription В теле запроса должны быть переданы сырые байты вложения через стрим
  *
  * @apiHeader (Content-Type запроса) {string="application/octet-stream"} Content-Type
  * Формат и способ представления сущности
@@ -46,17 +49,53 @@ export default router;
  * @apiUse v100AuthAuth
  */
 router.use(async (req, res, next) => {
-  await res.achain
+  let uploadError: Error & { statusCode: number; } | undefined;
+  const isUpload = await res.achain
     .check(() => {
       return String(req.headers["content-type"]).toLowerCase() === "application/octet-stream";
     }, ApiCodes.WRONG_CONTENT_TYPE, "Content-Type must be 'application/octet-stream'", 415)
     .action(async () => {
-      await (await S3.createClient()).putObject({ // TODO: stream support
-        Body: req.body,
-        Bucket: Env.AWS_S3_BUCKET,
-        Key: `entities/${req.params.id}/attachments/${req.params.name}`,
-      }).promise();
+      try {
+        await new Promise(async (resolve, reject) => {
+          const passThrough = new stream.PassThrough();
+          let allowRequestAbortByUser = false;
+          const uploadManager = (await S3.createClient()).upload({
+            Body: passThrough,
+            Bucket: Env.AWS_S3_BUCKET,
+            Key: `entities/${req.params.id}/attachments/${req.params.name}`,
+          }, (error) => {
+            if (error) {
+              if (error.message === "Request aborted by user" && allowRequestAbortByUser) {
+                reject(createError(413, "request entity too large"));
+              } else {
+                reject(error);
+              }
+            } else {
+              resolve();
+            }
+          });
+          let received = 0;
+          req.on("data", (chunk: Buffer) => {
+            received += chunk.length;
+            if (received > Env.EXPRESS_BODY_LIMIT_RAW) {
+              allowRequestAbortByUser = true;
+              uploadManager.abort();
+            }
+          }).pipe(passThrough);
+        });
+      } catch (error) {
+        uploadError = error;
+      }
     })
-    .send204()
-    .execute(next);
+    .execute();
+
+  if (isUpload) {
+    if (uploadError && uploadError.statusCode) {
+      next(uploadError);
+    } else {
+      await res.achain
+        .send204()
+        .execute(next);
+    }
+  }
 }, unverifyEntity);

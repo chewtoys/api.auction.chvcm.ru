@@ -27,8 +27,8 @@ router.use(async (req, res) => {
     .json(() => {
       return {
         body: {
-          json: Env.EXPRESS_BODY_PARSER_LIMIT_JSON,
-          raw: Env.EXPRESS_BODY_PARSER_LIMIT_RAW,
+          json: Env.EXPRESS_BODY_LIMIT_JSON,
+          raw: Env.EXPRESS_BODY_LIMIT_RAW,
         },
         select: {
           attachments: Const.AWS_S3_LIMIT_LIMIT,

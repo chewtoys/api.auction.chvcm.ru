@@ -10,8 +10,8 @@ describe("GET /utils/limits", () => {
     const res = await supertest(Web.instance.app).get(`${Const.API_MOUNT_POINT}/utils/limits`)
       .expect(200, {
         body: {
-          json: Env.EXPRESS_BODY_PARSER_LIMIT_JSON,
-          raw: Env.EXPRESS_BODY_PARSER_LIMIT_RAW,
+          json: Env.EXPRESS_BODY_LIMIT_JSON,
+          raw: Env.EXPRESS_BODY_LIMIT_RAW,
         },
         select: {
           attachments: Const.AWS_S3_LIMIT_LIMIT,

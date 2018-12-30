@@ -54,8 +54,8 @@ router.use(async (req, res) => {
     .action(async () => {
       s3 = await S3.createClient();
     })
-    .action(() => {
-      return new Promise((resolve) => {
+    .action(async () => {
+      await new Promise((resolve) => {
         let isType = false;
         const setResType = () => {
           if (!isType) {

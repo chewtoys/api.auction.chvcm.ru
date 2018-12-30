@@ -140,10 +140,7 @@ export class Web {
     this.app.use(bearerToken());
 
     this.app.use(bodyParser.json({
-      limit: Env.EXPRESS_BODY_PARSER_LIMIT_JSON,
-    }));
-    this.app.use(bodyParser.raw({
-      limit: Env.EXPRESS_BODY_PARSER_LIMIT_RAW,
+      limit: Env.EXPRESS_BODY_LIMIT_JSON,
     }));
 
     this.app.use("/", rootRoute);

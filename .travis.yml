@@ -28,8 +28,8 @@ env:
     - PORT=8080
     - HOST=0.0.0.0
     - CORS_WHITELIST=http://localhost:3000
-    - EXPRESS_BODY_PARSER_LIMIT_JSON=100kb
-    - EXPRESS_BODY_PARSER_LIMIT_RAW=10mb
+    - EXPRESS_BODY_LIMIT_JSON=100kb
+    - EXPRESS_BODY_LIMIT_RAW=1mb
     # Email
     - EMAIL_SMTP=smtps://username:password@smtp.example.com/?pool=true
     - EMAIL_FROM=Bender Bending Rodríguez <bender@ilovebender.com>

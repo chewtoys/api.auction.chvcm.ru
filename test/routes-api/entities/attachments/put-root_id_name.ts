@@ -3,6 +3,7 @@ import waitForExpect from "../../../wait-for-expect";
 
 import {PgBigSerialUnitCodes, RegExpUnitCodes} from "@alendo/express-req-validator";
 
+import * as bytes from "bytes";
 import {expect} from "chai";
 import * as sinon from "sinon";
 import * as supertest from "supertest";
@@ -203,6 +204,17 @@ describe("PUT /entities/:id/attachments/:name", () => {
       .expect(404, {
         code: ApiCodes.DB_ENTITY_NOT_FOUND_BY_ID,
         message: "entity with same id not found",
+      });
+  });
+
+  it("Payload to large 413", async () => {
+    await supertest(Web.instance.app).put(`${Const.API_MOUNT_POINT}/entities/2/attachments/files.zip`)
+      .set("Authorization", `Bearer ${tokenEntity}`)
+      .set("Content-Type", "application/octet-stream")
+      .send(Buffer.alloc(bytes("2mb")).fill(0))
+      .expect(413, {
+        code: ApiCodes.PAYLOAD_TOO_LARGE_ERROR,
+        message: "payload too large error",
       });
   });
 
