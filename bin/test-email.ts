@@ -8,11 +8,10 @@ import * as commander from "commander";
 
 import {EmailNotifications, RedisClient} from "src";
 
-// TODO: locale support
-
 const program = commander
   .description("send test email")
   .option("--to [value]", "to")
+  .option("--locale <value>", "language", "en")
   .parse(process.argv);
 
 RedisClient.instantiate();
@@ -32,7 +31,7 @@ const form = new ObjectUnit(program, {
     console.error(form.message);
     process.exit(1);
   } else {
-    await EmailNotifications.instance.test(form.value.to.value);
+    await EmailNotifications.instance.test(form.value.to.value, program.locale);
     await RedisClient.close();
   }
 })().catch((error) => {

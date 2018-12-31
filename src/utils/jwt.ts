@@ -1,3 +1,5 @@
+import * as util from "util";
+
 import * as jwt from "jsonwebtoken";
 
 import {Const} from "../const";
@@ -6,62 +8,35 @@ import {ISignUser} from "../interfaces";
 
 /**
  * JSON Web Token
- * TODO: refactoring it
  */
 export class Jwt {
   /**
    * Sign User
-   * @param {ISignUser} user User data for sign
-   * @return {Promise<string>}
+   * @param user User data for sign
    * @throws Error
    */
-  public static async signUser(user: ISignUser) {
-    return await Jwt.sign({
+  public static async signUser(user: ISignUser): Promise<string> {
+    return await util.promisify<string>((callback) => jwt.sign({
       id: user.id,
       type: user.type,
-    });
+    }, Env.JWT_SECRET, {
+      algorithm: Const.JWT_ALGORITHM,
+      expiresIn: Const.JWT_EXPIRESIN,
+    }, callback))();
   }
 
   /**
    * Verify user
-   * @param {string} token Token
-   * @return {Promise<ISignUser>}
+   * @param token Token
    * @throws Error
    */
   public static async verifyUser(token: string): Promise<ISignUser> {
-    const user = await Jwt.verify<ISignUser>(token);
+    const {id, type} = await util.promisify<any>((callback) => jwt.verify(token, Env.JWT_SECRET, {
+      algorithms: Const.JWT_ALGORITHMS,
+    }, callback))();
     return {
-      id: user.id,
-      type: user.type,
+      id,
+      type,
     };
-  }
-
-  private static sign(payload: object): Promise<string> {
-    return new Promise<string>((resolve, reject) => {
-      jwt.sign(payload, Env.JWT_SECRET, {
-        algorithm: Const.JWT_ALGORITHM,
-        expiresIn: Const.JWT_EXPIRESIN, // TODO: promisify here!
-      }, (error: Error, token: string) => {
-        if (error) {
-          reject(error);
-        } else {
-          resolve(token);
-        }
-      });
-    });
-  }
-
-  private static verify<T>(token: string): Promise<T> {
-    return new Promise<T>((resolve, reject) => {
-      jwt.verify(token, Env.JWT_SECRET, {
-        algorithms: Const.JWT_ALGORITHMS, // TODO: promisify here!
-      }, (error, decoded) => {
-        if (error) {
-          reject(error);
-        } else {
-          resolve(decoded as any);
-        }
-      });
-    });
   }
 }

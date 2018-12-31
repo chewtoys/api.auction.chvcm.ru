@@ -1,13 +1,18 @@
-import "./common";
+import "../common";
 
-import {EmailNotifications} from "../src";
+import {Const, EmailNotifications, Env} from "../../src";
 
 describe("EmailNotifications", () => {
+  if (!(Const.STAGING && Env.EMAIL_PREVIEW)) {
+    return;
+  }
+
   it("banned en (with custom message)", async () => {
     await EmailNotifications.instance.banned({
       email: "customer@organisation.com",
       language: "en",
-      message: `
+      name: "Customer Inc.",
+    }, `
 We were forced to ban your account because of **suspicious** activity.
 
 In order to get access to your account again, you need in your reply email:
@@ -16,16 +21,15 @@ In order to get access to your account again, you need in your reply email:
 1. Specify the list of IP addresses you use
 
 Thank you for understanding!
-`,
-      name: "Customer Inc.",
-    });
+`);
   });
 
   it("banned ru (with custom message)", async () => {
     await EmailNotifications.instance.banned({
       email: "customer@organisation.com",
       language: "ru",
-      message: `
+      name: `ООО "Трубопрокатный завод"`,
+    }, `
 Мы были вынуждены забанить вашу учетную запись из-за **подозрительной** активности.
 
 Для того чтобы вновь получить доступ к аккаунту вам необходимо в ответном письме:
@@ -34,9 +38,7 @@ Thank you for understanding!
 1. Указать список используемых вами IP адресов
 
 Спасибо за понимание!
-`,
-      name: `ООО "Трубопрокатный завод"`,
-    });
+`);
   });
 
   it("banned en", async () => {

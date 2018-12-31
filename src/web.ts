@@ -21,19 +21,17 @@ import {RedisClient} from "./redis";
 
 /**
  * Web
- * TODO: refactoring it
  */
 export class Web {
   /**
-   * Instantiate web
+   * Instantiate instance
    */
-  public static instantiate() {
+  public static instantiate(): void {
     Web._instance = new Web();
   }
 
   /**
    * Instance
-   * @returns {Web}
    */
   public static get instance(): Web {
     return Web._instance;
@@ -59,7 +57,6 @@ export class Web {
 
   /**
    * Express application
-   * @returns {e.Express}
    */
   public get app(): Express {
     return this._app;
@@ -67,7 +64,6 @@ export class Web {
 
   /**
    * Http server
-   * @return {module:http.Server}
    */
   public get server(): http.Server {
     return this._server;
@@ -89,7 +85,6 @@ export class Web {
 
   /**
    * Socket.io API namespace
-   * @return {SocketIO.Namespace}
    */
   public get nsp(): io.Namespace {
     return this.io.of(Const.API_MOUNT_POINT);
@@ -97,7 +92,7 @@ export class Web {
 
   /**
    * Close all connections
-   * @returns {Promise<void>}
+   * @throws Error
    */
   public async close() {
     await util.promisify((callback) => this.server.close(callback))();
@@ -156,4 +151,4 @@ export class Web {
   }
 }
 
-import rootRoute from "../routes/index";
+import rootRoute from "../routes";

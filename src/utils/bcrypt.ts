@@ -4,13 +4,11 @@ import {Const} from "../const";
 
 /**
  * Bcrypt
- * TODO: refactoring it
  */
 export class Bcrypt {
   /**
    * Hash password
-   * @param {string} password Password
-   * @return {Promise<string>}
+   * @param password Password
    * @throws Error
    */
   public static async hash(password: string): Promise<string> {
@@ -19,9 +17,8 @@ export class Bcrypt {
 
   /**
    * Compare password and hash
-   * @param {string | null} password Password
-   * @param {string | null} hash Hash
-   * @return {Promise<boolean>}
+   * @param password Password
+   * @param hash Hash
    * @throws Error
    */
   public static async compare(password?: string | null, hash?: string | null): Promise<boolean> {

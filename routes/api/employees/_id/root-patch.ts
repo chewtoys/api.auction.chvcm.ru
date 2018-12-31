@@ -92,9 +92,8 @@ router.use(new RequestValidator({
           await EmailNotifications.instance.banned({
             email: (employee as IEmployeeInstance).email,
             language: (employee as IEmployeeInstance).language,
-            message: _.get(req.body.value.ban_message, "value"),
             name: (employee as IEmployeeInstance).name,
-          });
+          }, _.get(req.body.value.ban_message, "value"));
         } else {
           await EmailNotifications.instance.unbanned(employee as IEmployeeInstance);
         }

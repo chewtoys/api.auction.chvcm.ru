@@ -1,10 +1,13 @@
 # v1.0.0 - API v1 (Antiquity)
 
-- Complete RESTful API redesign
-- Remove two-factor authentication via email
-- AWS S3 support for attachment storage
+- API
+  - Redesign RESTful API
+  - Add AWS S3 support for attachments storage
+  - Add Socket.IO support for lots notifications
+  - Remove two-factor authentication via email
+- DB redesign
 - Redesign email messages
-- Move `amount_type` property from `lot` to `stuff`
+- Redesign `index.html`
 
 # v0.0.0 - API v0 (Stone Age)
 

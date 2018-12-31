@@ -1,3 +1,6 @@
+// tslint:disable no-reference
+/// <reference path="./types/index.d.ts" />
+
 import * as path from "path";
 
 import * as appModulePath from "app-module-path";

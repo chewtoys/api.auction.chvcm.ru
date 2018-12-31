@@ -1,25 +1,30 @@
-import {NextFunction, Request, Response} from "express";
+import {NextFunction, Request, RequestHandler, Response} from "express";
 
 import {ApiCodes} from "../apiCodes";
 import {Sequelize} from "../pg";
-import cleanDeep from "../utils/clean-deep";
+import {cleanDeep} from "../utils";
+
+interface IUniqueEmailPhoneResult {
+  email: boolean;
+  phone: boolean;
+}
+
+interface IUniqueItnPsrnResult {
+  itn: boolean;
+  psrn: boolean;
+}
 
 /**
  * Unique middleware collection
- * TODO: refactoring it
  */
 export class Unique {
   /**
    * Check email and phone for unique
-   * @param {string} email Email
-   * @param {string} phone Phone
-   * @return {Promise}
+   * @param email Email
+   * @param phone Phone
    * @throws Error
    */
-  public static async checkEmailAndPhone(email?: string, phone?: string): Promise<{
-    email: boolean,
-    phone: boolean,
-  }> {
+  public static async checkEmailAndPhone(email?: string, phone?: string): Promise<IUniqueEmailPhoneResult> {
     if (!email && !phone) {
       return {
         email: false,
@@ -46,15 +51,11 @@ export class Unique {
 
   /**
    * Check ITN and PSRN for unique
-   * @param {string} itn ITN
-   * @param {string} psrn PSRN
-   * @return {Promise}
+   * @param itn ITN
+   * @param psrn PSRN
    * @throws Error
    */
-  public static async checkItnAndPsrn(itn: string, psrn: string): Promise<{
-    itn: boolean,
-    psrn: boolean,
-  }> {
+  public static async checkItnAndPsrn(itn: string, psrn: string): Promise<IUniqueItnPsrnResult> {
     const entities = await Sequelize.instance.entity.findAll({
       attributes: ["itn", "psrn"],
       where: {
@@ -91,12 +92,10 @@ export class Unique {
    * Check email and phone for unique middleware
    * @param getEmailAndPhone Get email and phone
    */
-  public static checkEmailAndPhoneMiddleware(getEmailAndPhone: (req: Request) => { email?: string, phone?: string }) {
-    return async (req: Request, res: Response, next: NextFunction) => {
-      let checkResult: {
-        email: boolean,
-        phone: boolean,
-      };
+  public static checkEmailAndPhoneMiddleware(getEmailAndPhone: (req: Request) => { email?: string, phone?: string })
+    : RequestHandler {
+    return async (req, res, next) => {
+      let checkResult: IUniqueEmailPhoneResult;
       await res.achain
         .action(async () => {
           const {email, phone} = getEmailAndPhone(req);
@@ -133,12 +132,10 @@ export class Unique {
    * Check ITN and PSRN for unique middleware
    * @param getItnAndPsrn Get ITN and PSRN
    */
-  public static checkItnAndPsrnMiddleware(getItnAndPsrn: (req: Request) => { itn: number, psrn: number }) {
+  public static checkItnAndPsrnMiddleware(getItnAndPsrn: (req: Request) => { itn: number, psrn: number })
+    : RequestHandler {
     return async (req: Request, res: Response, next: NextFunction) => {
-      let checkResult: {
-        itn: boolean,
-        psrn: boolean,
-      };
+      let checkResult: IUniqueItnPsrnResult;
       await res.achain
         .action(async () => {
           const {itn, psrn} = getItnAndPsrn(req);

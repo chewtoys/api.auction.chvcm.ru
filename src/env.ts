@@ -2,7 +2,6 @@ import * as bytes from "bytes";
 
 /**
  * Environment variables
- * TODO: refactoring it
  */
 export class Env {
   // Node.js
@@ -13,52 +12,20 @@ export class Env {
    */
   public static readonly NODE_ENV: string = process.env.NODE_ENV as string;
 
+  /**
+   * To accept self signed certificate pass "0"
+   */
+  public static readonly NODE_TLS_REJECT_UNAUTHORIZED: string = process.env.NODE_TLS_REJECT_UNAUTHORIZED as string;
+
   // @alendo/recaptcha
 
   /**
-   * Google reCAPTCHA secret or "disable"
+   * Google reCAPTCHA secret or fake "6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe"
    * @type {string}
    */
   public static readonly RECAPTCHA_SECRET: string = process.env.RECAPTCHA_SECRET as string;
 
   // DB
-
-  /**
-   * Redis URL in format redis://host:6379
-   * @type {string}
-   */
-  public static readonly REDIS_URL: string = process.env.REDIS_URL as string;
-
-  /**
-   * PostgreSQL connection string in format
-   * "postgres://someuser:somepassword@somehost:381/somedatabase"
-   * @type {string}
-   */
-  public static readonly DATABASE_URL: string = process.env.DATABASE_URL as string;
-
-  /**
-   * Use native library?
-   * @type {boolean}
-   */
-  public static readonly DATABASE_NATIVE: boolean = !!process.env.DATABASE_NATIVE;
-
-  /**
-   * PostgreSQL max pool clients for Web
-   * @type {number}
-   */
-  public static readonly DATABASE_POOL_MAX: number =
-    parseInt(process.env.DATABASE_POOL_MAX as string, 10);
-
-  /**
-   * Does PostgreSQL use secure connection?
-   * @type {boolean}
-   */
-  public static readonly DATABASE_SSL: boolean = !!process.env.DATABASE_SSL;
-
-  /**
-   * AWS endpoint in format "https://{service}.{region}.amazonaws.com"
-   */
-  public static readonly AWS_ENDPOINT: string = process.env.AWS_ENDPOINT as string;
 
   /**
    * AWS access key ID
@@ -71,29 +38,47 @@ export class Env {
   public static readonly AWS_SECRET_ACCESS_KEY: string = process.env.AWS_SECRET_ACCESS_KEY as string;
 
   /**
+   * AWS endpoint in format "https://{service}.{region}.amazonaws.com"
+   */
+  public static readonly AWS_ENDPOINT: string = process.env.AWS_ENDPOINT as string;
+
+  /**
    * AWS S3 bucket name
    */
   public static readonly AWS_S3_BUCKET: string = process.env.AWS_S3_BUCKET as string;
 
-  // web
+  /**
+   * Use native PostgreSQL library?
+   */
+  public static readonly DATABASE_NATIVE: boolean = !!process.env.DATABASE_NATIVE;
 
   /**
-   * Port
-   * @type {number}
+   * PostgreSQL max pool clients
    */
-  public static readonly PORT: number = parseInt(process.env.PORT as string, 10);
+  public static readonly DATABASE_POOL_MAX: number = parseInt(process.env.DATABASE_POOL_MAX as string, 10);
 
   /**
-   * Host
-   * @type {number}
+   * Does PostgreSQL use secure connection?
    */
-  public static readonly HOST: string = process.env.HOST as string;
+  public static readonly DATABASE_SSL: boolean = !!process.env.DATABASE_SSL;
+
+  /**
+   * PostgreSQL connection string in format "postgres://user:password@host:5432/db"
+   */
+  public static readonly DATABASE_URL: string = process.env.DATABASE_URL as string;
+
+  /**
+   * Redis connection string in format "redis://host:6379"
+   */
+  public static readonly REDIS_URL: string = process.env.REDIS_URL as string;
+
+  // Web
 
   /**
    * CORS - white list (semicolon ";" as separator), leave empty for any
-   * @type {string}
    */
-  public static readonly CORS_WHITELIST: string[] = (process.env.CORS_WHITELIST || "").split(";").filter((i) => i);
+  public static readonly CORS_WHITELIST: string[] = (process.env.CORS_WHITELIST || "")
+    .split(";").filter((host) => !!host);
 
   /**
    * Maximum size in "bytes" notation for json body
@@ -107,33 +92,37 @@ export class Env {
   public static readonly EXPRESS_BODY_LIMIT_RAW: number =
     bytes(process.env.EXPRESS_BODY_LIMIT_RAW as string);
 
-  // email
-
   /**
-   * SMTP email credentials in format
-   * "smtps://username:password@smtp.example.com/?pool=true"
-   * @type {string}
+   * Port
    */
-  public static readonly EMAIL_SMTP: string = process.env.EMAIL_SMTP as string;
+  public static readonly PORT: number = parseInt(process.env.PORT as string, 10);
 
   /**
-   * Email for use in the address "from"
-   * @type {string}
+   * Host
+   */
+  public static readonly HOST: string = process.env.HOST as string;
+
+  // Email
+
+  /**
+   * Email for use in address "from"
    */
   public static readonly EMAIL_FROM: string = process.env.EMAIL_FROM as string;
 
   /**
-   * Enable email preview?
-   * (only in staging mode)
-   * @type {boolean}
+   * Enable email preview? (only in staging mode)
    */
   public static readonly EMAIL_PREVIEW: boolean = !!process.env.EMAIL_PREVIEW;
 
-  // internal
+  /**
+   * SMTP email credentials in format "smtps://username:password@smtp.example.com/?pool=true"
+   */
+  public static readonly EMAIL_SMTP: string = process.env.EMAIL_SMTP as string;
+
+  // Internal
 
   /**
    * JSON Web Token secret
-   * @type {string}
    */
   public static readonly JWT_SECRET: string = process.env.JWT_SECRET as string;
 }

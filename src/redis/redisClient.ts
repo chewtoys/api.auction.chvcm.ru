@@ -5,13 +5,12 @@ import {Env} from "../env";
 
 /**
  * Redis client
- * TODO: refactoring it
  */
 export class RedisClient {
   /**
    * Instantiate instance
    */
-  public static instantiate() {
+  public static instantiate(): void {
     RedisClient._instance = redis.createClient(Env.REDIS_URL);
   }
 
@@ -19,7 +18,7 @@ export class RedisClient {
    * Instance
    * @return {RedisClient}
    */
-  public static get instance() {
+  public static get instance(): RedisClient {
     return RedisClient._instance;
   }
 

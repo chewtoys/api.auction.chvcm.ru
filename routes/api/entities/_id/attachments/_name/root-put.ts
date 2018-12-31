@@ -2,6 +2,7 @@ import * as stream from "stream";
 
 import {Router} from "express";
 import * as createError from "http-errors";
+import * as _ from "lodash";
 
 import {ApiCodes, Env, S3} from "src";
 
@@ -58,7 +59,7 @@ router.use(async (req, res, next) => {
       try {
         await new Promise(async (resolve, reject) => {
           const passThrough = new stream.PassThrough();
-          let allowRequestAbortByUser = false;
+          let allowRequestAbortByUser: boolean | Error = false;
           const uploadManager = (await S3.createClient()).upload({
             Body: passThrough,
             Bucket: Env.AWS_S3_BUCKET,
@@ -66,7 +67,11 @@ router.use(async (req, res, next) => {
           }, (error) => {
             if (error) {
               if (error.message === "Request aborted by user" && allowRequestAbortByUser) {
-                reject(createError(413, "request entity too large"));
+                if (_.isBoolean(allowRequestAbortByUser)) {
+                  reject(createError(413, "request entity too large"));
+                } else {
+                  reject(allowRequestAbortByUser);
+                }
               } else {
                 reject(error);
               }
@@ -75,13 +80,21 @@ router.use(async (req, res, next) => {
             }
           });
           let received = 0;
-          req.on("data", (chunk: Buffer) => {
-            received += chunk.length;
-            if (received > Env.EXPRESS_BODY_LIMIT_RAW) {
-              allowRequestAbortByUser = true;
+          req
+            .on("error", (error) => {
+              allowRequestAbortByUser = error;
               uploadManager.abort();
-            }
-          }).pipe(passThrough);
+            })
+            .on("aborted", () => {
+              uploadManager.abort();
+            })
+            .on("data", (chunk: Buffer) => {
+              received += chunk.length;
+              if (received > Env.EXPRESS_BODY_LIMIT_RAW) {
+                allowRequestAbortByUser = true;
+                uploadManager.abort();
+              }
+            }).pipe(passThrough);
         });
       } catch (error) {
         uploadError = error;

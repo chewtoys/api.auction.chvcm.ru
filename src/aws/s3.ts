@@ -1,4 +1,5 @@
 import * as AWS from "aws-sdk";
+
 import {Env} from "../env";
 
 /**
@@ -22,7 +23,7 @@ export class S3 {
         await s3.headBucket({
           Bucket: Env.AWS_S3_BUCKET,
         }).promise();
-      } catch (e) {
+      } catch (error) {
         await s3.createBucket({
           Bucket: Env.AWS_S3_BUCKET,
         }).promise();
@@ -44,7 +45,7 @@ export class S3 {
       await s3.headBucket({
         Bucket: Env.AWS_S3_BUCKET,
       }).promise();
-    } catch (e) {
+    } catch (error) {
       return;
     }
 

@@ -1,3 +1,4 @@
+export * from "./email";
 export * from "./employee";
 export * from "./entity";
 export * from "./isignUser";

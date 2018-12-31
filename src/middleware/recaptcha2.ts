@@ -1,6 +1,3 @@
-// tslint:disable no-reference
-/// <reference path="../../types/index.d.ts" />
-
 import {Recaptcha2 as SuperRecaptcha2} from "@alendo/recaptcha";
 
 import {NextFunction, Request, Response} from "express";
@@ -10,12 +7,10 @@ import {Env} from "../env";
 
 /**
  * reCAPTCHA v2
- * TODO: refactoring it
  */
 export class Recaptcha2 extends SuperRecaptcha2 {
   /**
    * Instance
-   * @return {Recaptcha2}
    */
   public static get instance(): Recaptcha2 {
     if (!this._instance) {
@@ -39,16 +34,11 @@ export class Recaptcha2 extends SuperRecaptcha2 {
 
   /**
    * Middleware for Express
-   * @param {e.Request} req Request
-   * @param {e.Response} res Response
-   * @param {e.NextFunction} next Next function
-   * @return {Promise<void>}
+   * @param req Request
+   * @param res Response
+   * @param next Next function
    */
   public async middleware(req: Request, res: Response, next: NextFunction) {
-    if (Env.RECAPTCHA_SECRET === "disable") {
-      next();
-      return;
-    }
     await res.achain
       .action(async () => {
         await super.middleware(req, res);

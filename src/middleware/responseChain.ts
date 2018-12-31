@@ -5,7 +5,6 @@ import {ApiCodes} from "../apiCodes";
 
 /**
  * Response chain
- * TODO: refactoring it
  */
 export class ResponseChain extends SuperResponseChain<ResponseChain> {
   /**
@@ -44,7 +43,7 @@ export class ResponseChain extends SuperResponseChain<ResponseChain> {
   protected onError(context: IResponseChainContext, error?: Error) {
     super.onError(context, error);
     if (error) {
-      // TODO: sentry.io (or raven.js) here
+      // TODO: sentry.io (raven.js) here
     }
   }
 }

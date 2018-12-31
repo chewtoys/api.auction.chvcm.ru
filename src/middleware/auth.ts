@@ -1,22 +1,11 @@
-// tslint:disable no-reference
-/// <reference path="../../types/index.d.ts" />
-
 import {NextFunction, Request, Response} from "express";
 import * as io from "socket.io";
 
-import {
-  ApiCodes,
-  Const,
-  IEmployeeAttributes,
-  IEntityAttributes,
-  ISignUser,
-  IUserCommonAttributes,
-  IUserInstance,
-  Jwt,
-  Sequelize,
-} from "../index";
-
-// TODO: refactoring it
+import {ApiCodes} from "../apiCodes";
+import {Const} from "../const";
+import {IEmployeeAttributes, IEntityAttributes, ISignUser, IUserCommonAttributes, IUserInstance} from "../interfaces";
+import {Sequelize} from "../pg";
+import {Jwt} from "../utils";
 
 /**
  * Auth middleware collection
@@ -42,10 +31,9 @@ export class Auth {
 
   /**
    * Auth via auth token middleware
-   * @param {e.Request} req Request
-   * @param {e.Response} res Response
-   * @param {e.NextFunction} next Next function
-   * @return {Promise<void>}
+   * @param req Request
+   * @param res Response
+   * @param next Next function
    */
   public static async auth(req: Request, res: Response, next: NextFunction) {
     let verifiedUser: ISignUser;
@@ -130,10 +118,9 @@ export class Auth {
 
   /**
    * Auth via purgatory token middleware
-   * @param {e.Request} req Request
-   * @param {e.Response} res Response
-   * @param {e.NextFunction} next Next function
-   * @return {Promise<void>}
+   * @param req Request
+   * @param res Response
+   * @param next Next function
    */
   public static async authPurgatory(req: Request, res: Response, next: NextFunction) {
     await res.achain
@@ -168,10 +155,9 @@ export class Auth {
 
   /**
    * Require moderator access
-   * @param {e.Request} req Request
-   * @param {e.Response} res Response
-   * @param {e.NextFunction} next Next function
-   * @return {Promise<void>}
+   * @param req Request
+   * @param res Response
+   * @param next Next function
    */
   public static async requireModerator(req: Request, res: Response, next: NextFunction) {
     await res.achain
@@ -190,10 +176,9 @@ export class Auth {
 
   /**
    * Require admin access
-   * @param {e.Request} req Request
-   * @param {e.Response} res Response
-   * @param {e.NextFunction} next Next function
-   * @return {Promise<void>}
+   * @param req Request
+   * @param res Response
+   * @param next Next function
    */
   public static async requireAdmin(req: Request, res: Response, next: NextFunction) {
     await res.achain
@@ -213,10 +198,9 @@ export class Auth {
 
   /**
    * Require verified entity access
-   * @param {e.Request} req Request
-   * @param {e.Response} res Response
-   * @param {e.NextFunction} next Next function
-   * @return {Promise<void>}
+   * @param req Request
+   * @param res Response
+   * @param next Next function
    */
   public static async requireVerifiedEntity(req: Request, res: Response, next: NextFunction) {
     await res.achain

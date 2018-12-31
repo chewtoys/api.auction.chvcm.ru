@@ -1,5 +1,4 @@
 import {EventEmitter} from "events";
-
 import * as path from "path";
 import * as util from "util";
 
@@ -12,6 +11,7 @@ import * as nodemailer from "nodemailer";
 import {baseDir} from "../../global";
 import {Const} from "../const";
 import {Env} from "../env";
+import {IEmailOptions, IEmailUser} from "../interfaces";
 import {RedisClient} from "../redis";
 
 async function renderMarkdown(markdown?: string): Promise<string> {
@@ -23,35 +23,11 @@ async function renderMarkdown(markdown?: string): Promise<string> {
 }
 
 /**
- * "EmailOptions" interface from Type definitions for node-email-templates 3.5
- * TODO: move to interfaces
- * TODO: move user interface to IUserEmailInterface
- */
-interface IEmailOptions {
-  /**
-   * The template name
-   */
-  template: string;
-
-  /**
-   * Nodemailer Message <Nodemailer.com/message/>
-   */
-  message: nodemailer.SendMailOptions;
-
-  /**
-   * The Template Variables
-   */
-  locals: any;
-}
-
-/**
  * Email notifications
- * TODO: refactoring it
  */
 export class EmailNotifications extends EventEmitter {
   /**
    * Email event
-   * @type {string}
    */
   public static readonly EMAIL_EVENT = "EMAIL_EVENT";
 
@@ -125,14 +101,31 @@ export class EmailNotifications extends EventEmitter {
   }
 
   /**
-   * Send "signin" message
+   * Send "banned" message
    * @param user User
+   * @param message Message
+   * @throws Error
    */
-  public async signin(user: {
-    email?: string;
-    language?: string;
-    name?: string;
-  }) {
+  public async banned(user: IEmailUser, message?: string): Promise<void> {
+    await this.send({
+      locals: {
+        locale: user.language,
+        message: await renderMarkdown(message),
+        name: user.name,
+      },
+      message: {
+        to: user.email as string,
+      },
+      template: "banned",
+    });
+  }
+
+  /**
+   * Send "inviteEmployee" message
+   * @param user User
+   * @throws Error
+   */
+  public async inviteEmployee(user: IEmailUser): Promise<void> {
     await this.send({
       locals: {
         locale: user.language,
@@ -141,49 +134,7 @@ export class EmailNotifications extends EventEmitter {
       message: {
         to: user.email as string,
       },
-      template: "signin",
-    });
-  }
-
-  /**
-   * Send "signup" message
-   * @param entity
-   */
-  public async signup(entity: {
-    email?: string;
-    language?: string;
-    name?: string;
-  }) {
-    await this.send({
-      locals: {
-        locale: entity.language,
-        name: entity.name,
-      },
-      message: {
-        to: entity.email as string,
-      },
-      template: "signup",
-    });
-  }
-
-  /**
-   * Send "signinTfa" message
-   * @param user User
-   */
-  public async signinTfa(user: {
-    email?: string;
-    language?: string;
-    name?: string;
-  }) {
-    await this.send({
-      locals: {
-        locale: user.language,
-        name: user.name,
-      },
-      message: {
-        to: user.email as string,
-      },
-      template: "signin_tfa",
+      template: "invite_employee",
     });
   }
 
@@ -191,13 +142,9 @@ export class EmailNotifications extends EventEmitter {
    * Send "passwordReset" message
    * @param user User
    * @param token Token
+   * @throws Error
    */
-  public async passwordReset(user: {
-                               email?: string;
-                               language?: string;
-                               name?: string;
-                             },
-                             token: string) {
+  public async passwordReset(user: IEmailUser, token: string) {
     await this.send({
       locals: {
         locale: user.language,
@@ -214,12 +161,9 @@ export class EmailNotifications extends EventEmitter {
   /**
    * Send "passwordResetComplete" message
    * @param user User
+   * @throws Error
    */
-  public async passwordResetComplete(user: {
-    email?: string;
-    language?: string;
-    name?: string;
-  }) {
+  public async passwordResetComplete(user: IEmailUser) {
     await this.send({
       locals: {
         locale: user.language,
@@ -233,14 +177,11 @@ export class EmailNotifications extends EventEmitter {
   }
 
   /**
-   * Send "inviteEmployee" message
+   * Send "signin" message
    * @param user User
+   * @throws Error
    */
-  public async inviteEmployee(user: {
-    email?: string;
-    language?: string;
-    name?: string;
-  }) {
+  public async signin(user: IEmailUser) {
     await this.send({
       locals: {
         locale: user.language,
@@ -249,42 +190,70 @@ export class EmailNotifications extends EventEmitter {
       message: {
         to: user.email as string,
       },
-      template: "invite_employee",
+      template: "signin",
     });
   }
 
   /**
-   * Send "banned" message
+   * Send "signinTfa" message
    * @param user User
+   * @throws Error
    */
-  public async banned(user: {
-    email?: string;
-    language?: string;
-    message?: string;
-    name?: string;
-  }) {
+  public async signinTfa(user: IEmailUser) {
     await this.send({
       locals: {
         locale: user.language,
-        message: await renderMarkdown(user.message),
         name: user.name,
       },
       message: {
         to: user.email as string,
       },
-      template: "banned",
+      template: "signin_tfa",
+    });
+  }
+
+  /**
+   * Send "signup" message
+   * @param entity
+   * @throws Error
+   */
+  public async signup(entity: IEmailUser) {
+    await this.send({
+      locals: {
+        locale: entity.language,
+        name: entity.name,
+      },
+      message: {
+        to: entity.email as string,
+      },
+      template: "signup",
+    });
+  }
+
+  /**
+   * Send "test" message
+   * @param to To
+   * @param locale Locale
+   * @throws Error
+   */
+  public async test(to: string, locale: string = "en") {
+    await this.send({
+      locals: {
+        locale,
+      },
+      message: {
+        to,
+      },
+      template: "test",
     });
   }
 
   /**
    * Send "unbanned" message
    * @param user User
+   * @throws Error
    */
-  public async unbanned(user: {
-    email?: string;
-    language?: string;
-    name?: string;
-  }) {
+  public async unbanned(user: IEmailUser) {
     await this.send({
       locals: {
         locale: user.language,
@@ -298,35 +267,11 @@ export class EmailNotifications extends EventEmitter {
   }
 
   /**
-   * Send "verified" message
-   * @param entity Entity
-   */
-  public async verified(entity: {
-    email?: string;
-    language?: string;
-    name?: string;
-  }) {
-    await this.send({
-      locals: {
-        locale: entity.language,
-        name: entity.name,
-      },
-      message: {
-        to: entity.email as string,
-      },
-      template: "verified",
-    });
-  }
-
-  /**
    * Send "unverified" message
    * @param entity Entity
+   * @throws Error
    */
-  public async unverified(entity: {
-    email?: string;
-    language?: string;
-    name?: string;
-  }) {
+  public async unverified(entity: IEmailUser) {
     await this.send({
       locals: {
         locale: entity.language,
@@ -340,19 +285,20 @@ export class EmailNotifications extends EventEmitter {
   }
 
   /**
-   * Send "test" message
-   * @param to To
-   * @param locale Locale
+   * Send "verified" message
+   * @param entity Entity
+   * @throws Error
    */
-  public async test(to: string, locale: string = "en") {
+  public async verified(entity: IEmailUser) {
     await this.send({
       locals: {
-        locale,
+        locale: entity.language,
+        name: entity.name,
       },
       message: {
-        to,
+        to: entity.email as string,
       },
-      template: "test",
+      template: "verified",
     });
   }
 
