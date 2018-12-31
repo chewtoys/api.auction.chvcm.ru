@@ -160,7 +160,7 @@
   "devDependencies": {
     "@types/chai": "4.1.7",
     "@types/mocha": "5.2.5",
-    "@types/sinon": "7.0.2",
+    "@types/sinon": "7.0.3",
     "@types/socket.io-client": "1.4.32",
     "@types/supertest": "2.0.7",
     "apidoc": "0.17.7",

@@ -16,9 +16,8 @@ export class RedisClient {
 
   /**
    * Instance
-   * @return {RedisClient}
    */
-  public static get instance(): RedisClient {
+  public static get instance(): redis.RedisClient {
     return RedisClient._instance;
   }
 
