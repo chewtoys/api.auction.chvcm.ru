@@ -27,6 +27,8 @@ export function disallowReCaptcha(): void {
   });
 }
 
+let beforeAll = true;
+
 beforeEach(async () => {
   await S3.emptyBucket(true);
 
@@ -39,10 +41,16 @@ beforeEach(async () => {
   PgEnumUnitClient.instantiate(Sequelize.instance as any); // TODO: remove "as any" when will be used normal types
   PgEnumUnitCacheMemory.instantiate();
 
-  await Sequelize.instance.query("CREATE SCHEMA IF NOT EXISTS public;");
-  await Sequelize.instance.query("DROP SCHEMA public CASCADE;");
-  await Sequelize.instance.query("CREATE SCHEMA public;");
-  await new PgMigrate().upPending();
+  if (beforeAll) {
+    await Sequelize.instance.query(`
+      CREATE SCHEMA IF NOT EXISTS public;
+      DROP SCHEMA public CASCADE;
+      CREATE SCHEMA public;`);
+    await new PgMigrate().upPending();
+    beforeAll = false;
+  } else {
+    await Sequelize.instance.query("TRUNCATE users_common, stuffs RESTART IDENTITY CASCADE;");
+  }
 
   Web.instantiate();
   reCaptchaMockAdapter = new MockAdapter(Recaptcha2.AXIOS);
