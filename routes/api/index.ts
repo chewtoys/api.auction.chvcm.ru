@@ -36,6 +36,9 @@ router.use("/utils", utils);
  * @apiHeader (Origin) {string} [Origin]
  * Инициализировать получение прав на совместное использование ресурсов между разными источниками
  *
+ * @apiError (Bad Request 400) {string="BAD_REQUEST"} code Код ошибки
+ * @apiError (Bad Request 400) {string} message Подробное описание ошибки
+ *
  * @apiError (Payload Too Large 413) {string="PAYLOAD_TOO_LARGE_ERROR"} code Код ошибки
  * @apiError (Payload Too Large 413) {string} message Подробное описание ошибки
  *

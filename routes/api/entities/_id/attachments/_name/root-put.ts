@@ -1,5 +1,6 @@
 import * as stream from "stream";
 
+import * as AWS from "aws-sdk";
 import {Router} from "express";
 import * as createError from "http-errors";
 import * as _ from "lodash";
@@ -50,17 +51,21 @@ export default router;
  * @apiUse v100AuthAuth
  */
 router.use(async (req, res, next) => {
+  let s3: AWS.S3;
   let uploadError: Error & { statusCode: number; } | undefined;
   const isUpload = await res.achain
     .check(() => {
       return String(req.headers["content-type"]).toLowerCase() === "application/octet-stream";
     }, ApiCodes.WRONG_CONTENT_TYPE, "Content-Type must be 'application/octet-stream'", 415)
     .action(async () => {
+      s3 = await S3.createClient();
+    })
+    .action(async () => {
       try {
         await new Promise(async (resolve, reject) => {
           const passThrough = new stream.PassThrough();
           let allowRequestAbortByUser: boolean | Error = false;
-          const uploadManager = (await S3.createClient()).upload({
+          const uploadManager = s3.upload({
             Body: passThrough,
             Bucket: Env.AWS_S3_BUCKET,
             Key: `entities/${req.params.id}/attachments/${req.params.name}`,

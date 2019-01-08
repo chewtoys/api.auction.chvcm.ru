@@ -1,4 +1,6 @@
+.git/
 .idea/
+.nuxt/
 .nyc_output/
 .vscode/
 
@@ -7,9 +9,7 @@ build/
 coverage/
 dist/
 docker/
-docs/
 node_modules/
-scripts/
 test/
 uml/
 
@@ -17,14 +17,13 @@ uml/
 .codeclimate.yml
 .dockerignore
 .editorconfig
-.env
+*/.env
 .gitattributes
 .gitignore
 .mdlrc
 .npmignore
 .slugignore
 .travis.yml
-docker-compose*.yml
 Procfile
 renovate.json
 SHASUMS256.txt

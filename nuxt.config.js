@@ -9,11 +9,14 @@ dotenv.config({
 const constSharedJson = require(path.join(__dirname, "src", "const-shared.json"));
 
 module.exports = {
+  build: {
+    babel: {
+      plugins: ["@babel/plugin-syntax-dynamic-import"],
+      presets: ["@babel/preset-env"],
+    },
+  },
   css: [
-    "bootstrap/dist/css/bootstrap.min.css",
-    "@fortawesome/fontawesome-free/css/all.min.css",
-    "highlight.js/styles/vs2015.css",
-    "~/css/main.css",
+    "@fortawesome/fontawesome-svg-core/styles.css",
   ],
   env: {
     API_ENDPOINT: process.env.API_ENDPOINT || constSharedJson.API_MOUNT_POINT,
@@ -33,12 +36,14 @@ module.exports = {
     titleTemplate: "%s | api.auction.chvcm.ru",
   },
   loading: {
-    color: "white",
+    color: "#FF8C00",
   },
   mode: "spa",
+  modules: [
+    "bootstrap-vue/nuxt",
+  ],
   plugins: [
-    "~/plugins/bootstrap.js",
-    "~/plugins/highlight.js"
+    "~/plugins/fontawesome.js",
   ],
   router: {
     linkExactActiveClass: "active",

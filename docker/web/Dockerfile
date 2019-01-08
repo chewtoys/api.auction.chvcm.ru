@@ -1,4 +1,6 @@
-FROM node:8-stretch
+FROM node:10-stretch
+
+ARG RECAPTCHA_SITE
 
 COPY . /alendo-api.auction.chvcm.ru
 

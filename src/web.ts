@@ -125,6 +125,10 @@ export class Web {
 
     this.app.use(express.static(path.join(baseDir, "build")));
 
+    if (Const.STAGING) {
+      this.app.use("/apidoc", express.static(path.join(baseDir, "apidoc")));
+    }
+
     this.app.use(cors({
       origin(origin, callback) {
         callback(null, Env.CORS_WHITELIST.length === 0 || Env.CORS_WHITELIST.indexOf(origin) !== -1);

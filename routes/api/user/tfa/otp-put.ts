@@ -65,7 +65,9 @@ router.use(new RequestValidator({
     .fork("authenticator")
     .action(() => {
       secret = otplib.authenticator.generateSecret();
-      keyuri = otplib.authenticator.keyuri(req.user.name as string, Const.AUTHENTICATOR_SERVICE, secret);
+      keyuri = otplib.authenticator
+      // TODO: remove encodeURIComponent when https://github.com/yeojz/otplib/issues/126 will be resolved
+        .keyuri(encodeURIComponent(req.user.name as string), encodeURIComponent(Const.AUTHENTICATOR_SERVICE), secret);
     })
     .fork()
     .action(async () => {

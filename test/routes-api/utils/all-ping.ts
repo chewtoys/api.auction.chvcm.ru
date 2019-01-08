@@ -3,7 +3,7 @@ import "../../common";
 import {expect} from "chai";
 import * as supertest from "supertest";
 
-import {Const, Web} from "../../../src";
+import {ApiCodes, Const, Web} from "../../../src";
 
 describe("ALL /utils/ping", () => {
   it("get", async () => {
@@ -18,6 +18,16 @@ describe("ALL /utils/ping", () => {
       .expect(200);
     expect(res.body).have.key("pong");
     expect(res.body.pong).be.a("boolean");
+  });
+
+  it("post with bad body", async () => {
+    await supertest(Web.instance.app).post(`${Const.API_MOUNT_POINT}/utils/ping`)
+      .set("content-type", "application/json")
+      .send(JSON.stringify(null))
+      .expect(400, {
+        code: ApiCodes.BAD_REQUEST,
+        message: "Unexpected token n in JSON at position 0",
+      });
   });
 
   it("put", async () => {

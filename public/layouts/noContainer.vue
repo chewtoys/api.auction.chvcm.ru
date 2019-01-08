@@ -11,5 +11,5 @@
     components: {
       NavbarComponent,
     },
-  };
+  }
 </script>

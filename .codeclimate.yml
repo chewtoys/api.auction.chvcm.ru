@@ -1,12 +1,12 @@
 version: "2"
 plugins:
+  editorconfig:
+    enabled: true
   fixme:
     enabled: true
   git-legal:
     enabled: true
   markdownlint:
-    enabled: true
-  nodesecurity:
     enabled: true
   shellcheck:
     enabled: true
@@ -15,6 +15,7 @@ plugins:
     config: tslint.json
 exclude_patterns:
   - ".idea/"
+  - ".nuxt/"
   - ".nyc_output/"
   - ".vscode/"
   - "apidoc/"

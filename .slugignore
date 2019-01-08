@@ -4,13 +4,3 @@
 docker/
 test/
 uml/
-
-.codeclimate.yml
-.dockerignore
-.editorconfig
-.mdlrc
-.npmignore
-.travis.yml
-docker-compose*.yml
-renovate.json
-tslint.json

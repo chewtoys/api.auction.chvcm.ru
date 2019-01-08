@@ -1,7 +1,8 @@
 <template lang="pug">
   div
     navbar-component
-    nuxt
+    b-container(fluid).mt-3
+      nuxt
 </template>
 
 <script lang="js">
@@ -21,5 +22,5 @@
         },
       ],
     },
-  };
+  }
 </script>

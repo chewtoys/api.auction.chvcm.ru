@@ -1,0 +1,882 @@
+{
+  "Employees": {
+    "GET /employees": {
+      "headers": [
+        {
+          "enabled": true,
+          "key": "Authorization",
+          "value": "Bearer {{authToken}}"
+        }
+      ],
+      "method": "get",
+      "path": "/employees",
+      "query": [
+        {
+          "enabled": false,
+          "key": "id",
+          "value": ""
+        },
+        {
+          "enabled": false,
+          "key": "limit",
+          "value": ""
+        },
+        {
+          "enabled": false,
+          "key": "offset",
+          "value": ""
+        }
+      ]
+    },
+    "POST /employees": {
+      "body": [
+        {
+          "key": "email",
+          "value": {
+            "data": "",
+            "type": "text"
+          }
+        },
+        {
+          "key": "language",
+          "value": {
+            "data": "",
+            "type": "text"
+          }
+        },
+        {
+          "key": "name",
+          "value": {
+            "data": "",
+            "type": "text"
+          }
+        },
+        {
+          "key": "phone",
+          "value": {
+            "data": "",
+            "type": "text"
+          }
+        }
+      ],
+      "headers": [
+        {
+          "enabled": true,
+          "key": "Authorization",
+          "value": "Bearer {{authToken}}"
+        }
+      ],
+      "method": "post",
+      "path": "/employees"
+    },
+    "PATCH /employees/:id": {
+      "body": [
+        {
+          "key": "ban_message",
+          "value": {
+            "data": "",
+            "type": "text"
+          }
+        },
+        {
+          "key": "banned",
+          "value": {
+            "data": false,
+            "type": "boolean"
+          }
+        },
+        {
+          "key": "moderator",
+          "value": {
+            "data": false,
+            "type": "boolean"
+          }
+        }
+      ],
+      "headers": [
+        {
+          "enabled": true,
+          "key": "Authorization",
+          "value": "Bearer {{authToken}}"
+        }
+      ],
+      "method": "patch",
+      "params": [
+        {
+          "enabled": true,
+          "key": ":id",
+          "value": ""
+        }
+      ],
+      "path": "/employees/:id"
+    }
+  },
+  "Entities": {
+    "GET /entities": {
+      "headers": [
+        {
+          "enabled": true,
+          "key": "Authorization",
+          "value": "Bearer {{authToken}}"
+        }
+      ],
+      "method": "get",
+      "path": "/entities",
+      "query": [
+        {
+          "enabled": false,
+          "key": "id",
+          "value": ""
+        },
+        {
+          "enabled": false,
+          "key": "limit",
+          "value": ""
+        },
+        {
+          "enabled": false,
+          "key": "offset",
+          "value": ""
+        }
+      ]
+    },
+    "GET /entities/:id/attachments": {
+      "headers": [
+        {
+          "enabled": true,
+          "key": "Authorization",
+          "value": "Bearer {{authToken}}"
+        }
+      ],
+      "method": "get",
+      "params": [
+        {
+          "enabled": true,
+          "key": ":id",
+          "value": ""
+        }
+      ],
+      "path": "/entities/:id/attachments",
+      "query": [
+        {
+          "enabled": false,
+          "key": "limit",
+          "value": ""
+        },
+        {
+          "enabled": false,
+          "key": "offset",
+          "value": ""
+        }
+      ]
+    },
+    "GET /entities/:id/attachments/:name": {
+      "headers": [
+        {
+          "enabled": true,
+          "key": "Authorization",
+          "value": "Bearer {{authToken}}"
+        }
+      ],
+      "method": "get",
+      "params": [
+        {
+          "enabled": true,
+          "key": ":id",
+          "value": ""
+        },
+        {
+          "enabled": true,
+          "key": ":name",
+          "value": ""
+        }
+      ],
+      "path": "/entities/:id/attachments/:name"
+    },
+    "POST /entities": {
+      "body": [
+        {
+          "key": "ceo",
+          "value": {
+            "data": "",
+            "type": "text"
+          }
+        },
+        {
+          "key": "email",
+          "value": {
+            "data": "",
+            "type": "text"
+          }
+        },
+        {
+          "key": "itn",
+          "value": {
+            "data": 0,
+            "type": "number"
+          }
+        },
+        {
+          "key": "language",
+          "value": {
+            "data": "",
+            "type": "text"
+          }
+        },
+        {
+          "key": "name",
+          "value": {
+            "data": "",
+            "type": "text"
+          }
+        },
+        {
+          "key": "password",
+          "value": {
+            "data": "",
+            "type": "text"
+          }
+        },
+        {
+          "key": "phone",
+          "value": {
+            "data": "",
+            "type": "text"
+          }
+        },
+        {
+          "key": "psrn",
+          "value": {
+            "data": 0,
+            "type": "number"
+          }
+        }
+      ],
+      "method": "post",
+      "path": "/entities",
+      "recaptcha": true
+    },
+    "PUT /entities/:id/attachments/:name": {
+      "contentType": "binary",
+      "headers": [
+        {
+          "enabled": true,
+          "key": "Authorization",
+          "value": "Bearer {{authToken}}"
+        }
+      ],
+      "method": "put",
+      "params": [
+        {
+          "enabled": true,
+          "key": ":id",
+          "value": ""
+        },
+        {
+          "enabled": true,
+          "key": ":name",
+          "value": ""
+        }
+      ],
+      "path": "/entities/:id/attachments/:name"
+    },
+    "PATCH /entities/:id": {
+      "body": [
+        {
+          "key": "ban_message",
+          "value": {
+            "data": "",
+            "type": "text"
+          }
+        },
+        {
+          "key": "banned",
+          "value": {
+            "data": false,
+            "type": "boolean"
+          }
+        },
+        {
+          "key": "ceo",
+          "value": {
+            "data": "",
+            "type": "text"
+          }
+        },
+        {
+          "key": "name",
+          "value": {
+            "data": "",
+            "type": "text"
+          }
+        },
+        {
+          "key": "verified",
+          "value": {
+            "data": false,
+            "type": "boolean"
+          }
+        }
+      ],
+      "headers": [
+        {
+          "enabled": true,
+          "key": "Authorization",
+          "value": "Bearer {{authToken}}"
+        }
+      ],
+      "method": "patch",
+      "params": [
+        {
+          "enabled": true,
+          "key": ":id",
+          "value": ""
+        }
+      ],
+      "path": "/entities/:id"
+    },
+    "DELETE /entities/:id/attachments/:name": {
+      "headers": [
+        {
+          "enabled": true,
+          "key": "Authorization",
+          "value": "Bearer {{authToken}}"
+        }
+      ],
+      "method": "delete",
+      "params": [
+        {
+          "enabled": true,
+          "key": ":id",
+          "value": ""
+        },
+        {
+          "enabled": true,
+          "key": ":name",
+          "value": ""
+        }
+      ],
+      "path": "/entities/:id/attachments/:name"
+    }
+  },
+  "Lots": {
+    "GET /lots": {
+      "headers": [
+        {
+          "enabled": true,
+          "key": "Authorization",
+          "value": "Bearer {{authToken}}"
+        }
+      ],
+      "method": "get",
+      "path": "/lots",
+      "query": [
+        {
+          "enabled": false,
+          "key": "id",
+          "value": ""
+        },
+        {
+          "enabled": false,
+          "key": "limit",
+          "value": ""
+        },
+        {
+          "enabled": false,
+          "key": "offset",
+          "value": ""
+        },
+        {
+          "enabled": false,
+          "key": "stuffid",
+          "value": ""
+        }
+      ]
+    },
+    "POST /lots": {
+      "body": [
+        {
+          "key": "amount",
+          "value": {
+            "data": "",
+            "type": "text"
+          }
+        },
+        {
+          "key": "buffer",
+          "value": {
+            "data": {},
+            "type": "interval"
+          }
+        },
+        {
+          "key": "currency",
+          "value": {
+            "data": "",
+            "type": "text"
+          }
+        },
+        {
+          "key": "finish",
+          "value": {
+            "data": "NaN",
+            "type": "date"
+          }
+        },
+        {
+          "key": "start",
+          "value": {
+            "data": "NaN",
+            "type": "date"
+          }
+        },
+        {
+          "key": "startbid",
+          "value": {
+            "data": "",
+            "type": "text"
+          }
+        },
+        {
+          "key": "step",
+          "value": {
+            "data": "",
+            "type": "text"
+          }
+        },
+        {
+          "key": "strict",
+          "value": {
+            "data": false,
+            "type": "boolean"
+          }
+        },
+        {
+          "key": "stuffid",
+          "value": {
+            "data": "",
+            "type": "text"
+          }
+        },
+        {
+          "key": "type",
+          "value": {
+            "data": "",
+            "type": "text"
+          }
+        }
+      ],
+      "headers": [
+        {
+          "enabled": true,
+          "key": "Authorization",
+          "value": "Bearer {{authToken}}"
+        }
+      ],
+      "method": "post",
+      "path": "/lots"
+    },
+    "PATCH /lots/:id": {
+      "body": [
+        {
+          "key": "winbid",
+          "value": {
+            "data": "",
+            "type": "text"
+          }
+        }
+      ],
+      "headers": [
+        {
+          "enabled": true,
+          "key": "Authorization",
+          "value": "Bearer {{authToken}}"
+        }
+      ],
+      "method": "patch",
+      "params": [
+        {
+          "enabled": true,
+          "key": ":id",
+          "value": ""
+        }
+      ],
+      "path": "/lots/:id"
+    }
+  },
+  "Sign in": {
+    "POST /signin": {
+      "body": [
+        {
+          "key": "email",
+          "value": {
+            "data": "",
+            "type": "text"
+          }
+        },
+        {
+          "key": "password",
+          "value": {
+            "data": "",
+            "type": "text"
+          }
+        }
+      ],
+      "method": "post",
+      "path": "/signin",
+      "recaptcha": true
+    },
+    "PUT /signin": {
+      "body": [
+        {
+          "key": "token",
+          "value": {
+            "data": "",
+            "type": "text"
+          }
+        },
+        {
+          "key": "type",
+          "value": {
+            "data": "",
+            "type": "text"
+          }
+        }
+      ],
+      "headers": [
+        {
+          "enabled": true,
+          "key": "Authorization",
+          "value": "Bearer {{purgatoryToken}}"
+        }
+      ],
+      "method": "put",
+      "path": "/signin"
+    }
+  },
+  "Stuffs": {
+    "GET /stuffs": {
+      "headers": [
+        {
+          "enabled": true,
+          "key": "Authorization",
+          "value": "Bearer {{authToken}}"
+        }
+      ],
+      "method": "get",
+      "path": "/stuffs",
+      "query": [
+        {
+          "enabled": false,
+          "key": "code",
+          "value": ""
+        },
+        {
+          "enabled": false,
+          "key": "id",
+          "value": ""
+        },
+        {
+          "enabled": false,
+          "key": "limit",
+          "value": ""
+        },
+        {
+          "enabled": false,
+          "key": "offset",
+          "value": ""
+        }
+      ]
+    },
+    "POST /stuffs": {
+      "body": [
+        {
+          "key": "amount_type",
+          "value": {
+            "data": "",
+            "type": "text"
+          }
+        }
+      ],
+      "headers": [
+        {
+          "enabled": true,
+          "key": "Authorization",
+          "value": "Bearer {{authToken}}"
+        }
+      ],
+      "method": "post",
+      "path": "/stuffs"
+    },
+    "PUT /stuffs/:id/translations/:code": {
+      "body": [
+        {
+          "key": "title",
+          "value": {
+            "data": "",
+            "type": "text"
+          }
+        },
+        {
+          "key": "description",
+          "value": {
+            "data": "",
+            "type": "text"
+          }
+        }
+      ],
+      "headers": [
+        {
+          "enabled": true,
+          "key": "Authorization",
+          "value": "Bearer {{authToken}}"
+        }
+      ],
+      "method": "put",
+      "params": [
+        {
+          "enabled": true,
+          "key": ":id",
+          "value": ""
+        },
+        {
+          "enabled": true,
+          "key": ":code",
+          "value": ""
+        }
+      ],
+      "path": "/stuffs/:id/translations/:code"
+    },
+    "PATCH /stuffs/:id": {
+      "body": [
+        {
+          "key": "amount_type",
+          "value": {
+            "data": "",
+            "type": "text"
+          }
+        },
+        {
+          "key": "enabled",
+          "value": {
+            "data": false,
+            "type": "boolean"
+          }
+        }
+      ],
+      "headers": [
+        {
+          "enabled": true,
+          "key": "Authorization",
+          "value": "Bearer {{authToken}}"
+        }
+      ],
+      "method": "patch",
+      "params": [
+        {
+          "enabled": true,
+          "key": ":id",
+          "value": ""
+        }
+      ],
+      "path": "/stuffs/:id"
+    },
+    "DELETE /stuffs/:id/translations/:code": {
+      "headers": [
+        {
+          "enabled": true,
+          "key": "Authorization",
+          "value": "Bearer {{authToken}}"
+        }
+      ],
+      "method": "delete",
+      "params": [
+        {
+          "enabled": true,
+          "key": ":id",
+          "value": ""
+        },
+        {
+          "enabled": true,
+          "key": ":code",
+          "value": ""
+        }
+      ],
+      "path": "/stuffs/:id/translations/:code"
+    }
+  },
+  "User": {
+    "GET /user": {
+      "headers": [
+        {
+          "enabled": true,
+          "key": "Authorization",
+          "value": "Bearer {{authToken}}"
+        }
+      ],
+      "method": "get",
+      "path": "/user"
+    },
+    "POST /user/tfa/otp": {
+      "body": [
+        {
+          "key": "token",
+          "value": {
+            "data": "",
+            "type": "text"
+          }
+        }
+      ],
+      "headers": [
+        {
+          "enabled": true,
+          "key": "Authorization",
+          "value": "Bearer {{authToken}}"
+        }
+      ],
+      "method": "post",
+      "path": "/user/tfa/otp"
+    },
+    "PUT /user/tfa/otp": {
+      "body": [
+        {
+          "key": "type",
+          "value": {
+            "data": "",
+            "type": "text"
+          }
+        }
+      ],
+      "headers": [
+        {
+          "enabled": true,
+          "key": "Authorization",
+          "value": "Bearer {{authToken}}"
+        }
+      ],
+      "method": "put",
+      "path": "/user/tfa/otp"
+    },
+    "PUT /user/tfa/recovery": {
+      "headers": [
+        {
+          "enabled": true,
+          "key": "Authorization",
+          "value": "Bearer {{authToken}}"
+        }
+      ],
+      "method": "put",
+      "path": "/user/tfa/recovery"
+    },
+    "PATCH /user": {
+      "body": [
+        {
+          "key": "email",
+          "value": {
+            "data": "",
+            "type": "text"
+          }
+        },
+        {
+          "key": "language",
+          "value": {
+            "data": "",
+            "type": "text"
+          }
+        },
+        {
+          "key": "name",
+          "value": {
+            "data": "",
+            "type": "text"
+          }
+        },
+        {
+          "key": "password",
+          "value": {
+            "data": "",
+            "type": "text"
+          }
+        },
+        {
+          "key": "phone",
+          "value": {
+            "data": "",
+            "type": "text"
+          }
+        },
+        {
+          "key": "tfa",
+          "value": {
+            "data": false,
+            "type": "boolean"
+          }
+        }
+      ],
+      "headers": [
+        {
+          "enabled": true,
+          "key": "Authorization",
+          "value": "Bearer {{authToken}}"
+        }
+      ],
+      "method": "patch",
+      "path": "/user"
+    }
+  },
+  "Utils": {
+    "GET /utils/ping": {
+      "method": "get",
+      "path": "/utils/ping"
+    },
+    "GET /utils/limits": {
+      "method": "get",
+      "path": "/utils/limits"
+    },
+    "GET /utils/password/reset": {
+      "method": "get",
+      "path": "/utils/password/reset",
+      "query": [
+        {
+          "enabled": true,
+          "key": "email",
+          "value": ""
+        }
+      ],
+      "recaptcha": true
+    },
+    "POST /utils/password/reset": {
+      "body": [
+        {
+          "key": "password",
+          "value": {
+            "data": "",
+            "type": "text"
+          }
+        }
+      ],
+      "headers": [
+        {
+          "enabled": true,
+          "key": "Authorization",
+          "value": "Bearer {{emailToken}}"
+        }
+      ],
+      "method": "post",
+      "path": "/utils/password/reset"
+    },
+    "POST /utils/password/check": {
+      "body": [
+        {
+          "key": "password",
+          "value": {
+            "data": "",
+            "type": "text"
+          }
+        }
+      ],
+      "method": "post",
+      "path": "/utils/password/check"
+    }
+  }
+}

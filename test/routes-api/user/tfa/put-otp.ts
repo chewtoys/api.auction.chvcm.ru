@@ -22,7 +22,7 @@ describe("PUT /user/tfa/otp", () => {
     await Sequelize.instance.employee.create({
       email: "admin@example.com",
       language: "ru",
-      name: "admin",
+      name: `Админ "Великий"`,
       password: await Bcrypt.hash("super duper password"),
       phone: "+79123456789",
       tfa: false,
@@ -83,8 +83,9 @@ describe("PUT /user/tfa/otp", () => {
     expect(res.body).to.have.keys("secret", "keyuri");
     expect(res.body.secret).to.be.a("string");
     expect(res.body.keyuri).to.be.a("string");
-    const service = Const.AUTHENTICATOR_SERVICE;
-    expect(res.body.keyuri).equal(`otpauth://totp/${service}:admin?secret=${res.body.secret}&issuer=${service}`);
+    const service = encodeURIComponent(Const.AUTHENTICATOR_SERVICE);
+    const name = encodeURIComponent(`Админ "Великий"`);
+    expect(res.body.keyuri).equal(`otpauth://totp/${service}:${name}?secret=${res.body.secret}&issuer=${service}`);
 
     const tokenOtp = await Sequelize.instance.tokensTfaOtp.findByPk("1");
     expect((tokenOtp as ITokensTfaOtpInstance).token).equal(res.body.secret);
@@ -101,8 +102,9 @@ describe("PUT /user/tfa/otp", () => {
     expect(res.body).to.have.keys("secret", "keyuri");
     expect(res.body.secret).to.be.a("string");
     expect(res.body.keyuri).to.be.a("string");
-    const service = Const.AUTHENTICATOR_SERVICE;
-    expect(res.body.keyuri).equal(`otpauth://totp/${service}:admin?secret=${res.body.secret}&issuer=${service}`);
+    const service = encodeURIComponent(Const.AUTHENTICATOR_SERVICE);
+    const name = encodeURIComponent(`Админ "Великий"`);
+    expect(res.body.keyuri).equal(`otpauth://totp/${service}:${name}?secret=${res.body.secret}&issuer=${service}`);
 
     const tokenOtp = await Sequelize.instance.tokensTfaOtp.findByPk("1");
     expect((tokenOtp as ITokensTfaOtpInstance).token).equal(res.body.secret);

@@ -5,6 +5,8 @@ services:
     build:
       context: ../
       dockerfile: docker/web/Dockerfile
+      args:
+        RECAPTCHA_SITE: "${RECAPTCHA_SITE}"
     restart: "${COMPOSE_RESTART}"
     ports:
       - "${WEB_PORT}:80"
