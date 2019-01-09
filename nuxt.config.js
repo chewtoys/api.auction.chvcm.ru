@@ -21,6 +21,7 @@ module.exports = {
   env: {
     API_ENDPOINT: process.env.API_ENDPOINT || constSharedJson.API_MOUNT_POINT,
     RECAPTCHA_SITE: process.env.RECAPTCHA_SITE,
+    SOCKET_TRANSPORTS: constSharedJson.SOCKET_TRANSPORTS,
   },
   generate: {
     dir: "build",

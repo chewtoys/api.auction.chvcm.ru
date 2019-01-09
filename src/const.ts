@@ -80,7 +80,7 @@ export class Const {
   /**
    * Socket.IO transports
    */
-  public static readonly SOCKET_TRANSPORTS: string[] = ["websocket", "polling"];
+  public static readonly SOCKET_TRANSPORTS: string[] = constSharedJson.SOCKET_TRANSPORTS;
 
   /**
    * TFA recovery codes count

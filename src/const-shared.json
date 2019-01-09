@@ -1,3 +1,6 @@
 {
-  "API_MOUNT_POINT": "/api/v1"
+  "API_MOUNT_POINT": "/api/v1",
+  "SOCKET_TRANSPORTS": [
+    "websocket"
+  ]
 }

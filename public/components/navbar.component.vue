@@ -9,14 +9,23 @@
           font-awesome-icon(:icon="userAstronautIcon")
           =" "
           | Requester
+        nav-item-component(to="/listener" :active="!!$route.path.match('^/listener.*$')")
+          font-awesome-icon(:icon="userGraduateIcon")
+          =" "
+          | Listener
         nav-item-component(to="/environment" :active="!!$route.path.match('^/environment.*$')")
-          font-awesome-icon(:icon="UserCogIcon")
+          font-awesome-icon(:icon="userCogIcon")
           =" "
           | Environment
 </template>
 
 <script lang="js">
-  import {faBars, faUserAstronaut, faUserCog} from "@fortawesome/free-solid-svg-icons";
+  import {
+    faBars,
+    faUserAstronaut,
+    faUserCog,
+    faUserGraduate,
+  } from "@fortawesome/free-solid-svg-icons";
 
   import NavItemComponent from "~/components/navItem.component.vue";
 
@@ -31,8 +40,11 @@
       userAstronautIcon() {
         return faUserAstronaut;
       },
-      UserCogIcon() {
+      userCogIcon() {
         return faUserCog;
+      },
+      userGraduateIcon() {
+        return faUserGraduate;
       },
     },
   }

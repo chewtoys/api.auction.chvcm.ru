@@ -1,6 +1,6 @@
 <template lang="pug">
   b-form
-    b-form-group(label="Base URL" label-for="baseUrl" description="This URL will be joined with your url path")
+    b-form-group(:description="baseUrlDescription" label="Base URL" label-for="baseUrl")
       b-input(id="baseUrl" :placeholder="baseUrlPlaceholder" v-model="baseUrl")
     b-form-group(:description="authTokenDescription" label="Auth token" label-for="authToken")
       b-input( id="authToken" v-model="authToken")
@@ -21,13 +21,16 @@
   export default {
     computed: {
       authTokenDescription() {
-        return "Can be used as {{authToken}} variable in Headers section";
+        return "Requester: Can be used as {{authToken}} variable in Headers section";
+      },
+      baseUrlDescription() {
+        return "Absolute URL to server including API version";
       },
       baseUrlPlaceholder() {
         return process.env.API_ENDPOINT;
       },
       purgatoryTokenDescription() {
-        return "Can be used as {{purgatoryToken}} variable in Headers section";
+        return "Requester: Can be used as {{purgatoryToken}} variable in Headers section";
       },
     },
     data() {
