@@ -18,9 +18,9 @@ services:
       - s3proxy
       - mail
   mail:
-    image: analogic/poste.io:2
+    image: "analogic/poste.io:${MAIL_TAG}"
     hostname: "${MAIL_HOSTNAME}"
-    dns: dns-mailoop
+    dns: mail-dnsmasq
     restart: "${COMPOSE_RESTART}"
     ports:
       - "${MAIL_PORT_WEB}:80"
@@ -31,11 +31,12 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - "${MAIL_VOLUME}:/data"
     depends_on:
-      - dns-mailoop
-  dns-mailoop:
-    build:
-      context: dns-mailoop
-      dockerfile: Dockerfile
+      - mail-dnsmasq
+  mail-dnsmasq:
+    image: "andyshinn/dnsmasq:${MAIL_DNSMASQ_TAG}"
+    command: ["--address=/#/127.0.0.1"]
+    cap_add:
+      - NET_ADMIN
     restart: "${COMPOSE_RESTART}"
     environment:
       LOOP: "${MAIL_HOSTNAME}"
