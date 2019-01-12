@@ -20,7 +20,7 @@ import {
   EmailNotifications,
   IEntityInstance,
   Jwt,
-  Recaptcha2,
+  reCaptcha2,
   Sequelize,
   Unique,
 } from "src";
@@ -79,7 +79,7 @@ export default router;
  * @apiUse v100UniqueCheckEmailAndPhone
  * @apiUse v100UniqueCheckItnAndPsrn
  */
-router.use(Recaptcha2.instance.middleware, new RequestValidator({
+router.use(reCaptcha2, new RequestValidator({
   body: {
     Unit: ObjectUnit,
     payload: {

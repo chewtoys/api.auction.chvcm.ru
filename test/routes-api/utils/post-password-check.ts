@@ -13,7 +13,7 @@ describe("POST /utils/password/check", () => {
         password: new Array(1_000_000).fill("a").join(""),
       })
       .expect(413, {
-        code: ApiCodes.PAYLOAD_TOO_LARGE_ERROR,
+        code: ApiCodes.PAYLOAD_TOO_LARGE,
         message: "payload too large error",
       });
   });

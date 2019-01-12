@@ -1,4 +1,4 @@
-import {allowReCaptcha} from "../../../common";
+import "../../../common";
 
 import {PgBigSerialUnitCodes, RegExpUnitCodes} from "@alendo/express-req-validator";
 
@@ -12,8 +12,6 @@ describe("GET /entities/:id/attachments/:name", () => {
   let tokenEntity: string;
 
   beforeEach(async () => {
-    allowReCaptcha();
-
     await Sequelize.instance.employee.create({
       email: "moderator@example.com",
       language: "ru",

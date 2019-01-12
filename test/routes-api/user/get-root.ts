@@ -1,4 +1,4 @@
-import {allowReCaptcha} from "../../common";
+import "../../common";
 
 import {expect} from "chai";
 import * as supertest from "supertest";
@@ -16,8 +16,6 @@ describe("GET /user", () => {
   let tokenEmployee: string;
   let tokenEntity: string;
   beforeEach(async () => {
-    allowReCaptcha();
-
     await Sequelize.instance.employee.create({
       admin: true,
       email: "admin@example.com",

@@ -1,4 +1,4 @@
-import {allowReCaptcha} from "../../common";
+import "../../common";
 
 import {ObjectUnitCodes, PgEnumUnitCodes} from "@alendo/express-req-validator";
 
@@ -16,8 +16,6 @@ import {
 describe("POST /stuffs", () => {
   let token: string;
   beforeEach(async () => {
-    allowReCaptcha();
-
     await Sequelize.instance.employee.create({
       email: "admin@example.com",
       language: "ru",

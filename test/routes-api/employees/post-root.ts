@@ -1,4 +1,4 @@
-import {allowReCaptcha} from "../../common";
+import "../../common";
 import waitForExpect from "../../wait-for-expect";
 
 import {
@@ -27,8 +27,6 @@ import {
 describe("POST /employees", () => {
   let token: string;
   beforeEach(async () => {
-    allowReCaptcha();
-
     const spyMail = sinon.stub();
     EmailNotifications.instance.on(EmailNotifications.EMAIL_EVENT, spyMail);
 

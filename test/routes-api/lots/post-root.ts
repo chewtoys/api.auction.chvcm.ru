@@ -1,4 +1,4 @@
-import {allowReCaptcha} from "../../common";
+import "../../common";
 import waitForExpect from "../../wait-for-expect";
 
 import {
@@ -34,8 +34,6 @@ describe("POST /lots", () => {
   let socket: SocketIOClient.Socket;
 
   beforeEach(async () => {
-    allowReCaptcha();
-
     await Sequelize.instance.employee.create({
       email: "admin@example.com",
       language: "ru",

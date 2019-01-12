@@ -1,4 +1,4 @@
-import {allowReCaptcha, disallowReCaptcha} from "../../common";
+import "../../common";
 import waitForExpect from "../../wait-for-expect";
 
 import {EmailUnitCodes, ObjectUnitCodes} from "@alendo/express-req-validator";
@@ -19,7 +19,6 @@ import {
 
 describe("GET /utils/password/reset", () => {
   beforeEach(async () => {
-    allowReCaptcha();
     await Sequelize.instance.employee.create({
       email: "admin@example.com",
       language: "ru",
@@ -28,18 +27,6 @@ describe("GET /utils/password/reset", () => {
       phone: "+79123456789",
       tfa: false,
     });
-  });
-
-  it("reCaptcha not valid", async () => {
-    disallowReCaptcha();
-    await supertest(Web.instance.app).get(`${Const.API_MOUNT_POINT}/utils/password/reset`)
-      .query({
-        email: "admin@example.com",
-      })
-      .expect(401, {
-        code: ApiCodes.WRONG_RECAPTCHA,
-        message: "FUCK YOU BOT!",
-      });
   });
 
   it("wrong email", async () => {

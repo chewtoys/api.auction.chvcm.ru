@@ -1,4 +1,4 @@
-import {allowReCaptcha} from "../../common";
+import "../../common";
 import waitForExpect from "../../wait-for-expect";
 
 import {ObjectUnitCodes, PgBigSerialUnitCodes, PgNumericUnitCodes} from "@alendo/express-req-validator";
@@ -28,8 +28,6 @@ describe("PATH /lots/:id", () => {
   let finish: Date;
 
   beforeEach(async () => {
-    allowReCaptcha();
-
     await Sequelize.instance.employee.create({
       email: "admin@example.com",
       language: "ru",

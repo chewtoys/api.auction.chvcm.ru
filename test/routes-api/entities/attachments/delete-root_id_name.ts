@@ -1,4 +1,4 @@
-import {allowReCaptcha} from "../../../common";
+import "../../../common";
 import waitForExpect from "../../../wait-for-expect/index";
 
 import {PgBigSerialUnitCodes, RegExpUnitCodes} from "@alendo/express-req-validator";
@@ -24,8 +24,6 @@ describe("DELETE /entities/:id/attachments/:name", () => {
   let tokenEntity: string;
 
   beforeEach(async () => {
-    allowReCaptcha();
-
     const spyMail = sinon.stub();
     EmailNotifications.instance.on(EmailNotifications.EMAIL_EVENT, spyMail);
 

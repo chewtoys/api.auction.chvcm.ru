@@ -1,4 +1,4 @@
-import {allowReCaptcha} from "../../../common";
+import "../../../common";
 import waitForExpect from "../../../wait-for-expect";
 
 import {PgBigSerialUnitCodes, RegExpUnitCodes} from "@alendo/express-req-validator";
@@ -26,8 +26,6 @@ describe("PUT /entities/:id/attachments/:name", () => {
   let tokenEntity: string;
 
   beforeEach(async () => {
-    allowReCaptcha();
-
     const spyMail = sinon.stub();
     EmailNotifications.instance.on(EmailNotifications.EMAIL_EVENT, spyMail);
 
@@ -213,7 +211,7 @@ describe("PUT /entities/:id/attachments/:name", () => {
       .set("Content-Type", "application/octet-stream")
       .send(Buffer.alloc(bytes("2mb")).fill(0))
       .expect(413, {
-        code: ApiCodes.PAYLOAD_TOO_LARGE_ERROR,
+        code: ApiCodes.PAYLOAD_TOO_LARGE,
         message: "payload too large error",
       });
   });
@@ -222,7 +220,7 @@ describe("PUT /entities/:id/attachments/:name", () => {
     await supertest(Web.instance.app).put(`${Const.API_MOUNT_POINT}/entities/2/attachments/files.zip`)
       .set("Authorization", `Bearer ${tokenEntity}`)
       .expect(415, {
-        code: ApiCodes.WRONG_CONTENT_TYPE,
+        code: ApiCodes.UNSUPPORTED_MEDIA_TYPE,
         message: "Content-Type must be 'application/octet-stream'",
       });
   });
@@ -232,7 +230,7 @@ describe("PUT /entities/:id/attachments/:name", () => {
       .set("Authorization", `Bearer ${tokenEntity}`)
       .set("Content-Type", "application/json")
       .expect(415, {
-        code: ApiCodes.WRONG_CONTENT_TYPE,
+        code: ApiCodes.UNSUPPORTED_MEDIA_TYPE,
         message: "Content-Type must be 'application/octet-stream'",
       });
   });

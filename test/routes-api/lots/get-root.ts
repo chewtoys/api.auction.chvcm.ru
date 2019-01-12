@@ -1,4 +1,4 @@
-import {allowReCaptcha} from "../../common";
+import "../../common";
 
 import {
   PgBigSerialUnitCodes,
@@ -30,8 +30,6 @@ describe("GET /lots", () => {
   let finish3: Date;
 
   beforeEach(async () => {
-    allowReCaptcha();
-
     await Sequelize.instance.employee.create({
       email: "admin@example.com",
       language: "ru",

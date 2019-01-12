@@ -1,4 +1,4 @@
-import {allowReCaptcha, disallowReCaptcha} from "../../common";
+import "../../common";
 import waitForExpect from "../../wait-for-expect";
 
 import {EmailUnitCodes, ObjectUnitCodes, ZxcvbnUnitCodes} from "@alendo/express-req-validator";
@@ -20,8 +20,6 @@ import {
 
 describe("POST /signin", () => {
   beforeEach(async () => {
-    allowReCaptcha();
-
     await Sequelize.instance.employee.create({
       email: "admin@example.com",
       language: "ru",
@@ -30,16 +28,6 @@ describe("POST /signin", () => {
       phone: "+79123456789",
       tfa: false,
     });
-  });
-
-  it("wrong reCaptcha", async () => {
-    disallowReCaptcha();
-
-    await supertest(Web.instance.app).post(`${Const.API_MOUNT_POINT}/signin`)
-      .expect(401, {
-        code: ApiCodes.WRONG_RECAPTCHA,
-        message: "FUCK YOU BOT!",
-      });
   });
 
   describe("with tfa", () => {

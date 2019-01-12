@@ -1,4 +1,4 @@
-import {allowReCaptcha, disallowReCaptcha} from "../../common";
+import "../../common";
 import waitForExpect from "../../wait-for-expect";
 
 import {
@@ -28,10 +28,6 @@ import {
 } from "../../../src";
 
 describe("POST /entities", () => {
-  beforeEach(() => {
-    allowReCaptcha();
-  });
-
   it("Bad Request 400 - OBJECT_MISSING_KEY (ceo)", async () => {
     await supertest(Web.instance.app).post(`${Const.API_MOUNT_POINT}/entities`)
       .send({
@@ -454,15 +450,6 @@ describe("POST /entities", () => {
       .expect(400, {
         code: PsrnUnitCodes.WRONG_JURIDICAL_PSRN,
         message: "body.psrn: psrn must contains 13 digits with the correct checksum",
-      });
-  });
-
-  it("Unauthorized 401 - wrong reCaptcha", async () => {
-    disallowReCaptcha();
-    await supertest(Web.instance.app).post(`${Const.API_MOUNT_POINT}/entities`)
-      .expect(401, {
-        code: ApiCodes.WRONG_RECAPTCHA,
-        message: "FUCK YOU BOT!",
       });
   });
 

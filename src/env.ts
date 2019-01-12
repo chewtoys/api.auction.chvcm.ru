@@ -17,14 +17,6 @@ export class Env {
    */
   public static readonly NODE_TLS_REJECT_UNAUTHORIZED: string = process.env.NODE_TLS_REJECT_UNAUTHORIZED as string;
 
-  // @alendo/recaptcha
-
-  /**
-   * Google reCAPTCHA secret or fake "6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe"
-   * @type {string}
-   */
-  public static readonly RECAPTCHA_SECRET: string = process.env.RECAPTCHA_SECRET as string;
-
   // DB
 
   /**
@@ -120,4 +112,10 @@ export class Env {
    * JSON Web Token secret
    */
   public static readonly JWT_SECRET: string = process.env.JWT_SECRET as string;
+
+  /**
+   * Google reCaptcha v2 secret or fake "6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe"
+   * @type {string}
+   */
+  public static readonly RECAPTCHA_SECRET: string = process.env.RECAPTCHA_SECRET as string;
 }

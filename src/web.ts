@@ -15,7 +15,7 @@ import * as ioRedis from "socket.io-redis";
 import {baseDir} from "../global";
 import {Const} from "./const";
 import {Env} from "./env";
-import {Auth, ResponseChain} from "./middleware";
+import {Auth, errorHandler, ResponseChain} from "./middleware";
 import {RedisClient} from "./redis";
 
 /**
@@ -138,7 +138,7 @@ export class Web {
 
     this.app.use("/", rootRoute);
 
-    this.app.use(ResponseChain.errorHandlerMiddleware);
+    this.app.use(errorHandler);
   }
 
   private initIO() {

@@ -7,7 +7,7 @@ import {
   EmailNotifications,
   ITokensPasswordResetInstance,
   IUserAttributes,
-  Recaptcha2,
+  reCaptcha2,
   Sequelize,
 } from "src";
 
@@ -41,7 +41,7 @@ export default router;
  * @apiUse v100CommonHeaders
  * @apiUse v100Recaptcha2
  */
-router.use(Recaptcha2.instance.middleware, new RequestValidator({
+router.use(reCaptcha2, new RequestValidator({
   query: {
     Unit: ObjectUnit,
     payload: {

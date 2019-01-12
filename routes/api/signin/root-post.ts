@@ -9,7 +9,7 @@ import {
   EmailNotifications,
   ITokensTfaPurgatoryInstance,
   IUserAttributes,
-  Recaptcha2,
+  reCaptcha2,
   Sequelize,
 } from "src";
 
@@ -60,7 +60,7 @@ export default router;
  * @apiUse v100CommonHeaders
  * @apiUse v100Recaptcha2
  */
-router.use(Recaptcha2.instance.middleware, new RequestValidator({
+router.use(reCaptcha2, new RequestValidator({
   body: {
     Unit: ObjectUnit,
     payload: {

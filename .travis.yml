@@ -13,8 +13,6 @@ env:
   global:
     # Node.js
     - NODE_ENV=staging
-    # @alendo/recaptcha
-    - RECAPTCHA_SECRET=6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe
     # DB
     - AWS_ACCESS_KEY_ID=key
     - AWS_SECRET_ACCESS_KEY=secret
@@ -33,6 +31,7 @@ env:
     - EMAIL_SMTP=smtps://username:password@smtp.example.com/?pool=true
     # Internal
     - JWT_SECRET=jwt
+    - RECAPTCHA_SECRET=6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe
     - RECAPTCHA_SITE=6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI
     # Docker
     - COMPOSE_PROJECT_NAME=api.auction.chvcm.ru

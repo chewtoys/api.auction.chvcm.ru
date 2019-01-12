@@ -8,24 +8,9 @@ if (process.env.DEBUG) {
 
 import {PgEnumUnitCacheMemory, PgEnumUnitClient} from "@alendo/express-req-validator";
 
-import MockAdapter from "axios-mock-adapter";
 import "mocha";
 
-import {EmailNotifications, PgMigrate, Recaptcha2, RedisClient, S3, Sequelize, Web} from "../src";
-
-export let reCaptchaMockAdapter: MockAdapter;
-
-export function allowReCaptcha(): void {
-  reCaptchaMockAdapter.onPost(Recaptcha2.VERIFY_URL).reply(200, {
-    success: true,
-  });
-}
-
-export function disallowReCaptcha(): void {
-  reCaptchaMockAdapter.onPost(Recaptcha2.VERIFY_URL).reply(200, {
-    success: false,
-  });
-}
+import {EmailNotifications, PgMigrate, RedisClient, S3, Sequelize, Web} from "../src";
 
 let beforeAll = true;
 
@@ -53,7 +38,6 @@ beforeEach(async () => {
   }
 
   Web.instantiate();
-  reCaptchaMockAdapter = new MockAdapter(Recaptcha2.AXIOS);
 
   await Web.instance.listen();
 });
@@ -62,7 +46,6 @@ afterEach(async () => {
   await Web.instance.close();
   await Sequelize.instance.close();
   await RedisClient.close();
-  reCaptchaMockAdapter.restore();
 });
 
 process.on("uncaughtException", (error) => {

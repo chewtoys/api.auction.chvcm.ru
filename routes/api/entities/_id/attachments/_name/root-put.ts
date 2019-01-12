@@ -44,7 +44,7 @@ export default router;
  * @apiError (Not Found 404 - Юридическое лицо не найдено) {string="DB_ENTITY_NOT_FOUND_BY_ID"} code Код ошибки
  * @apiError (Not Found 404 - Юридическое лицо не найдено) {string} message Подробное описание ошибки
  *
- * @apiError (Unsupported Media Type 415 - Content-Type запроса неверный) {string="WRONG_CONTENT_TYPE"} code Код ошибки
+ * @apiError (Unsupported Media Type 415 - Content-Type запроса неверный) {string="UNSUPPORTED_MEDIA_TYPE"} code Код ошибки
  * @apiError (Unsupported Media Type 415 - Content-Type запроса неверный) {string} message Подробное описание ошибки
  *
  * @apiUse v100CommonHeaders
@@ -56,7 +56,7 @@ router.use(async (req, res, next) => {
   const isUpload = await res.achain
     .check(() => {
       return String(req.headers["content-type"]).toLowerCase() === "application/octet-stream";
-    }, ApiCodes.WRONG_CONTENT_TYPE, "Content-Type must be 'application/octet-stream'", 415)
+    }, ApiCodes.UNSUPPORTED_MEDIA_TYPE, "Content-Type must be 'application/octet-stream'", 415)
     .action(async () => {
       s3 = await S3.createClient();
     })

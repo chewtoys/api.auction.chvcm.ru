@@ -1,4 +1,4 @@
-import {allowReCaptcha} from "../../common";
+import "../../common";
 import waitForExpect from "../../wait-for-expect";
 
 import {EnumUnitCodes, NotEmptyStringUnitCodes, ObjectUnitCodes} from "@alendo/express-req-validator";
@@ -24,8 +24,6 @@ describe("PUT /signin", () => {
   let authToken: string;
   let purgatoryToken: string;
   beforeEach(async () => {
-    allowReCaptcha();
-
     await Sequelize.instance.employee.create({
       email: "admin@example.com",
       language: "ru",

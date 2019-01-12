@@ -36,7 +36,7 @@ export class ResponseChain extends SuperResponseChain<ResponseChain> {
       }, ApiCodes.BAD_REQUEST, () => error.message, 400)
       .check(() => {
         return error.statusCode !== 413;
-      }, ApiCodes.PAYLOAD_TOO_LARGE_ERROR, "payload too large error", 413)
+      }, ApiCodes.PAYLOAD_TOO_LARGE, "payload too large error", 413)
       .action(() => {
         throw error;
       })
