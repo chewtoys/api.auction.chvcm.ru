@@ -212,7 +212,7 @@ describe("PUT /entities/:id/attachments/:name", () => {
       .send(Buffer.alloc(bytes("2mb")).fill(0))
       .expect(413, {
         code: ApiCodes.PAYLOAD_TOO_LARGE,
-        message: "payload too large error",
+        message: "request entity too large",
       });
   });
 
