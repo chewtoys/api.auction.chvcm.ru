@@ -48,11 +48,6 @@ export class Env {
   public static readonly AWS_S3_BUCKET: string = process.env.AWS_S3_BUCKET as string;
 
   /**
-   * Use native PostgreSQL library?
-   */
-  public static readonly DATABASE_NATIVE: boolean = !!process.env.DATABASE_NATIVE;
-
-  /**
    * PostgreSQL max pool clients
    */
   public static readonly DATABASE_POOL_MAX: number = parseInt(process.env.DATABASE_POOL_MAX as string, 10);

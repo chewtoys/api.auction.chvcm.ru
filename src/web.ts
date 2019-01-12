@@ -8,7 +8,6 @@ import * as cors from "cors";
 import * as express from "express";
 import {Express} from "express";
 import * as bearerToken from "express-bearer-token";
-import * as helmet from "helmet";
 import * as morgan from "morgan";
 import * as io from "socket.io";
 import * as ioRedis from "socket.io-redis";
@@ -121,13 +120,8 @@ export class Web {
       this.app.use(morgan("tiny"));
     }
 
-    this.app.use(helmet());
-
     this.app.use(express.static(path.join(baseDir, "build")));
-
-    if (Const.STAGING) {
-      this.app.use("/apidoc", express.static(path.join(baseDir, "apidoc")));
-    }
+    this.app.use(Const.APIDOC_MOUNT_POINT, express.static(path.join(baseDir, "apidoc")));
 
     this.app.use(cors({
       origin(origin, callback) {

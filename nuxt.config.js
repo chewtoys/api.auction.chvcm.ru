@@ -1,4 +1,5 @@
 const path = require("path");
+const url = require("url");
 
 const dotenv = require("dotenv");
 
@@ -19,7 +20,8 @@ module.exports = {
     "@fortawesome/fontawesome-svg-core/styles.css",
   ],
   env: {
-    API_ENDPOINT: process.env.API_ENDPOINT || constSharedJson.API_MOUNT_POINT,
+    API_ENDPOINT: url.resolve(process.env.API_SERVER || "/", constSharedJson.API_MOUNT_POINT),
+    APIDOC_URL: url.resolve(process.env.API_SERVER || "/", constSharedJson.APIDOC_MOUNT_POINT),
     RECAPTCHA_SITE: process.env.RECAPTCHA_SITE,
     SOCKET_TRANSPORTS: constSharedJson.SOCKET_TRANSPORTS,
   },

@@ -5,7 +5,9 @@
   - Add AWS S3 support for attachments storage
   - Add Socket.IO support for lots notifications
   - Remove two-factor authentication via email
-- Redesign DB
+- DB
+  - Redesign DB
+  - Drop native driver support
 - Redesign email messages
 - Redesign `index.html`
   - Add `Requester` to RESTful API testing

@@ -71,7 +71,7 @@ export class Sequelize extends SuperSequelize {
         ssl: Env.DATABASE_SSL,
       },
       logging: false,
-      native: Env.DATABASE_NATIVE,
+      native: false,
       pool: {
         max: options.poolMax,
       },

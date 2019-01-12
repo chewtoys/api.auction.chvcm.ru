@@ -43,7 +43,7 @@
         font-awesome-icon(:icon="githubIcon")
         =" "
         | Source code
-      b-nav-item(href="https://github.com/AlendoStudio/api.auction.chvcm.ru/wiki" target="_blank")
+      b-nav-item(:href="apidocUrl" target="_blank")
         font-awesome-icon(:icon="bookIcon")
         =" "
         | Documentation
@@ -63,6 +63,9 @@
 
   export default {
     computed: {
+      apidocUrl() {
+        return process.env.APIDOC_URL;
+      },
       bookIcon() {
         return faBook;
       },

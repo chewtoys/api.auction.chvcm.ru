@@ -20,7 +20,6 @@ env:
     - AWS_SECRET_ACCESS_KEY=secret
     - AWS_ENDPOINT=http://localhost:4567
     - AWS_S3_BUCKET=api.auction.chvcm.ru
-    - DATABASE_NATIVE=true
     - DATABASE_POOL_MAX=10
     - DATABASE_URL=postgresql://postgres:postgres@localhost:5432/postgres
     - REDIS_URL=redis://localhost:6379
@@ -34,6 +33,7 @@ env:
     - EMAIL_SMTP=smtps://username:password@smtp.example.com/?pool=true
     # Internal
     - JWT_SECRET=jwt
+    - RECAPTCHA_SITE=6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI
     # Docker
     - COMPOSE_PROJECT_NAME=api.auction.chvcm.ru
     - COMPOSE_RESTART=no
@@ -52,14 +52,16 @@ env:
     - S3PROXY_SECRET_ACCESS_KEY=secret
     - S3PROXY_VOLUME=/mnt/alendo-api.auction.chvcm.ru-s3poxy-ramdisk
   matrix:
-    - POSTGRES_TAG=11 REDIS_TAG=5 S3PROXY_TAG=latest
+    - POSTGRES_TAG=11-alpine REDIS_TAG=5-alpine S3PROXY_TAG=latest
 
 before_install:
   - curl -o- -L https://yarnpkg.com/install.sh | bash -s
   - export PATH="$HOME/.yarn/bin:$PATH"
   - yarn global add codecov
 
-install: yarn install --production false
+install:
+  - yarn install --production false
+  - yarn build-src
 
 before_script:
   # TODO: https://github.com/travis-ci/travis-ci/issues/4842#issuecomment-311527059
@@ -88,6 +90,11 @@ jobs:
       name: tslint
       before_script: true
       script: yarn lint
+      after_script: true
+    - stage: test
+      name: build-public
+      before_script: true
+      script: yarn build-public
       after_script: true
     - stage: deploy
       name: releases

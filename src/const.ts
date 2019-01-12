@@ -21,6 +21,11 @@ export class Const {
   public static readonly API_MOUNT_POINT: string = constSharedJson.API_MOUNT_POINT;
 
   /**
+   * Apidoc mount point
+   */
+  public static readonly APIDOC_MOUNT_POINT: string = constSharedJson.APIDOC_MOUNT_POINT;
+
+  /**
    * Production environment
    */
   public static readonly PRODUCTION: boolean = Env.NODE_ENV === "production";
