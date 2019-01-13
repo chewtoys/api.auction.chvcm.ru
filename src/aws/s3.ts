@@ -62,7 +62,7 @@ export class S3 {
       }
 
       if (objects.IsTruncated) {
-        objects = objects = await s3.listObjects({
+        objects = await s3.listObjects({
           Bucket: Env.AWS_S3_BUCKET,
           Marker: objects.NextMarker,
         }).promise();

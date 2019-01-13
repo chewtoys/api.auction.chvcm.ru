@@ -2,7 +2,6 @@ import {EventEmitter} from "events";
 import * as path from "path";
 import * as util from "util";
 
-import * as cachePugTemplates from "cache-pug-templates";
 import * as debug from "debug";
 import * as Email from "email-templates";
 import * as marked from "marked";
@@ -12,7 +11,6 @@ import {baseDir} from "../../global";
 import {Const} from "../const";
 import {Env} from "../env";
 import {IEmailOptions, IEmailUser} from "../interfaces";
-import {RedisClient} from "../redis";
 
 async function renderMarkdown(markdown?: string): Promise<string> {
   if (!markdown) {
@@ -95,9 +93,6 @@ export class EmailNotifications extends EventEmitter {
         root: views,
       },
     });
-    if (Const.PRODUCTION) {
-      cachePugTemplates(RedisClient.instance, views);
-    }
   }
 
   /**

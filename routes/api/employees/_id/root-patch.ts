@@ -41,11 +41,11 @@ export default router;
  * @apiError (Bad Request 400 - Параметр banned или moderator неверный) {string} message
  * Подробное описание ошибки
  *
- * @apiError (Not Found 404 - Сотрудник не найден) {string="DB_EMPLOYEE_NOT_FOUND_BY_ID"} code Код ошибки
+ * @apiError (Not Found 404 - Сотрудник не найден) {string="EMPLOYEE_NOT_FOUND_BY_ID"} code Код ошибки
  * @apiError (Not Found 404 - Сотрудник не найден) {string} message Подробное описание ошибки
  *
  * @apiUse v100CommonHeaders
- * @apiUse v100AuthAuth
+ * @apiUse v100AuthViaAuthToken
  * @apiUse v100AuthRequireAdmin
  */
 router.use(new RequestValidator({
@@ -74,7 +74,7 @@ router.use(new RequestValidator({
     })
     .check(() => {
       return !!employee;
-    }, ApiCodes.DB_EMPLOYEE_NOT_FOUND_BY_ID, "employee with same id not found", 404)
+    }, ApiCodes.EMPLOYEE_NOT_FOUND_BY_ID, "employee with same id not found", 404)
     .action(async () => {
       await Sequelize.instance.employee.update(cleanDeep({
         banned: _.get(req.body.value.banned, "value"),

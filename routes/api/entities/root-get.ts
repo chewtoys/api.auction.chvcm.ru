@@ -35,7 +35,7 @@ router.use(Auth.auth, Auth.requireModerator);
  * @apiSuccess {string} entities.email Email
  * @apiSuccess {string="1..9223372036854775807"} entities.id ID
  * @apiSuccess {string} entities.itn Идентификационный номер налогоплательщика
- * @apiSuccess {string="ISO 639-1 в нижнем регистре"} entities.language Язык
+ * @apiSuccess {string="en", "ru"} entities.language Язык
  * @apiSuccess {string} entities.name Название огранизации
  * @apiSuccess {string} entities.phone Телефон
  * @apiSuccess {string} entities.psrn Основной государственный регистрационный номер
@@ -52,7 +52,7 @@ router.use(Auth.auth, Auth.requireModerator);
  * @apiError (Bad Request 400 - Параметр offset неверный) {string} message Подробное описание ошибки
  *
  * @apiUse v100CommonHeaders
- * @apiUse v100AuthAuth
+ * @apiUse v100AuthViaAuthToken
  * @apiUse v100AuthRequireModerator
  */
 router.use(new RequestValidator({

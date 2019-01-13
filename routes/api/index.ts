@@ -1,4 +1,4 @@
-import {Router} from "express";
+import Router from "express-promise-router";
 
 const router = Router();
 export default router;
@@ -21,17 +21,12 @@ router.use("/utils", utils);
 
 /**
  * @apiDefine v100CommonHeaders
- * @apiHeader (Accept-Encoding) {string="gzip", "deflate", "identity"} [Accept-Encoding]
- * Перечень поддерживаемых способов кодирования содержимого сущности при передаче
  *
  * @apiHeader (Content-Type запроса) {string="application/json"} [Content-Type]
  * Формат и способ представления сущности
  *
  * @apiHeader (Content-Type ответа) {string="application/json"} [Content-Type]
  * Формат и способ представления сущности
- *
- * @apiHeader (Content-Encoding) {string="gzip", "deflate", "identity"} [Content-Encoding]
- * Способ кодирования содержимого сущности при передаче
  *
  * @apiHeader (Origin) {string} [Origin]
  * Инициализировать получение прав на совместное использование ресурсов между разными источниками

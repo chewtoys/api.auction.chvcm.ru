@@ -47,7 +47,7 @@ export default router;
  * @apiError (Not Found 404 - Юридическое лицо не найдено) {string} message Подробное описание ошибки
  *
  * @apiUse v100CommonHeaders
- * @apiUse v100AuthAuth
+ * @apiUse v100AuthViaAuthToken
  */
 router.use(new RequestValidator({
   body: {

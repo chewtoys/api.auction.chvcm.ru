@@ -80,7 +80,7 @@ function numericOverflowStatus(error?: Error) {
  * @apiError (Bad Request 400 - Параметр winbid неверный) {string} message Подробное описание ошибки
  *
  * @apiUse v100CommonHeaders
- * @apiUse v100AuthAuth
+ * @apiUse v100AuthViaAuthToken
  * @apiUse v100AuthRequireVerifiedEntity
  */
 router.use(new RequestValidator({

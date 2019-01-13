@@ -7,7 +7,6 @@ import * as compression from "compression";
 import * as cors from "cors";
 import * as express from "express";
 import {Express} from "express";
-import * as bearerToken from "express-bearer-token";
 import * as morgan from "morgan";
 import * as io from "socket.io";
 import * as ioRedis from "socket.io-redis";
@@ -120,23 +119,19 @@ export class Web {
       this.app.use(morgan("tiny"));
     }
 
-    this.app.use(express.static(path.join(baseDir, "build")));
-    this.app.use(Const.APIDOC_MOUNT_POINT, express.static(path.join(baseDir, "apidoc")));
-
     this.app.use(cors({
       origin(origin, callback) {
         callback(null, Env.CORS_WHITELIST.length === 0 || Env.CORS_WHITELIST.indexOf(origin) !== -1);
       },
     }));
 
-    this.app.use(compression());
-    this.app.use(bearerToken());
-
     this.app.use(bodyParser.json({
       limit: Env.EXPRESS_BODY_LIMIT_JSON,
     }));
 
     this.app.use("/", rootRoute);
+    this.app.use("/", compression(), express.static(path.join(baseDir, "build")));
+    this.app.use(Const.APIDOC_MOUNT_POINT, compression(), express.static(path.join(baseDir, "apidoc")));
 
     this.app.use(errorHandler);
   }

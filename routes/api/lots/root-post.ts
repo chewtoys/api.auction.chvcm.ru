@@ -55,13 +55,13 @@ function intervalOverflowStatus(error?: Error) {
  * Количество материала > 0
  * @apiParam {object} buffer
  * Интервал времени, который всегда должен оставаться между временем последней ставки и временем окончания аукциона
- * @apiParam {number} [buffer.years] Годы
- * @apiParam {number} [buffer.months] Месяцы
- * @apiParam {number} [buffer.days] Дни
- * @apiParam {number} [buffer.hours] Часы
- * @apiParam {number} [buffer.minutes] Минуты
- * @apiParam {number} [buffer.seconds] Секунды
- * @apiParam {number} [buffer.milliseconds] Миллисекунды
+ * @apiParam {number} [buffer.years] Годы >= 0
+ * @apiParam {number} [buffer.months] Месяцы >= 0
+ * @apiParam {number} [buffer.days] Дни >= 0
+ * @apiParam {number} [buffer.hours] Часы >= 0
+ * @apiParam {number} [buffer.minutes] Минуты >= 0
+ * @apiParam {number} [buffer.seconds] Секунды >= 0
+ * @apiParam {number} [buffer.milliseconds] Миллисекунды >= 0
  * @apiParam {string="ISO 4217:2015 в нижнем регистре"} currency Валюта
  * @apiParam {string="ISO 8601"} finish Время окончания аукциона (не может быть раньше времени начала)
  * @apiParam {string="ISO 8601"} start Время начала аукциона (не может быть в прошлом)
@@ -132,7 +132,7 @@ function intervalOverflowStatus(error?: Error) {
  * @apiError (Bad Request 400 - Материал не найден) {string} message Подробное описание ошибки
  *
  * @apiUse v100CommonHeaders
- * @apiUse v100AuthAuth
+ * @apiUse v100AuthViaAuthToken
  * @apiUse v100AuthRequireModerator
  */
 router.use(new RequestValidator({

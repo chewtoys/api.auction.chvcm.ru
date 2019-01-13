@@ -1,7 +1,7 @@
 import "../common";
 
 import {expect} from "chai";
-import {AttachmentNameUnit} from "../../src/units";
+import {AttachmentNameUnit} from "../../src/joi";
 
 describe("AttachmentNameUnit", () => {
   [

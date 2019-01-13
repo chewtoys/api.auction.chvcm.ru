@@ -39,7 +39,7 @@ export default router;
  * @apiParam {string} ceo Директор
  * @apiParam {string} email Email
  * @apiParam {number} itn Идентификационный номер налогоплательщика
- * @apiParam {string="ISO 639-1 в нижнем регистре"} language Язык
+ * @apiParam {string="en", "ru"} language Язык
  * @apiParam {string} name Название огранизации
  * @apiParam {string} password Пароль (учитываются только первые 72 символа)
  * @apiParam {string="+79xxxxxxxxx"} phone Телефон

@@ -26,7 +26,7 @@ export default router;
  *
  * @apiDescription Результаты отсортированы в порядке возрастания названия материала
  *
- * @apiParam (Query) {string="ISO 639-1 в нижнем регистре"} [code] Фильтр по языку перевода
+ * @apiParam (Query) {string="en", "ru"} [code] Фильтр по языку перевода
  * (`"en"` по умолчанию, если не задан ID)
  * @apiParam (Query) {string="1..9223372036854775807"} [id] Фильтр по ID
  * @apiParam (Query) {string="0..100"} [limit='"100"'] Лимит (не учитывается когда задан ID)
@@ -37,7 +37,7 @@ export default router;
  * @apiSuccess {boolean} stuffs.enabled Включен ли материал?
  * @apiSuccess {string="1..9223372036854775807"} stuffs.id ID материала
  * @apiSuccess {object[]} stuffs.translations Список переводов
- * @apiSuccess {string="ISO 639-1 в нижнем регистре"} stuffs.translations.code Язык перевода
+ * @apiSuccess {string="en", "ru"} stuffs.translations.code Язык перевода
  * @apiSuccess {string} stuffs.translations.title Название материала
  * @apiSuccess {string} stuffs.translations.description Описание материала (может быть пустым)
  *
@@ -54,7 +54,7 @@ export default router;
  * @apiError (Bad Request 400 - Параметр offset неверный) {string} message Подробное описание ошибки
  *
  * @apiUse v100CommonHeaders
- * @apiUse v100AuthAuth
+ * @apiUse v100AuthViaAuthToken
  */
 router.use(new RequestValidator({
   query: {

@@ -48,7 +48,7 @@ export default router;
  * @apiError (Unsupported Media Type 415 - Content-Type запроса неверный) {string} message Подробное описание ошибки
  *
  * @apiUse v100CommonHeaders
- * @apiUse v100AuthAuth
+ * @apiUse v100AuthViaAuthToken
  */
 router.use(async (req, res, next) => {
   let s3: AWS.S3;

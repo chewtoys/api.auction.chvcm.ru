@@ -30,7 +30,7 @@ export default router;
  * @apiPermission Администратор
  *
  * @apiParam {string} email Email
- * @apiParam {string="ISO 639-1 в нижнем регистре"} language Язык
+ * @apiParam {string="en", "ru"} language Язык
  * @apiParam {string} name Имя
  * @apiParam {string="+79xxxxxxxxx"} phone Телефон
  *
@@ -55,7 +55,7 @@ export default router;
  * @apiError (Bad Request 400 - Параметр phone неверный) {string} message Подробное описание ошибки
  *
  * @apiUse v100CommonHeaders
- * @apiUse v100AuthAuth
+ * @apiUse v100AuthViaAuthToken
  * @apiUse v100AuthRequireAdmin
  * @apiUse v100UniqueCheckEmailAndPhone
  */

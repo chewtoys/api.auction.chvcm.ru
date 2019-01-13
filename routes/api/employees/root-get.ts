@@ -32,7 +32,7 @@ export default router;
  * @apiSuccess {boolean} employees.banned Забанен ли сотрудник?
  * @apiSuccess {string} employees.email Email
  * @apiSuccess {string="1..9223372036854775807"} employees.id ID
- * @apiSuccess {string="ISO 639-1 в нижнем регистре"} employees.language Язык
+ * @apiSuccess {string="en", "ru"} employees.language Язык
  * @apiSuccess {boolean} employees.moderator Есть ли права модератора?
  * @apiSuccess {string} employees.name Имя
  * @apiSuccess {string} employees.phone Телефон
@@ -48,7 +48,7 @@ export default router;
  * @apiError (Bad Request 400 - Параметр offset неверный) {string} message Подробное описание ошибки
  *
  * @apiUse v100CommonHeaders
- * @apiUse v100AuthAuth
+ * @apiUse v100AuthViaAuthToken
  * @apiUse v100AuthRequireAdmin
  */
 router.use(new RequestValidator({

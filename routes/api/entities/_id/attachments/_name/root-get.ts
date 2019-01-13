@@ -45,7 +45,7 @@ export default router;
  * @apiError (Not Found 404 - Вложение не найдено) {string} message Подробное описание ошибки
  *
  * @apiUse v100CommonHeaders
- * @apiUse v100AuthAuth
+ * @apiUse v100AuthViaAuthToken
  */
 router.use(async (req, res) => {
   let s3: AWS.S3;

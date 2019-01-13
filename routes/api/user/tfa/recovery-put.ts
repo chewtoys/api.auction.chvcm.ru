@@ -15,7 +15,7 @@ export default router;
  * @apiSuccess {string[]} tokens Коды восстановления (10 элементов по умолчанию)
  *
  * @apiUse v100CommonHeaders
- * @apiUse v100AuthAuth
+ * @apiUse v100AuthViaAuthToken
  */
 router.use(async (req, res) => {
   let tokens: ITokensTfaRecoveryInstance[] = [];

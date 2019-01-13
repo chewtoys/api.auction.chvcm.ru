@@ -9,6 +9,7 @@ import {Env} from "../env";
 export class RedisClient {
   /**
    * Instantiate instance
+   * TODO: remove instantiate
    */
   public static instantiate(): void {
     RedisClient._instance = redis.createClient(Env.REDIS_URL);
@@ -16,6 +17,7 @@ export class RedisClient {
 
   /**
    * Instance
+   * TODO: remove instance
    */
   public static get instance(): redis.RedisClient {
     return RedisClient._instance;
@@ -23,6 +25,7 @@ export class RedisClient {
 
   /**
    * FLUSHDB
+   * TODO: use FLUSHDB is testing only
    * @throws Error
    */
   public static async flushdb(): Promise<void> {
@@ -33,6 +36,7 @@ export class RedisClient {
 
   /**
    * Close connection
+   * TODO: move close to web
    * @param client Client (instance by default)
    * @throws Error
    */

@@ -129,7 +129,7 @@ describe("GET /entities/:id/attachments", () => {
         type: Const.USER_TYPE_EMPLOYEE,
       })}`)
       .expect(401, {
-        code: ApiCodes.DB_EMPLOYEE_NOT_FOUND_BY_ID,
+        code: ApiCodes.EMPLOYEE_NOT_FOUND_BY_ID,
         message: "employee with same id not found",
       });
   });

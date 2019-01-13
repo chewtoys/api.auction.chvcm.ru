@@ -12,24 +12,6 @@ import {Jwt} from "../utils";
  */
 export class Auth {
   /**
-   * @apiDefine v100AuthAuth
-   *
-   * @apiHeader (Authorization) {string} Authorization **Bearer** токен аутентификации
-   *
-   * @apiError (Unauthorized 401 - Неверный токен аутентификации) {string="JWT_VERIFY_USER"} code Код ошибки
-   * @apiError (Unauthorized 401 - Неверный токен аутентификации) {string} message Подробное описание ошибки
-   *
-   * @apiError (Unauthorized 401 - Сотрудник не найден) {string="DB_EMPLOYEE_NOT_FOUND_BY_ID"} code Код ошибки
-   * @apiError (Unauthorized 401 - Сотрудник не найден) {string} message Подробное описание ошибки
-   *
-   * @apiError (Unauthorized 401 - Юридическое лицо не найдено) {string="DB_ENTITY_NOT_FOUND_BY_ID"} code Код ошибки
-   * @apiError (Unauthorized 401 - Юридическое лицо не найдено) {string} message Подробное описание ошибки
-   *
-   * @apiError (Unauthorized 401 - Пользователь забанен) {string="BANNED"} code Код ошибки
-   * @apiError (Unauthorized 401 - Пользователь забанен) {string} message Подробное описание ошибки
-   */
-
-  /**
    * Auth via auth token middleware
    * @param req Request
    * @param res Response
@@ -59,7 +41,7 @@ export class Auth {
       })
       .check(() => {
         return !!req.employee;
-      }, ApiCodes.DB_EMPLOYEE_NOT_FOUND_BY_ID, "employee with same id not found", 401)
+      }, ApiCodes.EMPLOYEE_NOT_FOUND_BY_ID, "employee with same id not found", 401)
       .fork(Const.USER_TYPE_ENTITY)
       .action(async () => {
         req.entity = (await Sequelize.instance.entity.findByPk(verifiedUser.id)) as IEntityAttributes;

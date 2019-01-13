@@ -193,7 +193,7 @@ describe("PATCH /employees/:id", () => {
     await supertest(Web.instance.app).patch(`${Const.API_MOUNT_POINT}/employees/999`)
       .set("Authorization", `Bearer ${token}`)
       .expect(404, {
-        code: ApiCodes.DB_EMPLOYEE_NOT_FOUND_BY_ID,
+        code: ApiCodes.EMPLOYEE_NOT_FOUND_BY_ID,
         message: "employee with same id not found",
       });
   });

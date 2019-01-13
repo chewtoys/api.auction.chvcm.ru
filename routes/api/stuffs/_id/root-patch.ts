@@ -44,7 +44,7 @@ export default router;
  * @apiError (Not Found 404 - Материал не найден) {string} message Подробное описание ошибки
  *
  * @apiUse v100CommonHeaders
- * @apiUse v100AuthAuth
+ * @apiUse v100AuthViaAuthToken
  * @apiUse v100AuthRequireModerator
  */
 router.use(new RequestValidator({

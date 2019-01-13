@@ -2,8 +2,7 @@ import {IEmployeeAttributes, IEntityAttributes, IUserAttributes, ResponseChain} 
 
 declare global {
   namespace Express {
-    // tslint:disable interface-name
-    // noinspection JSUnusedGlobalSymbols
+    // tslint:disable-next-line
     export interface Request {
       employee: IEmployeeAttributes;
       entity: IEntityAttributes;
@@ -11,8 +10,8 @@ declare global {
       readonly token: string;
     }
 
-    // noinspection JSUnusedGlobalSymbols
-    export interface Response {
+    // tslint:disable-next-line
+    export interface Response { // TODO: remove this interface
       achain: ResponseChain;
     }
   }

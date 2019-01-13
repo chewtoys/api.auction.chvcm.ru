@@ -15,7 +15,7 @@ export default router;
  * @apiSuccess (Success 200 - Для сотрудника) {boolean} admin Есть ли права администратора?
  * @apiSuccess (Success 200 - Для сотрудника) {string} email Email
  * @apiSuccess (Success 200 - Для сотрудника) {string="1..9223372036854775807"} id ID
- * @apiSuccess (Success 200 - Для сотрудника) {string="ISO 639-1 в нижнем регистре"} language Язык
+ * @apiSuccess (Success 200 - Для сотрудника) {string="en", "ru"} language Язык
  * @apiSuccess (Success 200 - Для сотрудника) {boolean} moderator Есть ли права модератора?
  * @apiSuccess (Success 200 - Для сотрудника) {string} name Имя
  * @apiSuccess (Success 200 - Для сотрудника) {string} phone Телефон
@@ -27,7 +27,7 @@ export default router;
  * @apiSuccess (Success 200 - Для юридического лица) {string} email Email
  * @apiSuccess (Success 200 - Для юридического лица) {string="1..9223372036854775807"} id ID
  * @apiSuccess (Success 200 - Для юридического лица) {string} itn Идентификационный номер налогоплательщика
- * @apiSuccess (Success 200 - Для юридического лица) {string="ISO 639-1 в нижнем регистре"} language Язык
+ * @apiSuccess (Success 200 - Для юридического лица) {string="en", "ru"} language Язык
  * @apiSuccess (Success 200 - Для юридического лица) {string} name Название огранизации
  * @apiSuccess (Success 200 - Для юридического лица) {string} phone Телефон
  * @apiSuccess (Success 200 - Для юридического лица) {string} psrn Основной государственный регистрационный номер
@@ -37,7 +37,7 @@ export default router;
  * @apiSuccess (Success 200 - Для юридического лица) {boolean} verified Является ли учетная запись проверенной?
  *
  * @apiUse v100CommonHeaders
- * @apiUse v100AuthAuth
+ * @apiUse v100AuthViaAuthToken
  */
 router.use(async (req, res) => {
   await res.achain

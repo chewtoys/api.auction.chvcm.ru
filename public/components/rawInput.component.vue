@@ -147,7 +147,7 @@
           this.$emit("input", {data: new Date(newData), type: newType});
         }
         if (newType === "interval") {
-          this.$emit("input", {data: JSON.parse(JSON.stringify(postgresInterval(newData))), type: newType});
+          this.$emit("input", {data: Object.assign({}, postgresInterval(newData)), type: newType});
         }
       },
       setValueType(newType) {

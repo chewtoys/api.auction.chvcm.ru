@@ -36,7 +36,7 @@ export default router;
  * @apiError (Bad Request 400 - Параметр type неверный) {string} message Подробное описание ошибки
  *
  * @apiUse v100CommonHeaders
- * @apiUse v100AuthAuth
+ * @apiUse v100AuthViaAuthToken
  */
 router.use(new RequestValidator({
   body: {

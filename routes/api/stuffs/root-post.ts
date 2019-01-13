@@ -36,7 +36,7 @@ router.use(Auth.requireModerator);
  * @apiError (Bad Request 400 - Параметр amount_type неверный) {string} message Подробное описание ошибки
  *
  * @apiUse v100CommonHeaders
- * @apiUse v100AuthAuth
+ * @apiUse v100AuthViaAuthToken
  * @apiUse v100AuthRequireModerator
  */
 router.use(new RequestValidator({

@@ -18,7 +18,7 @@ export default router;
  * @apiPermission Модератор
  *
  * @apiParam {string="1..9223372036854775807"} :id ID материала
- * @apiParam {string="ISO 639-1 в нижнем регистре"} :code Язык перевода
+ * @apiParam {string="en", "ru"} :code Язык перевода
  * @apiParam {string} title Название материала
  * @apiParam {string} [description='""'] Описание материала (может быть пустым)
  *
@@ -44,7 +44,7 @@ export default router;
  * @apiError (Not Found 404 - Материал не найден) {string} message Подробное описание ошибки
  *
  * @apiUse v100CommonHeaders
- * @apiUse v100AuthAuth
+ * @apiUse v100AuthViaAuthToken
  * @apiUse v100AuthRequireModerator
  */
 router.use(new RequestValidator({

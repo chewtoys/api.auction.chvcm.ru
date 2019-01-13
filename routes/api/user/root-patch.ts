@@ -29,7 +29,7 @@ export default router;
  * @apiDescription > Хочешь изменить мир - начни с себя
  *
  * @apiParam {string} [email] Email
- * @apiParam {string="ISO 639-1 в нижнем регистре"} [language] Язык
+ * @apiParam {string="en", "ru"} [language] Язык
  * @apiParam {string} [name] Имя (только для сотрудников)
  * @apiParam {string} [password] Пароль (учитываются только первые 72 символа)
  * @apiParam {string="+79xxxxxxxxx"} [phone] Телефон
@@ -57,7 +57,7 @@ export default router;
  * @apiError (Bad Request 400 - Параметр tfa неверный) {string} message Подробное описание ошибки
  *
  * @apiUse v100CommonHeaders
- * @apiUse v100AuthAuth
+ * @apiUse v100AuthViaAuthToken
  * @apiUse v100UniqueCheckEmailAndPhone
  */
 router.use(new RequestValidator({

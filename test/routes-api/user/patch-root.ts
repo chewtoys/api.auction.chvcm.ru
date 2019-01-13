@@ -231,14 +231,14 @@ describe("PATCH /user", () => {
       });
   });
 
-  it("401 Unauthorized - DB_EMPLOYEE_NOT_FOUND_BY_ID", async () => {
+  it("401 Unauthorized - EMPLOYEE_NOT_FOUND_BY_ID", async () => {
     await supertest(Web.instance.app).patch(`${Const.API_MOUNT_POINT}/user`)
       .set("Authorization", `Bearer ${await Jwt.signUser({
         id: "3",
         type: Const.USER_TYPE_EMPLOYEE,
       })}`)
       .expect(401, {
-        code: ApiCodes.DB_EMPLOYEE_NOT_FOUND_BY_ID,
+        code: ApiCodes.EMPLOYEE_NOT_FOUND_BY_ID,
         message: "employee with same id not found",
       });
   });

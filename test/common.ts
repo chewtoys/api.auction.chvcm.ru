@@ -14,39 +14,41 @@ import {EmailNotifications, PgMigrate, RedisClient, S3, Sequelize, Web} from "..
 
 let beforeAll = true;
 
-beforeEach(async () => {
-  await S3.emptyBucket(true);
+export function prepareApi() {
+  beforeEach(async () => {
+    await S3.emptyBucket(true);
 
-  RedisClient.instantiate();
-  await RedisClient.flushdb();
+    RedisClient.instantiate();
+    await RedisClient.flushdb();
 
-  EmailNotifications.instantiateSmtp();
+    EmailNotifications.instantiateSmtp();
 
-  Sequelize.instantiate();
-  PgEnumUnitClient.instantiate(Sequelize.instance as any); // TODO: remove "as any" when will be used normal types
-  PgEnumUnitCacheMemory.instantiate();
+    Sequelize.instantiate();
+    PgEnumUnitClient.instantiate(Sequelize.instance as any); // TODO: remove "as any" when will be used normal types
+    PgEnumUnitCacheMemory.instantiate();
 
-  if (beforeAll) {
-    await Sequelize.instance.query(`
+    if (beforeAll) {
+      await Sequelize.instance.query(`
       CREATE SCHEMA IF NOT EXISTS public;
       DROP SCHEMA public CASCADE;
       CREATE SCHEMA public;`);
-    await new PgMigrate().upPending();
-    beforeAll = false;
-  } else {
-    await Sequelize.instance.query("TRUNCATE users_common, stuffs RESTART IDENTITY CASCADE;");
-  }
+      await new PgMigrate().upPending();
+      beforeAll = false;
+    } else {
+      await Sequelize.instance.query("TRUNCATE users_common, stuffs RESTART IDENTITY CASCADE;");
+    }
 
-  Web.instantiate();
+    Web.instantiate();
 
-  await Web.instance.listen();
-});
+    await Web.instance.listen();
+  });
 
-afterEach(async () => {
-  await Web.instance.close();
-  await Sequelize.instance.close();
-  await RedisClient.close();
-});
+  afterEach(async () => {
+    await Web.instance.close();
+    await Sequelize.instance.close();
+    await RedisClient.close();
+  });
+}
 
 process.on("uncaughtException", (error) => {
   // tslint:disable no-console

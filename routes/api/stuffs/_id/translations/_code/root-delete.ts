@@ -15,7 +15,7 @@ export default router;
  * @apiPermission Модератор
  *
  * @apiParam {string="1..9223372036854775807"} :id ID материала
- * @apiParam {string="ISO 639-1 в нижнем регистре"} :code Язык перевода
+ * @apiParam {string="en", "ru"} :code Язык перевода
  *
  * @apiError (Bad Request 400 - Параметр :id неверный) {string="WRONG_PG_BIGSERIAL"} code Код ошибки
  * @apiError (Bad Request 400 - Параметр :id неверный) {string} message Подробное описание ошибки
@@ -27,7 +27,7 @@ export default router;
  * @apiError (Not Found 404 - Материал не найден) {string} message Подробное описание ошибки
  *
  * @apiUse v100CommonHeaders
- * @apiUse v100AuthAuth
+ * @apiUse v100AuthViaAuthToken
  * @apiUse v100AuthRequireModerator
  */
 router.use(async (req, res) => {

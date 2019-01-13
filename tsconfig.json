@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": "./",
     "lib": [
-      "es2018",
+      "esnext",
       "dom"
     ],
     "module": "commonjs",
@@ -11,7 +11,7 @@
     "outDir": "./dist",
     "sourceMap": true,
     "strict": true,
-    "target": "es2018"
+    "target": "esnext"
   },
   "exclude": [
     "./docker",
